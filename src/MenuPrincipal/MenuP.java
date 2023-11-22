@@ -5,6 +5,14 @@
  */
 package MenuPrincipal;
 
+import Mantenimientos.DeAlianza;
+import Mantenimientos.DeCandidatos;
+import Mantenimientos.DeCircunscripciones;
+import Mantenimientos.DeUsuario;
+import Mantenimientos.DePartidos;
+import Mantenimientos.DeMunicipios;
+import Mantenimientos.DeRecinto;
+
 /**
  *
  * @author User
@@ -34,14 +42,14 @@ public class MenuP extends javax.swing.JFrame {
         jMenuItem2 = new javax.swing.JMenuItem();
         jPopupMenu1 = new javax.swing.JPopupMenu();
         jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu2 = new javax.swing.JMenu();
-        jMenuItem3 = new javax.swing.JMenuItem();
-        jMenuItem4 = new javax.swing.JMenuItem();
-        jMenuItem5 = new javax.swing.JMenuItem();
-        jMenuItem6 = new javax.swing.JMenuItem();
-        jMenuItem7 = new javax.swing.JMenuItem();
-        jMenuItem8 = new javax.swing.JMenuItem();
-        jMenuItem9 = new javax.swing.JMenuItem();
+        Mantenimientos = new javax.swing.JMenu();
+        MUsuario = new javax.swing.JMenuItem();
+        MPartidos = new javax.swing.JMenuItem();
+        MMunicipios = new javax.swing.JMenuItem();
+        MCircunscripciones = new javax.swing.JMenuItem();
+        MAlianza = new javax.swing.JMenuItem();
+        MRecintos = new javax.swing.JMenuItem();
+        MCandidatos = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         jMenuItem10 = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
@@ -70,35 +78,65 @@ public class MenuP extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jMenu2.setText("Mantenimientos ");
+        Mantenimientos.setText("Mantenimientos ");
 
-        jMenuItem3.setText("De usuarios");
-        jMenu2.add(jMenuItem3);
-
-        jMenuItem4.setText("De partidos");
-        jMenu2.add(jMenuItem4);
-
-        jMenuItem5.setText("De Municipios");
-        jMenu2.add(jMenuItem5);
-
-        jMenuItem6.setText("De circunscripciones");
-        jMenu2.add(jMenuItem6);
-
-        jMenuItem7.setText("De alianza");
-        jMenu2.add(jMenuItem7);
-
-        jMenuItem8.setText("De recintos");
-        jMenuItem8.addActionListener(new java.awt.event.ActionListener() {
+        MUsuario.setText("De usuarios");
+        MUsuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem8ActionPerformed(evt);
+                MUsuarioActionPerformed(evt);
             }
         });
-        jMenu2.add(jMenuItem8);
+        Mantenimientos.add(MUsuario);
 
-        jMenuItem9.setText("De candidatos");
-        jMenu2.add(jMenuItem9);
+        MPartidos.setText("De partidos");
+        MPartidos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MPartidosActionPerformed(evt);
+            }
+        });
+        Mantenimientos.add(MPartidos);
 
-        jMenuBar1.add(jMenu2);
+        MMunicipios.setText("De Municipios");
+        MMunicipios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MMunicipiosActionPerformed(evt);
+            }
+        });
+        Mantenimientos.add(MMunicipios);
+
+        MCircunscripciones.setText("De circunscripciones");
+        MCircunscripciones.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MCircunscripcionesActionPerformed(evt);
+            }
+        });
+        Mantenimientos.add(MCircunscripciones);
+
+        MAlianza.setText("De alianza");
+        MAlianza.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MAlianzaActionPerformed(evt);
+            }
+        });
+        Mantenimientos.add(MAlianza);
+
+        MRecintos.setText("De recintos");
+        MRecintos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MRecintosActionPerformed(evt);
+            }
+        });
+        Mantenimientos.add(MRecintos);
+
+        MCandidatos.setText("De candidatos");
+        MCandidatos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MCandidatosActionPerformed(evt);
+            }
+        });
+        Mantenimientos.add(MCandidatos);
+
+        jMenuBar1.add(Mantenimientos);
 
         jMenu3.setText("Movimientos");
 
@@ -158,9 +196,40 @@ public class MenuP extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem8ActionPerformed
+    private void MRecintosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MRecintosActionPerformed
+        DeRecinto verventana = new DeRecinto();
+        verventana.setVisible(true);
+    }//GEN-LAST:event_MRecintosActionPerformed
+
+    private void MUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MUsuarioActionPerformed
+        DeUsuario verventana = new DeUsuario();
+        verventana.setVisible(true);
+    }//GEN-LAST:event_MUsuarioActionPerformed
+
+    private void MPartidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MPartidosActionPerformed
+       DePartidos verventana = new DePartidos();
+        verventana.setVisible(true);
+    }//GEN-LAST:event_MPartidosActionPerformed
+
+    private void MMunicipiosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MMunicipiosActionPerformed
+        DeMunicipios verventana = new DeMunicipios();
+        verventana.setVisible(true);
+    }//GEN-LAST:event_MMunicipiosActionPerformed
+
+    private void MCircunscripcionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MCircunscripcionesActionPerformed
+       DeCircunscripciones verventana = new DeCircunscripciones();
+        verventana.setVisible(true);
+    }//GEN-LAST:event_MCircunscripcionesActionPerformed
+
+    private void MAlianzaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MAlianzaActionPerformed
+        DeAlianza verventana = new DeAlianza();
+        verventana.setVisible(true);
+    }//GEN-LAST:event_MAlianzaActionPerformed
+
+    private void MCandidatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MCandidatosActionPerformed
+        DeCandidatos verventana = new DeCandidatos();
+        verventana.setVisible(true);
+    }//GEN-LAST:event_MCandidatosActionPerformed
 
     /**
      * @param args the command line arguments
@@ -198,9 +267,16 @@ public class MenuP extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem MAlianza;
+    private javax.swing.JMenuItem MCandidatos;
+    private javax.swing.JMenuItem MCircunscripciones;
+    private javax.swing.JMenuItem MMunicipios;
+    private javax.swing.JMenuItem MPartidos;
+    private javax.swing.JMenuItem MRecintos;
+    private javax.swing.JMenuItem MUsuario;
+    private javax.swing.JMenu Mantenimientos;
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem1;
     private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
@@ -217,13 +293,6 @@ public class MenuP extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem18;
     private javax.swing.JMenuItem jMenuItem19;
     private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
-    private javax.swing.JMenuItem jMenuItem4;
-    private javax.swing.JMenuItem jMenuItem5;
-    private javax.swing.JMenuItem jMenuItem6;
-    private javax.swing.JMenuItem jMenuItem7;
-    private javax.swing.JMenuItem jMenuItem8;
-    private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JPopupMenu jPopupMenu1;
     private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItem1;
     // End of variables declaration//GEN-END:variables
