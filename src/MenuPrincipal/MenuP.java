@@ -5,13 +5,20 @@
  */
 package MenuPrincipal;
 
+import Consultas.CDeAlianza;
+import Consultas.CDeCandidatos;
+import Consultas.CDeCircunscripciones;
+import Consultas.CDeMunicipios;
+import Consultas.CDePartidos;
 import Mantenimientos.DeAlianza;
 import Mantenimientos.DeCandidatos;
 import Mantenimientos.DeCircunscripciones;
-import Mantenimientos.DeUsuario;
 import Mantenimientos.DePartidos;
 import Mantenimientos.DeMunicipios;
 import Mantenimientos.DeRecinto;
+import Mantenimientos.DeUsuario;
+
+import Consultas.CDeUsuario;
 
 /**
  *
@@ -55,14 +62,14 @@ public class MenuP extends javax.swing.JFrame {
         jMenu4 = new javax.swing.JMenu();
         jMenuItem11 = new javax.swing.JMenuItem();
         jMenu5 = new javax.swing.JMenu();
-        jMenuItem12 = new javax.swing.JMenuItem();
-        jMenuItem13 = new javax.swing.JMenuItem();
-        jMenuItem14 = new javax.swing.JMenuItem();
-        jMenuItem15 = new javax.swing.JMenuItem();
-        jMenuItem16 = new javax.swing.JMenuItem();
-        jMenuItem18 = new javax.swing.JMenuItem();
-        jMenuItem17 = new javax.swing.JMenuItem();
-        jMenuItem19 = new javax.swing.JMenuItem();
+        CUsuarios = new javax.swing.JMenuItem();
+        CPartidos = new javax.swing.JMenuItem();
+        CMunicipios = new javax.swing.JMenuItem();
+        CCircunscripciones = new javax.swing.JMenuItem();
+        CAlianza = new javax.swing.JMenuItem();
+        CCandidatos = new javax.swing.JMenuItem();
+        CEscaños = new javax.swing.JMenuItem();
+        CDipotadosE = new javax.swing.JMenuItem();
 
         jMenuItem1.setText("jMenuItem1");
 
@@ -154,29 +161,59 @@ public class MenuP extends javax.swing.JFrame {
 
         jMenu5.setText("Consultas");
 
-        jMenuItem12.setText("De usuarios");
-        jMenu5.add(jMenuItem12);
+        CUsuarios.setText("De usuarios");
+        CUsuarios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CUsuariosActionPerformed(evt);
+            }
+        });
+        jMenu5.add(CUsuarios);
 
-        jMenuItem13.setText("De partidos");
-        jMenu5.add(jMenuItem13);
+        CPartidos.setText("De partidos");
+        CPartidos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CPartidosActionPerformed(evt);
+            }
+        });
+        jMenu5.add(CPartidos);
 
-        jMenuItem14.setText("De Municipios");
-        jMenu5.add(jMenuItem14);
+        CMunicipios.setText("De Municipios");
+        CMunicipios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CMunicipiosActionPerformed(evt);
+            }
+        });
+        jMenu5.add(CMunicipios);
 
-        jMenuItem15.setText("De circunscripciones");
-        jMenu5.add(jMenuItem15);
+        CCircunscripciones.setText("De circunscripciones");
+        CCircunscripciones.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CCircunscripcionesActionPerformed(evt);
+            }
+        });
+        jMenu5.add(CCircunscripciones);
 
-        jMenuItem16.setText("De alianza");
-        jMenu5.add(jMenuItem16);
+        CAlianza.setText("De alianza");
+        CAlianza.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CAlianzaActionPerformed(evt);
+            }
+        });
+        jMenu5.add(CAlianza);
 
-        jMenuItem18.setText("De candidatos");
-        jMenu5.add(jMenuItem18);
+        CCandidatos.setText("De candidatos");
+        CCandidatos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CCandidatosActionPerformed(evt);
+            }
+        });
+        jMenu5.add(CCandidatos);
 
-        jMenuItem17.setText("De escaños por partidos");
-        jMenu5.add(jMenuItem17);
+        CEscaños.setText("De escaños por partidos");
+        jMenu5.add(CEscaños);
 
-        jMenuItem19.setText("De diputados elegidos por partidos");
-        jMenu5.add(jMenuItem19);
+        CDipotadosE.setText("De diputados elegidos por partidos");
+        jMenu5.add(CDipotadosE);
 
         jMenuBar1.add(jMenu5);
 
@@ -231,6 +268,36 @@ public class MenuP extends javax.swing.JFrame {
         verventana.setVisible(true);
     }//GEN-LAST:event_MCandidatosActionPerformed
 
+    private void CCandidatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CCandidatosActionPerformed
+         CDeCandidatos verventana = new CDeCandidatos();
+         verventana.setVisible(true);
+    }//GEN-LAST:event_CCandidatosActionPerformed
+
+    private void CUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CUsuariosActionPerformed
+         CDeUsuario verventana = new CDeUsuario();
+         verventana.setVisible(true);
+    }//GEN-LAST:event_CUsuariosActionPerformed
+
+    private void CPartidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CPartidosActionPerformed
+         CDePartidos verventana = new CDePartidos();
+         verventana.setVisible(true);  
+    }//GEN-LAST:event_CPartidosActionPerformed
+
+    private void CMunicipiosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CMunicipiosActionPerformed
+         CDeMunicipios verventana = new CDeMunicipios();
+         verventana.setVisible(true);
+    }//GEN-LAST:event_CMunicipiosActionPerformed
+
+    private void CCircunscripcionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CCircunscripcionesActionPerformed
+         CDeCircunscripciones verventana = new CDeCircunscripciones();
+         verventana.setVisible(true);
+    }//GEN-LAST:event_CCircunscripcionesActionPerformed
+
+    private void CAlianzaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CAlianzaActionPerformed
+        CDeAlianza verventana = new CDeAlianza();
+        verventana.setVisible(true);
+    }//GEN-LAST:event_CAlianzaActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -267,6 +334,14 @@ public class MenuP extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem CAlianza;
+    private javax.swing.JMenuItem CCandidatos;
+    private javax.swing.JMenuItem CCircunscripciones;
+    private javax.swing.JMenuItem CDipotadosE;
+    private javax.swing.JMenuItem CEscaños;
+    private javax.swing.JMenuItem CMunicipios;
+    private javax.swing.JMenuItem CPartidos;
+    private javax.swing.JMenuItem CUsuarios;
     private javax.swing.JMenuItem MAlianza;
     private javax.swing.JMenuItem MCandidatos;
     private javax.swing.JMenuItem MCircunscripciones;
@@ -284,14 +359,6 @@ public class MenuP extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem10;
     private javax.swing.JMenuItem jMenuItem11;
-    private javax.swing.JMenuItem jMenuItem12;
-    private javax.swing.JMenuItem jMenuItem13;
-    private javax.swing.JMenuItem jMenuItem14;
-    private javax.swing.JMenuItem jMenuItem15;
-    private javax.swing.JMenuItem jMenuItem16;
-    private javax.swing.JMenuItem jMenuItem17;
-    private javax.swing.JMenuItem jMenuItem18;
-    private javax.swing.JMenuItem jMenuItem19;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JPopupMenu jPopupMenu1;
     private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItem1;
