@@ -236,41 +236,49 @@ public class MenuP extends javax.swing.JFrame {
     private void MRecintosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MRecintosActionPerformed
         DeRecinto verventana = new DeRecinto();
         verventana.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_MRecintosActionPerformed
 
     private void MUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MUsuarioActionPerformed
         DeUsuario verventana = new DeUsuario();
         verventana.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_MUsuarioActionPerformed
 
     private void MPartidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MPartidosActionPerformed
        DePartidos verventana = new DePartidos();
         verventana.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_MPartidosActionPerformed
 
     private void MMunicipiosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MMunicipiosActionPerformed
         DeMunicipios verventana = new DeMunicipios();
         verventana.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_MMunicipiosActionPerformed
 
     private void MCircunscripcionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MCircunscripcionesActionPerformed
        DeCircunscripciones verventana = new DeCircunscripciones();
         verventana.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_MCircunscripcionesActionPerformed
 
     private void MAlianzaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MAlianzaActionPerformed
         DeAlianza verventana = new DeAlianza();
         verventana.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_MAlianzaActionPerformed
 
     private void MCandidatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MCandidatosActionPerformed
         DeCandidatos verventana = new DeCandidatos();
         verventana.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_MCandidatosActionPerformed
 
     private void CCandidatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CCandidatosActionPerformed
          CDeCandidatos verventana = new CDeCandidatos();
          verventana.setVisible(true);
+         this.dispose();
     }//GEN-LAST:event_CCandidatosActionPerformed
 
     private void CUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CUsuariosActionPerformed
@@ -280,22 +288,26 @@ public class MenuP extends javax.swing.JFrame {
 
     private void CPartidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CPartidosActionPerformed
          CDePartidos verventana = new CDePartidos();
-         verventana.setVisible(true);  
+         verventana.setVisible(true); 
+         this.dispose();
     }//GEN-LAST:event_CPartidosActionPerformed
 
     private void CMunicipiosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CMunicipiosActionPerformed
          CDeMunicipios verventana = new CDeMunicipios();
          verventana.setVisible(true);
+         this.dispose();
     }//GEN-LAST:event_CMunicipiosActionPerformed
 
     private void CCircunscripcionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CCircunscripcionesActionPerformed
          CDeCircunscripciones verventana = new CDeCircunscripciones();
          verventana.setVisible(true);
+         this.dispose();
     }//GEN-LAST:event_CCircunscripcionesActionPerformed
 
     private void CAlianzaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CAlianzaActionPerformed
         CDeAlianza verventana = new CDeAlianza();
         verventana.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_CAlianzaActionPerformed
 
     /**
