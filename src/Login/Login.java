@@ -1,9 +1,13 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package Login;
+
+import Mantenimientos.DeUsuario;
+import MenuPrincipal.MenuP;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -17,6 +21,58 @@ public class Login extends javax.swing.JFrame {
     public Login() {
         initComponents();
     }
+       private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {                                         
+        DeUsuario R = new DeUsuario();
+        R.setVisible(true);
+        this.dispose();
+    }                                        
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {                                         
+        String usuario = Usuario.getText();
+        String password = new String(Password.getPassword());
+    
+        try {  
+            // Intentar abrir el archivo
+             File archivo = new File("Usuario.txt");
+           // Verificar si el archivo existe
+        
+        
+            if (archivo.exists()) {
+                // Verificar si el usuario ya existe en el archivo
+                if (credencialesCorrectas(archivo, usuario, password)) {
+                    JOptionPane.showMessageDialog(null, "Inicio de sesión exitoso.", "Información", JOptionPane.INFORMATION_MESSAGE);
+                    MenuP Menu = new MenuP();
+                    Menu.setVisible(true);
+                    this.dispose();
+                }
+            }
+            else {
+                JOptionPane.showMessageDialog(null, "el archivo no existe.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (IOException e) {
+            // Capturar y manejar la excepción en caso de error
+            JOptionPane.showMessageDialog(null, "Error al manejar el archivo: "+ e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        } 
+    }                                        
+
+private static boolean credencialesCorrectas(File archivo, String usuarioIngresado, String passwordIngresado) throws IOException {
+    try (BufferedReader br = new BufferedReader(new FileReader(archivo))) {
+        String linea;
+        while ((linea = br.readLine()) != null) {
+            // Separar la línea en campos
+            String[] campos = linea.split(",");
+            // El primer campo es el nombre de usuario
+            String usuarioExistente = campos[0].trim();
+            // El segundo campo es la contraseña
+            String passwordExistente = campos[1].trim();
+            // Verificar si el usuario y la contraseña coinciden
+            if (usuarioExistente.equals(usuarioIngresado) && passwordExistente.equals(passwordIngresado)) {
+                return true; // Las credenciales son correctas
+            }
+        }
+    }
+    return false; // Las credenciales son incorrectas
+}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -27,8 +83,8 @@ public class Login extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jTextField1 = new javax.swing.JTextField();
-        jPasswordField1 = new javax.swing.JPasswordField();
+        Usuario = new javax.swing.JTextField();
+        Password = new javax.swing.JPasswordField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -66,8 +122,8 @@ public class Login extends javax.swing.JFrame {
                             .addComponent(jLabel1))
                         .addGap(28, 28, 28)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 119, Short.MAX_VALUE)
-                            .addComponent(jPasswordField1)))
+                            .addComponent(Usuario, javax.swing.GroupLayout.DEFAULT_SIZE, 119, Short.MAX_VALUE)
+                            .addComponent(Password)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(129, 129, 129)
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -86,11 +142,11 @@ public class Login extends javax.swing.JFrame {
                 .addComponent(jLabel3)
                 .addGap(46, 46, 46)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Usuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Password, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
                 .addGap(28, 28, 28)
                 .addComponent(jLabel4)
@@ -140,13 +196,13 @@ public class Login extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPasswordField Password;
+    private javax.swing.JTextField Usuario;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JPasswordField jPasswordField1;
-    private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 }
