@@ -41,7 +41,6 @@ public class DeRecinto extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        Eliminar = new javax.swing.JButton();
         Id = new javax.swing.JTextField();
         Nombre = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
@@ -61,13 +60,6 @@ public class DeRecinto extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel1.setText("Mantenimientos de recinto");
-
-        Eliminar.setText("Eliminar");
-        Eliminar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                EliminarActionPerformed(evt);
-            }
-        });
 
         jLabel2.setText("Id ");
 
@@ -132,13 +124,12 @@ public class DeRecinto extends javax.swing.JFrame {
                                 .addComponent(Buscar))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(71, 71, 71)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(Guardar)
-                            .addComponent(Eliminar))
+                        .addComponent(Guardar)
                         .addGap(69, 69, 69)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(Limpiar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(Salir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addComponent(Limpiar))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(146, 146, 146)
+                        .addComponent(Salir, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -168,11 +159,9 @@ public class DeRecinto extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Guardar)
                     .addComponent(Limpiar))
-                .addGap(27, 27, 27)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Eliminar)
-                    .addComponent(Salir))
-                .addGap(31, 31, 31))
+                .addGap(18, 18, 18)
+                .addComponent(Salir)
+                .addGap(40, 40, 40))
         );
 
         pack();
@@ -244,10 +233,6 @@ public class DeRecinto extends javax.swing.JFrame {
         IdCir.setText("");
         Direccion.setText(""); 
     }//GEN-LAST:event_LimpiarActionPerformed
-
-    private void EliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EliminarActionPerformed
-        
-    }//GEN-LAST:event_EliminarActionPerformed
 
     private void SalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SalirActionPerformed
         MenuP Menu = new MenuP();
@@ -367,7 +352,6 @@ public class DeRecinto extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Buscar;
     private javax.swing.JTextField Direccion;
-    private javax.swing.JButton Eliminar;
     private javax.swing.JButton Guardar;
     private javax.swing.JTextField Id;
     private javax.swing.JTextField IdCir;

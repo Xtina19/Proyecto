@@ -55,7 +55,6 @@ public class DeUsuario extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         Limpiar = new javax.swing.JButton();
         Salir = new javax.swing.JButton();
-        Eliminar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -121,27 +120,20 @@ public class DeUsuario extends javax.swing.JFrame {
             }
         });
 
-        Eliminar.setText("Eliminar");
-        Eliminar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                EliminarActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(146, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(Guardar, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(Eliminar, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addComponent(Guardar)
                 .addGap(52, 52, 52)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(Limpiar)
-                    .addComponent(Salir, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(Limpiar)
                 .addGap(171, 171, 171))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(220, 220, 220)
+                .addComponent(Salir, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(52, 52, 52)
@@ -187,9 +179,7 @@ public class DeUsuario extends javax.swing.JFrame {
                     .addComponent(Guardar)
                     .addComponent(Limpiar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(Eliminar)
-                    .addComponent(Salir))
+                .addComponent(Salir)
                 .addGap(26, 26, 26))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
@@ -319,10 +309,6 @@ public class DeUsuario extends javax.swing.JFrame {
         Menu.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_SalirActionPerformed
-
-    private void EliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EliminarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_EliminarActionPerformed
    // Método para modificar el usuario si ya existe en el archivo
     private boolean modificarUsuario(String usuario, String password, String acceso, String nombre, String apellido, String email) {
     // Crear una lista para almacenar las líneas modificadas
@@ -435,7 +421,6 @@ public class DeUsuario extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField Apellido;
     private javax.swing.JButton Buscar;
-    private javax.swing.JButton Eliminar;
     private javax.swing.JTextField Email;
     private javax.swing.JButton Guardar;
     private javax.swing.JButton Limpiar;

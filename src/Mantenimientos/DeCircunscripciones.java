@@ -43,7 +43,6 @@ public class DeCircunscripciones extends javax.swing.JFrame {
         Cant_Candidatos = new javax.swing.JSpinner();
         jLabel1 = new javax.swing.JLabel();
         Buscar = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
         Id = new javax.swing.JTextField();
         Nombre = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
@@ -68,8 +67,6 @@ public class DeCircunscripciones extends javax.swing.JFrame {
                 BuscarActionPerformed(evt);
             }
         });
-
-        jButton3.setText("Eliminar");
 
         jLabel2.setText("Id ");
 
@@ -129,15 +126,12 @@ public class DeCircunscripciones extends javax.swing.JFrame {
                                         .addComponent(Buscar))))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(63, 63, 63)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jButton3)
-                                .addGap(71, 71, 71)
-                                .addComponent(Salir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(Guardar)
-                                .addGap(71, 71, 71)
-                                .addComponent(Limpiar)))))
+                        .addComponent(Guardar)
+                        .addGap(71, 71, 71)
+                        .addComponent(Limpiar))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(130, 130, 130)
+                        .addComponent(Salir, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(23, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -166,11 +160,9 @@ public class DeCircunscripciones extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Guardar)
                     .addComponent(Limpiar))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton3)
-                    .addComponent(Salir))
-                .addGap(46, 46, 46))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(Salir)
+                .addGap(52, 52, 52))
         );
 
         pack();
@@ -370,7 +362,6 @@ public class DeCircunscripciones extends javax.swing.JFrame {
     private javax.swing.JButton Limpiar;
     private javax.swing.JTextField Nombre;
     private javax.swing.JButton Salir;
-    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

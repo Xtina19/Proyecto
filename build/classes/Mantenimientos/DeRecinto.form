@@ -59,15 +59,13 @@
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="71" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="Guardar" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="Eliminar" alignment="0" min="-2" max="-2" attributes="0"/>
-                      </Group>
+                      <Component id="Guardar" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="69" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="Limpiar" max="32767" attributes="0"/>
-                          <Component id="Salir" max="32767" attributes="0"/>
-                      </Group>
+                      <Component id="Limpiar" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="146" max="-2" attributes="0"/>
+                      <Component id="Salir" min="-2" pref="73" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace max="32767" attributes="0"/>
@@ -107,12 +105,9 @@
                   <Component id="Guardar" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="Limpiar" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="Eliminar" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="Salir" alignment="3" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Component id="Salir" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -135,14 +130,6 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Mantenimientos de recinto"/>
       </Properties>
-    </Component>
-    <Component class="javax.swing.JButton" name="Eliminar">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Eliminar"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="EliminarActionPerformed"/>
-      </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="Id">
     </Component>
