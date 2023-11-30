@@ -267,7 +267,8 @@ public class DeMunicipios extends javax.swing.JFrame {
     
     private void buscarYRellenarMunicipio() {
         String idMunicipio = Id.getText().trim();
-
+        String nombre = Nombre.getText().trim();
+        
         try (BufferedReader br = new BufferedReader(new FileReader("Archivos\\Municipios.txt"))) {
             String linea;
             while ((linea = br.readLine()) != null) {

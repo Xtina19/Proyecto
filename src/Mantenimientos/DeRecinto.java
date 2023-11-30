@@ -5,6 +5,16 @@
  */
 package Mantenimientos;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author User
@@ -64,6 +74,11 @@ public class DeRecinto extends javax.swing.JFrame {
         });
 
         Limpiar.setText("Limpiar");
+        Limpiar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                LimpiarActionPerformed(evt);
+            }
+        });
 
         Buscar.setText("Buscar");
         Buscar.addActionListener(new java.awt.event.ActionListener() {
@@ -147,13 +162,146 @@ public class DeRecinto extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void BuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BuscarActionPerformed
-       
+       buscarYRellenarRecinto();
     }//GEN-LAST:event_BuscarActionPerformed
 
     private void GuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GuardarActionPerformed
+        String id = Id.getText();
+        String nombre = Nombre.getText();
+        String idcir = IdCir.getText();
+        String direccion = Direccion.getText();
         
+        // Validar que todos los datos no estén vacíos
+        if (id.isEmpty() || nombre.isEmpty()|| idcir.isEmpty()|| direccion.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Todos los datos son obligatorios.", "Error", JOptionPane.ERROR_MESSAGE);
+            return; // Detener el proceso
+        }
+
+        try {
+            // Intentar abrir el archivo
+            File archivo = new File("Archivos\\Recinto.txt");
+
+            // Verificar si el archivo existe
+            if (archivo.exists()) {
+                // Verificar si el usuario ya existe en el archivo
+                if (modificarRecinto(id, nombre, idcir, direccion)) {
+                    JOptionPane.showMessageDialog(null, "Información del recinto modificada en el archivo.", "Información", JOptionPane.INFORMATION_MESSAGE);
+                    return; // Detener el proceso si el usuario ya existe y fue modificado
+                }
+            }
+            else {
+                // Si el archivo no existe, intentar crear uno nuevo
+                if (archivo.createNewFile()) {
+                    System.out.println("Se ha creado un nuevo archivo.");
+                }
+                else {
+                    JOptionPane.showMessageDialog(null, "No se pudo crear el archivo ", "Error", JOptionPane.ERROR_MESSAGE);
+                    return; // Detener el proceso si no se pudo crear el archivo
+                }
+            }
+
+            // Abrir flujos de escritura
+            try (FileWriter FW = new FileWriter(archivo, true);
+                BufferedWriter BW = new BufferedWriter(FW)) {
+
+                // Crear la línea formateada
+                String linea = String.format("%s,%s", id, nombre, idcir, direccion);
+                System.out.println("Línea: " + linea);  // Agregar esta línea para imprimir la línea formateada
+
+                // Aquí se guarda la información
+                BW.write(linea);
+                BW.newLine(); // Añadir una nueva línea
+
+                JOptionPane.showMessageDialog(null, "Información guardada en el archivo.", "Información", JOptionPane.INFORMATION_MESSAGE);
+            }
+
+        } catch (IOException e) {
+            // Capturar y manejar la excepción en caso de error
+            JOptionPane.showMessageDialog(null, "Error al manejar el archivo: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_GuardarActionPerformed
 
+    private void LimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LimpiarActionPerformed
+        Id.setText("");
+        Nombre.setText("");
+        IdCir.setText("");
+        Direccion.setText(""); 
+    }//GEN-LAST:event_LimpiarActionPerformed
+     private boolean modificarRecinto(String id, String nombre, String idcir, String direccion) {
+        // Crear una lista para almacenar las líneas modificadas
+        List<String> lineasModificadas = new ArrayList<>();
+
+        try (BufferedReader br = new BufferedReader(new FileReader("Archivos\\Recinto.txt"))) {
+            String linea;
+            boolean recintoModificado = false;
+
+            while ((linea = br.readLine()) != null) {
+                String[] partes = linea.split(",");
+                if (partes.length == 4 && partes[0].equals(id)) {
+                    // Encontramos el usuario, rellenamos los campos
+                    // Puedes realizar modificaciones aquí si es necesario
+                    partes[1] = nombre;
+                    partes[2] = idcir;
+                    partes[3] = direccion;
+
+                    // Agregamos la línea modificada a la lista
+                    lineasModificadas.add(String.join(",", partes));
+                    recintoModificado = true;
+                } 
+                else {
+                    // Si no es el usuario que estamos buscando, simplemente agregamos la línea al listado
+                    lineasModificadas.add(linea);
+                }
+            }
+
+            if (recintoModificado) {
+                // Ahora escribimos las líneas modificadas de vuelta al archivo
+                try (BufferedWriter bw = new BufferedWriter(new FileWriter("Archivos\\Recinto.txt"))) {
+                    for (String lineaModificada : lineasModificadas) {
+                        bw.write(lineaModificada);
+                     bw.newLine(); // Agregamos un salto de línea después de cada línea
+                    }
+                }
+            }
+
+        return recintoModificado;
+
+        } 
+        catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "Error al leer el archivo " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+    }
+    
+     private void buscarYRellenarRecinto() {
+        String id = Id.getText().trim();
+        String nombre = Nombre.getText().trim();
+        String idcir = IdCir.getText().trim();
+        String direccion = Direccion.getText().trim();
+
+        try (BufferedReader br = new BufferedReader(new FileReader("Archivos\\Recinto.txt"))) {
+            String linea;
+            while ((linea = br.readLine()) != null) {
+                String[] partes = linea.split(",");
+                if (partes.length == 4 && partes[0].equals(id)) {
+                    // Encontramos el partido, rellenamos los campos
+                    Nombre.setText(partes[1]);
+                    IdCir.setText(partes[2]);
+                    Direccion.setText(partes[3]);
+                    return; // Terminamos la búsqueda una vez encontrado el recinto
+                }
+            }
+
+            // Si llegamos aquí, el recinto no fue encontrado
+            JOptionPane.showMessageDialog(this, "Recinto no encontrado", "Error", JOptionPane.ERROR_MESSAGE);
+
+        } 
+        catch (IOException ex) {
+            JOptionPane.showMessageDialog(this, "Error al leer el archivo", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+    
     /**
      * @param args the command line arguments
      */
