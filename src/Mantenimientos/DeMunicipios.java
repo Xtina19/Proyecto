@@ -205,7 +205,7 @@ public class DeMunicipios extends javax.swing.JFrame {
 
                 // Crear la línea formateada
                 String linea = String.format("%s,%s", id, nombre);
-                System.out.println("Línea: " + linea);  // Agregar esta línea para imprimir la línea formateada
+                System.out.println("Linea: " + linea);  // Agregar esta línea para imprimir la línea formateada
 
                 // Aquí se guarda la información
                 BW.write(linea);
@@ -263,12 +263,12 @@ public class DeMunicipios extends javax.swing.JFrame {
                 try (BufferedWriter bw = new BufferedWriter(new FileWriter("Archivos\\Municipios.txt"))) {
                     for (String lineaModificada : lineasModificadas) {
                         bw.write(lineaModificada);
-                     bw.newLine(); // Agregamos un salto de línea después de cada línea
+                        bw.newLine(); // Agregamos un salto de línea después de cada línea
                     }
                 }
             }
 
-        return municipioModificado;
+            return municipioModificado;
 
         } 
         catch (IOException ex) {

@@ -199,7 +199,7 @@ public class DePartidos extends javax.swing.JFrame {
 
                 // Crear la línea formateada
                 String linea = String.format("%s,%s", id, descripcion);
-                System.out.println("Línea: " + linea);  // Agregar esta línea para imprimir la línea formateada
+                System.out.println("Linea: " + linea);  // Agregar esta línea para imprimir la línea formateada
 
                 // Aquí se guarda la información
                 BW.write(linea);
@@ -231,7 +231,7 @@ public class DePartidos extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_SalirActionPerformed
      
-        private boolean modificarPartido(String id, String descripcion) {
+    private boolean modificarPartido(String id, String descripcion) {
         // Crear una lista para almacenar las líneas modificadas
         List<String> lineasModificadas = new ArrayList<>();
 
@@ -242,16 +242,15 @@ public class DePartidos extends javax.swing.JFrame {
             while ((linea = br.readLine()) != null) {
                 String[] partes = linea.split(",");
                 if (partes.length == 2 && partes[0].equals(id)) {
-                    // Encontramos el usuario, rellenamos los campos
-                    // Puedes realizar modificaciones aquí si es necesario
+                    // Encontramos el partido, rellenamos los campos
                     partes[1] = descripcion;
 
-                    // Agregamos la línea modificada a la lista
+                     // Agregamos la línea modificada a la lista
                     lineasModificadas.add(String.join(",", partes));
                     partidoModificado = true;
                 } 
                 else {
-                    // Si no es el usuario que estamos buscando, simplemente agregamos la línea al listado
+                    // Si no es el partido que estamos buscando, simplemente agregamos la línea al listado
                     lineasModificadas.add(linea);
                 }
             }
@@ -261,12 +260,12 @@ public class DePartidos extends javax.swing.JFrame {
                 try (BufferedWriter bw = new BufferedWriter(new FileWriter("Archivos\\Partidos.txt"))) {
                     for (String lineaModificada : lineasModificadas) {
                         bw.write(lineaModificada);
-                     bw.newLine(); // Agregamos un salto de línea después de cada línea
+                        bw.newLine(); // Agregamos un salto de línea después de cada línea
                     }
                 }
             }
 
-        return partidoModificado;
+            return partidoModificado;
 
         } 
         catch (IOException ex) {

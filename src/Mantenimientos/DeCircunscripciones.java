@@ -130,8 +130,8 @@ public class DeCircunscripciones extends javax.swing.JFrame {
                         .addGap(71, 71, 71)
                         .addComponent(Limpiar))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(130, 130, 130)
-                        .addComponent(Salir, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(139, 139, 139)
+                        .addComponent(Salir)))
                 .addContainerGap(23, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -160,9 +160,9 @@ public class DeCircunscripciones extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Guardar)
                     .addComponent(Limpiar))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(Salir)
-                .addGap(52, 52, 52))
+                .addGap(46, 46, 46))
         );
 
         pack();
@@ -241,11 +241,10 @@ public class DeCircunscripciones extends javax.swing.JFrame {
     }//GEN-LAST:event_LimpiarActionPerformed
 
     private void SalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SalirActionPerformed
-        MenuP Menu = new MenuP();
-        Menu.setVisible(true);
-        this.dispose();
+        // TODO add your handling code here:
     }//GEN-LAST:event_SalirActionPerformed
- private boolean modificarCircunscripcion(String id, String nombre, String id_municipio, int cant_candidatos) {
+ 
+    private boolean modificarCircunscripcion(String id, String nombre, String id_municipio, int cant_candidatos) {
         // Crear una lista para almacenar las líneas modificadas
         List<String> lineasModificadas = new ArrayList<>();
 

@@ -39,7 +39,7 @@ public class DeAlianza extends javax.swing.JFrame {
         Buscar = new javax.swing.JButton();
         Limpiar = new javax.swing.JButton();
         Aliados = new javax.swing.JTextField();
-        Guardar1 = new javax.swing.JButton();
+        Guardar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -73,7 +73,12 @@ public class DeAlianza extends javax.swing.JFrame {
             }
         });
 
-        Guardar1.setText("Guardar");
+        Guardar.setText("Guardar");
+        Guardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                GuardarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -112,7 +117,7 @@ public class DeAlianza extends javax.swing.JFrame {
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(80, 80, 80)
-                    .addComponent(Guardar1)
+                    .addComponent(Guardar)
                     .addContainerGap(272, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
@@ -141,7 +146,7 @@ public class DeAlianza extends javax.swing.JFrame {
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                     .addContainerGap(214, Short.MAX_VALUE)
-                    .addComponent(Guardar1)
+                    .addComponent(Guardar)
                     .addGap(92, 92, 92)))
         );
 
@@ -161,9 +166,13 @@ public class DeAlianza extends javax.swing.JFrame {
     }//GEN-LAST:event_SalirActionPerformed
 
     private void BuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BuscarActionPerformed
-         buscarYRellenarAlianza();
+        // buscarYRellenarAlianza();
     }//GEN-LAST:event_BuscarActionPerformed
 
+    private void GuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GuardarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_GuardarActionPerformed
+    
     /**
      * @param args the command line arguments
      */
@@ -202,7 +211,7 @@ public class DeAlianza extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField Aliados;
     private javax.swing.JButton Buscar;
-    private javax.swing.JButton Guardar1;
+    private javax.swing.JButton Guardar;
     private javax.swing.JTextField Id;
     private javax.swing.JTextField IdMu;
     private javax.swing.JButton Limpiar;

@@ -21,58 +21,6 @@ public class Login extends javax.swing.JFrame {
     public Login() {
         initComponents();
     }
-       private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {                                         
-        DeUsuario R = new DeUsuario();
-        R.setVisible(true);
-        this.dispose();
-    }                                        
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {                                         
-        String usuario = Usuario.getText();
-        String password = new String(Password.getPassword());
-    
-        try {  
-            // Intentar abrir el archivo
-             File archivo = new File("Usuario.txt");
-           // Verificar si el archivo existe
-        
-        
-            if (archivo.exists()) {
-                // Verificar si el usuario ya existe en el archivo
-                if (credencialesCorrectas(archivo, usuario, password)) {
-                    JOptionPane.showMessageDialog(null, "Inicio de sesión exitoso.", "Información", JOptionPane.INFORMATION_MESSAGE);
-                    MenuP Menu = new MenuP();
-                    Menu.setVisible(true);
-                    this.dispose();
-                }
-            }
-            else {
-                JOptionPane.showMessageDialog(null, "el archivo no existe.", "Error", JOptionPane.ERROR_MESSAGE);
-            }
-        } catch (IOException e) {
-            // Capturar y manejar la excepción en caso de error
-            JOptionPane.showMessageDialog(null, "Error al manejar el archivo: "+ e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-        } 
-    }                                        
-
-private static boolean credencialesCorrectas(File archivo, String usuarioIngresado, String passwordIngresado) throws IOException {
-    try (BufferedReader br = new BufferedReader(new FileReader(archivo))) {
-        String linea;
-        while ((linea = br.readLine()) != null) {
-            // Separar la línea en campos
-            String[] campos = linea.split(",");
-            // El primer campo es el nombre de usuario
-            String usuarioExistente = campos[0].trim();
-            // El segundo campo es la contraseña
-            String passwordExistente = campos[1].trim();
-            // Verificar si el usuario y la contraseña coinciden
-            if (usuarioExistente.equals(usuarioIngresado) && passwordExistente.equals(passwordIngresado)) {
-                return true; // Las credenciales son correctas
-            }
-        }
-    }
-    return false; // Las credenciales son incorrectas
-}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -89,8 +37,7 @@ private static boolean credencialesCorrectas(File archivo, String usuarioIngresa
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jLabel5 = new javax.swing.JLabel();
+        Iniciar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -102,9 +49,12 @@ private static boolean credencialesCorrectas(File archivo, String usuarioIngresa
         jLabel3.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel3.setText("Login");
 
-        jButton1.setText("Registrate");
-
-        jLabel5.setText("¿No tienes cuenta?");
+        Iniciar.setText("Iniciar sesion");
+        Iniciar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                IniciarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -127,13 +77,11 @@ private static boolean credencialesCorrectas(File archivo, String usuarioIngresa
                     .addGroup(layout.createSequentialGroup()
                         .addGap(129, 129, 129)
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap(34, Short.MAX_VALUE)
-                .addComponent(jLabel5)
-                .addGap(18, 18, 18)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(39, 39, 39))
+                .addContainerGap(49, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(Iniciar)
+                .addGap(108, 108, 108))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -150,16 +98,61 @@ private static boolean credencialesCorrectas(File archivo, String usuarioIngresa
                     .addComponent(jLabel2))
                 .addGap(28, 28, 28)
                 .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(jButton1))
-                .addContainerGap(53, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(Iniciar)
+                .addContainerGap(41, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void IniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IniciarActionPerformed
+        String usuario = Usuario.getText();
+        String password = new String(Password.getPassword());
+    
+        try {  
+            // Intentar abrir el archivo
+             File archivo = new File("Archivos\\Usuario.txt");
+           // Verificar si el archivo existe
+        
+        
+            if (archivo.exists()) {
+                // Verificar si el usuario ya existe en el archivo
+                if (credencialesCorrectas(archivo, usuario, password)) {
+                    JOptionPane.showMessageDialog(null, "Inicio de sesión exitoso.", "Información", JOptionPane.INFORMATION_MESSAGE);
+                    MenuP Menu = new MenuP();
+                    Menu.setVisible(true);
+                    this.dispose();
+                }
+            }
+            else {
+                JOptionPane.showMessageDialog(null, "el archivo no existe.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (IOException e) {
+            // Capturar y manejar la excepción en caso de error
+            JOptionPane.showMessageDialog(null, "Error al manejar el archivo: "+ e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        } 
+    }//GEN-LAST:event_IniciarActionPerformed
+
+    private static boolean credencialesCorrectas(File archivo, String usuarioIngresado, String passwordIngresado) throws IOException {
+        try (BufferedReader br = new BufferedReader(new FileReader(archivo))) {
+            String linea;
+            while ((linea = br.readLine()) != null) {
+                // Separar la línea en campos
+                String[] campos = linea.split(",");
+                // El primer campo es el nombre de usuario
+                String usuarioExistente = campos[0].trim();
+                // El segundo campo es la contraseña
+                String passwordExistente = campos[1].trim();
+                // Verificar si el usuario y la contraseña coinciden
+                if (usuarioExistente.equals(usuarioIngresado) && passwordExistente.equals(passwordIngresado)) {
+                    return true; // Las credenciales son correctas
+                }
+            }
+        }
+        return false; // Las credenciales son incorrectas
+    }      
+    
     /**
      * @param args the command line arguments
      */
@@ -196,13 +189,12 @@ private static boolean credencialesCorrectas(File archivo, String usuarioIngresa
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton Iniciar;
     private javax.swing.JPasswordField Password;
     private javax.swing.JTextField Usuario;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     // End of variables declaration//GEN-END:variables
 }

@@ -210,7 +210,12 @@ public class DeUsuario extends javax.swing.JFrame {
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(Email, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addContainerGap(110, Short.MAX_VALUE)))
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(Guardar)
+                        .addComponent(Limpiar)
+                        .addComponent(Salir))
+                    .addContainerGap(52, Short.MAX_VALUE)))
         );
 
         pack();
@@ -280,7 +285,7 @@ public class DeUsuario extends javax.swing.JFrame {
 
                 // Crear la línea formateada
                 String linea = String.format("%s,%s,%s,%s,%s,%s", usuario, password, acceso, nombre, apellido, email);
-                System.out.println("Línea: " + linea);  // Agregar esta línea para imprimir la línea formateada
+                System.out.println("Linea: " + linea);  // Agregar esta línea para imprimir la línea formateada
 
                 // Aquí se guarda la información
                 BW.write(linea);
