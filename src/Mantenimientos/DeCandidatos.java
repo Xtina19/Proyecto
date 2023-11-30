@@ -5,6 +5,17 @@
  */
 package Mantenimientos;
 
+import MenuPrincipal.MenuP;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author User
@@ -28,27 +39,39 @@ public class DeCandidatos extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel3 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        Guardar = new javax.swing.JButton();
+        Limpiar = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
-        jTextField4 = new javax.swing.JTextField();
+        IdCir = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        jTextField5 = new javax.swing.JTextField();
+        IdPar = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
-        jButton3 = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
+        Eliminar = new javax.swing.JButton();
+        Id = new javax.swing.JTextField();
+        Nombre = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jTextField6 = new javax.swing.JTextField();
+        TotalVo = new javax.swing.JTextField();
+        Buscar = new javax.swing.JButton();
+        Salir = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel3.setText("Nombre");
 
-        jButton1.setText("Guardar");
+        Guardar.setText("Guardar");
+        Guardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                GuardarActionPerformed(evt);
+            }
+        });
 
-        jButton2.setText("Limpiar");
+        Limpiar.setText("Limpiar");
+        Limpiar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                LimpiarActionPerformed(evt);
+            }
+        });
 
         jLabel5.setText("Id partido");
 
@@ -57,11 +80,25 @@ public class DeCandidatos extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel1.setText("Mantenimientos de candidatos");
 
-        jButton3.setText("Eliminar");
+        Eliminar.setText("Eliminar");
 
         jLabel2.setText("Id ");
 
         jLabel6.setText("Total de votos");
+
+        Buscar.setText("Buscar");
+        Buscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BuscarActionPerformed(evt);
+            }
+        });
+
+        Salir.setText("Salir");
+        Salir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SalirActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -77,29 +114,32 @@ public class DeCandidatos extends javax.swing.JFrame {
                             .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextField5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(IdPar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(Id, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(Nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(13, 13, 13)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jButton1)
-                            .addComponent(jLabel4))
+                        .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(jButton2)
-                                .addGap(37, 37, 37))))
+                        .addComponent(IdCir, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jLabel6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(TotalVo, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(75, 75, 75)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(Eliminar)
+                            .addComponent(Guardar))
+                        .addGap(74, 74, 74)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton3)
-                            .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(43, Short.MAX_VALUE))
+                            .addComponent(Limpiar, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(Salir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addGap(26, 26, 26)
+                .addComponent(Buscar)
+                .addContainerGap(35, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -108,36 +148,189 @@ public class DeCandidatos extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
-                .addGap(19, 19, 19)
+                    .addComponent(Id, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2)
+                    .addComponent(Buscar))
+                .addGap(15, 15, 15)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(Nombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(22, 22, 22)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(IdPar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(IdCir, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(TotalVo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
+                    .addComponent(Guardar)
+                    .addComponent(Limpiar))
                 .addGap(18, 18, 18)
-                .addComponent(jButton3)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Eliminar)
+                    .addComponent(Salir))
                 .addGap(40, 40, 40))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void LimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LimpiarActionPerformed
+        Id.setText("");
+        Nombre.setText("");
+        IdPar.setText("");
+        IdCir.setText("");
+        TotalVo.setText("");
+    }//GEN-LAST:event_LimpiarActionPerformed
+
+    private void GuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GuardarActionPerformed
+        String id = Id.getText();
+        String nombre = Nombre.getText();
+        String idpar = IdPar.getText();
+        String idcir = IdCir.getText();
+        String totalvo = TotalVo.getText();
+
+        // Validar que el id y la descripcion no estén vacíos
+        if (id.isEmpty() || nombre.isEmpty()|| idpar.isEmpty()|| idcir.isEmpty()|| totalvo.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Todos los datos son obligatorios.", "Error", JOptionPane.ERROR_MESSAGE);
+            return; // Detener el proceso
+        }
+
+        try {
+            // Intentar abrir el archivo
+            File archivo = new File("Archivos\\Candidatos.txt");
+
+            // Verificar si el archivo existe
+            if (archivo.exists()) {
+                // Verificar si el usuario ya existe en el archivo
+                if (modificarCandidato(id,nombre,idpar,idcir,totalvo)) {
+                    JOptionPane.showMessageDialog(null, "Información del candidato modificada en el archivo.", "Información", JOptionPane.INFORMATION_MESSAGE);
+                    return; // Detener el proceso si el usuario ya existe y fue modificado
+                }
+            }
+            else {
+                // Si el archivo no existe, intentar crear uno nuevo
+                if (archivo.createNewFile()) {
+                    System.out.println("Se ha creado un nuevo archivo.");
+                }
+                else {
+                    JOptionPane.showMessageDialog(null, "No se pudo crear el archivo ", "Error", JOptionPane.ERROR_MESSAGE);
+                    return; // Detener el proceso si no se pudo crear el archivo
+                }
+            }
+
+            // Abrir flujos de escritura
+            try (FileWriter FW = new FileWriter(archivo, true);
+                BufferedWriter BW = new BufferedWriter(FW)) {
+
+                // Crear la línea formateada
+                String linea = String.format("%s,%s", id,nombre,idpar,idcir,totalvo);
+                System.out.println("Línea: " + linea);  // Agregar esta línea para imprimir la línea formateada
+
+                // Aquí se guarda la información
+                BW.write(linea);
+                BW.newLine(); // Añadir una nueva línea
+
+                JOptionPane.showMessageDialog(null, "Información guardada en el archivo.", "Información", JOptionPane.INFORMATION_MESSAGE);
+            }
+
+        } catch (IOException e) {
+            // Capturar y manejar la excepción en caso de error
+            JOptionPane.showMessageDialog(null, "Error al manejar el archivo: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_GuardarActionPerformed
+
+    private void BuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BuscarActionPerformed
+        buscarYRellenarCandidato();
+    }//GEN-LAST:event_BuscarActionPerformed
+
+    private void SalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SalirActionPerformed
+        MenuP Menu = new MenuP();
+        Menu.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_SalirActionPerformed
+        private boolean modificarCandidato(String id,String nombre,String idpar,String idcir,String totalvo) {
+        // Crear una lista para almacenar las líneas modificadas
+        List<String> lineasModificadas = new ArrayList<>();
+
+        try (BufferedReader br = new BufferedReader(new FileReader("Archivos\\Candidatos.txt"))) {
+            String linea;
+            boolean candidatoModificado = false;
+
+            while ((linea = br.readLine()) != null) {
+                String[] partes = linea.split(",");
+                if (partes.length == 5 && partes[0].equals(id)) {
+                    // Encontramos el usuario, rellenamos los campos
+                    // Puedes realizar modificaciones aquí si es necesario
+                    partes[1] = nombre;
+                    partes[2] = idpar;
+                    partes[3] = idcir;
+                    partes[4] = totalvo;
+
+
+                    // Agregamos la línea modificada a la lista
+                    lineasModificadas.add(String.join(",", partes));
+                    candidatoModificado = true;
+                } 
+                else {
+                    // Si no es el usuario que estamos buscando, simplemente agregamos la línea al listado
+                    lineasModificadas.add(linea);
+                }
+            }
+
+            if (candidatoModificado) {
+                // Ahora escribimos las líneas modificadas de vuelta al archivo
+                try (BufferedWriter bw = new BufferedWriter(new FileWriter("Archivos\\Candidatos.txt"))) {
+                    for (String lineaModificada : lineasModificadas) {
+                        bw.write(lineaModificada);
+                     bw.newLine(); // Agregamos un salto de línea después de cada línea
+                    }
+                }
+            }
+
+        return candidatoModificado;
+
+        } 
+        catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "Error al leer el archivo " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+    }
+     private void buscarYRellenarCandidato() {
+        String id = Id.getText().trim();
+        String nombre = Nombre.getText().trim();
+        String idpar = IdPar.getText().trim();
+        String idcir = IdCir.getText().trim();
+        String totalvo = TotalVo.getText().trim();
+
+        try (BufferedReader br = new BufferedReader(new FileReader("Archivos\\Candidatos.txt"))) {
+            String linea;
+            while ((linea = br.readLine()) != null) {
+                String[] partes = linea.split(",");
+                if (partes.length == 5 && partes[0].equals(id)) {
+                    // Encontramos el partido, rellenamos los campos
+                    Nombre.setText(partes[1]);
+                    IdPar.setText(partes[2]);
+                    IdCir.setText(partes[3]);
+                    TotalVo.setText(partes[4]);
+                    return; // Terminamos la búsqueda una vez encontrado el partido
+                }
+            }
+
+            // Si llegamos aquí, el candidato no fue encontrado
+            JOptionPane.showMessageDialog(this, "Candidato no encontrado", "Error", JOptionPane.ERROR_MESSAGE);
+
+        } 
+        catch (IOException ex) {
+            JOptionPane.showMessageDialog(this, "Error al leer el archivo", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
     /**
      * @param args the command line arguments
      */
@@ -174,19 +367,21 @@ public class DeCandidatos extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
+    private javax.swing.JButton Buscar;
+    private javax.swing.JButton Eliminar;
+    private javax.swing.JButton Guardar;
+    private javax.swing.JTextField Id;
+    private javax.swing.JTextField IdCir;
+    private javax.swing.JTextField IdPar;
+    private javax.swing.JButton Limpiar;
+    private javax.swing.JTextField Nombre;
+    private javax.swing.JButton Salir;
+    private javax.swing.JTextField TotalVo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
     // End of variables declaration//GEN-END:variables
 }

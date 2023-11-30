@@ -5,6 +5,7 @@
  */
 package Mantenimientos;
 
+import MenuPrincipal.MenuP;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -50,6 +51,7 @@ public class DeRecinto extends javax.swing.JFrame {
         Direccion = new javax.swing.JTextField();
         IdCir = new javax.swing.JTextField();
         Buscar = new javax.swing.JButton();
+        Salir = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -61,6 +63,11 @@ public class DeRecinto extends javax.swing.JFrame {
         jLabel1.setText("Mantenimientos de recinto");
 
         Eliminar.setText("Eliminar");
+        Eliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                EliminarActionPerformed(evt);
+            }
+        });
 
         jLabel2.setText("Id ");
 
@@ -87,17 +94,19 @@ public class DeRecinto extends javax.swing.JFrame {
             }
         });
 
+        Salir.setText("Salir");
+        Salir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SalirActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(71, 71, 71)
-                        .addComponent(Guardar)
-                        .addGap(69, 69, 69)
-                        .addComponent(Limpiar))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(28, 28, 28)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -122,8 +131,14 @@ public class DeRecinto extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(Buscar))))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(140, 140, 140)
-                        .addComponent(Eliminar)))
+                        .addGap(71, 71, 71)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(Guardar)
+                            .addComponent(Eliminar))
+                        .addGap(69, 69, 69)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(Limpiar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(Salir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -153,9 +168,11 @@ public class DeRecinto extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Guardar)
                     .addComponent(Limpiar))
-                .addGap(18, 18, 18)
-                .addComponent(Eliminar)
-                .addGap(40, 40, 40))
+                .addGap(27, 27, 27)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Eliminar)
+                    .addComponent(Salir))
+                .addGap(31, 31, 31))
         );
 
         pack();
@@ -227,6 +244,16 @@ public class DeRecinto extends javax.swing.JFrame {
         IdCir.setText("");
         Direccion.setText(""); 
     }//GEN-LAST:event_LimpiarActionPerformed
+
+    private void EliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EliminarActionPerformed
+        
+    }//GEN-LAST:event_EliminarActionPerformed
+
+    private void SalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SalirActionPerformed
+        MenuP Menu = new MenuP();
+        Menu.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_SalirActionPerformed
      private boolean modificarRecinto(String id, String nombre, String idcir, String direccion) {
         // Crear una lista para almacenar las líneas modificadas
         List<String> lineasModificadas = new ArrayList<>();
@@ -346,6 +373,7 @@ public class DeRecinto extends javax.swing.JFrame {
     private javax.swing.JTextField IdCir;
     private javax.swing.JButton Limpiar;
     private javax.swing.JTextField Nombre;
+    private javax.swing.JButton Salir;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

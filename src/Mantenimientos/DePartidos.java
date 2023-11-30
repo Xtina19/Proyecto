@@ -5,6 +5,7 @@
  */
 package Mantenimientos;
 
+import MenuPrincipal.MenuP;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -48,6 +49,7 @@ public class DePartidos extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
         Id = new javax.swing.JTextField();
         Descripcion = new javax.swing.JTextField();
+        Salir = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -83,6 +85,13 @@ public class DePartidos extends javax.swing.JFrame {
 
         jButton3.setText("Eliminar");
 
+        Salir.setText("Salir");
+        Salir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SalirActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -105,17 +114,20 @@ public class DePartidos extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(Descripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                            .addGroup(layout.createSequentialGroup()
                                 .addGap(15, 15, 15)
-                                .addComponent(Guardar)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(Limpiar)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jButton3)
+                                        .addGap(82, 82, 82)
+                                        .addComponent(Salir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(Guardar)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(Limpiar)))
                                 .addGap(26, 26, 26)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(Buscar))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(132, 132, 132)
-                        .addComponent(jButton3))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(49, 49, 49)
                         .addComponent(jLabel1)))
@@ -144,7 +156,9 @@ public class DePartidos extends javax.swing.JFrame {
                     .addComponent(Guardar)
                     .addComponent(Limpiar))
                 .addGap(18, 18, 18)
-                .addComponent(jButton3)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton3)
+                    .addComponent(Salir))
                 .addContainerGap(49, Short.MAX_VALUE))
         );
 
@@ -215,6 +229,12 @@ public class DePartidos extends javax.swing.JFrame {
     private void BuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BuscarActionPerformed
         buscarYRellenarPartido();
     }//GEN-LAST:event_BuscarActionPerformed
+
+    private void SalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SalirActionPerformed
+        MenuP Menu = new MenuP();
+        Menu.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_SalirActionPerformed
      
         private boolean modificarPartido(String id, String descripcion) {
         // Crear una lista para almacenar las líneas modificadas
@@ -324,6 +344,7 @@ public class DePartidos extends javax.swing.JFrame {
     private javax.swing.JButton Guardar;
     private javax.swing.JTextField Id;
     private javax.swing.JButton Limpiar;
+    private javax.swing.JButton Salir;
     private javax.swing.JTextField Votos;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;

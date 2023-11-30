@@ -5,6 +5,7 @@
  */
 package Mantenimientos;
 
+import MenuPrincipal.MenuP;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -54,6 +55,7 @@ public class DeMunicipios extends javax.swing.JFrame {
         Limpiar = new javax.swing.JButton();
         Buscar = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
+        Salir = new javax.swing.JButton();
 
         jButton3.setText("Eliminar");
 
@@ -100,16 +102,17 @@ public class DeMunicipios extends javax.swing.JFrame {
 
         jButton4.setText("Eliminar");
 
+        Salir.setText("Salir");
+        Salir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SalirActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(44, 44, 44)
-                .addComponent(Guardar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(Limpiar)
-                .addGap(77, 77, 77))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -128,11 +131,20 @@ public class DeMunicipios extends javax.swing.JFrame {
                         .addComponent(Buscar))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(35, 35, 35)
-                        .addComponent(jLabel4))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(114, 114, 114)
-                        .addComponent(jButton4)))
+                        .addComponent(jLabel4)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(44, 44, 44)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jButton4)
+                        .addGap(94, 94, 94)
+                        .addComponent(Salir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(Guardar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(Limpiar)))
+                .addGap(77, 77, 77))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -153,7 +165,9 @@ public class DeMunicipios extends javax.swing.JFrame {
                     .addComponent(Guardar)
                     .addComponent(Limpiar))
                 .addGap(18, 18, 18)
-                .addComponent(jButton4)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton4)
+                    .addComponent(Salir))
                 .addGap(54, 54, 54))
         );
 
@@ -222,6 +236,12 @@ public class DeMunicipios extends javax.swing.JFrame {
     private void BuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BuscarActionPerformed
         buscarYRellenarMunicipio();
     }//GEN-LAST:event_BuscarActionPerformed
+
+    private void SalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SalirActionPerformed
+        MenuP Menu = new MenuP();
+        Menu.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_SalirActionPerformed
      private boolean modificarMunicipio(String id, String nombre) {
         // Crear una lista para almacenar las líneas modificadas
         List<String> lineasModificadas = new ArrayList<>();
@@ -329,6 +349,7 @@ public class DeMunicipios extends javax.swing.JFrame {
     private javax.swing.JTextField Id;
     private javax.swing.JButton Limpiar;
     private javax.swing.JTextField Nombre;
+    private javax.swing.JButton Salir;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
