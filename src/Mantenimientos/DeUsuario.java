@@ -151,7 +151,7 @@ public class DeUsuario extends javax.swing.JFrame {
                                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGap(18, 18, 18)
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(Nivel_acceso, javax.swing.GroupLayout.Alignment.TRAILING, 0, 169, Short.MAX_VALUE)
+                                        .addComponent(Nivel_acceso, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addGroup(layout.createSequentialGroup()
                                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                                 .addComponent(Login, javax.swing.GroupLayout.DEFAULT_SIZE, 156, Short.MAX_VALUE)
@@ -210,12 +210,7 @@ public class DeUsuario extends javax.swing.JFrame {
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(Email, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(Guardar)
-                        .addComponent(Limpiar)
-                        .addComponent(Salir))
-                    .addContainerGap(52, Short.MAX_VALUE)))
+                    .addContainerGap()))
         );
 
         pack();
@@ -292,6 +287,7 @@ public class DeUsuario extends javax.swing.JFrame {
                 BW.newLine(); // Añadir una nueva línea
 
                 JOptionPane.showMessageDialog(null, "Información guardada en el archivo.", "Información", JOptionPane.INFORMATION_MESSAGE);
+                LimpiarCampos();
             }
 
         } catch (IOException e) {
@@ -301,14 +297,19 @@ public class DeUsuario extends javax.swing.JFrame {
     }//GEN-LAST:event_GuardarActionPerformed
 
     private void LimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LimpiarActionPerformed
+        LimpiarCampos();
+    }//GEN-LAST:event_LimpiarActionPerformed
+
+    private void LimpiarCampos(){
         Login.setText("");
         Password.setText("");
         Nivel_acceso.setSelectedItem("(0) Administrador");
         Nombre.setText("");
         Apellido.setText("");
-        Email.setText("");
-    }//GEN-LAST:event_LimpiarActionPerformed
-
+        Email.setText("");        
+    }
+    
+    
     private void SalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SalirActionPerformed
         MenuP Menu = new MenuP();
         Menu.setVisible(true);
@@ -361,31 +362,39 @@ public class DeUsuario extends javax.swing.JFrame {
     }
 }
 
-    private void buscarYRellenarUsuario() {
-        String nombreUsuario = Login.getText().trim();
+private void buscarYRellenarUsuario() {
+    String nombreUsuario = Login.getText().trim();
+    String passwordUsuario = new String(Password.getPassword());
 
-        try (BufferedReader br = new BufferedReader(new FileReader("Archivos\\Usuario.txt"))) {
-            String linea;
-            while ((linea = br.readLine()) != null) {
-                String[] partes = linea.split(",");
-                if (partes.length == 6 && partes[0].equals(nombreUsuario)) {
-                    // Encontramos el usuario, rellenamos los campos
-                    Password.setText(partes[1]);
-                    Nivel_acceso.setSelectedItem(partes[2]);
-                    Nombre.setText(partes[3]);
-                    Apellido.setText(partes[4]);
+    try (BufferedReader br = new BufferedReader(new FileReader("Archivos\\Usuario.txt"))) {
+        String linea;
+        while ((linea = br.readLine()) != null) {
+            String[] partes = linea.split(",");
+            if (partes.length >= 5 && partes[0].equals(nombreUsuario) && partes[1].equals(passwordUsuario)) {
+                // Encontramos el usuario, rellenamos los campos
+                Password.setText(partes[1]);
+                Nivel_acceso.setSelectedItem(partes[2]);
+                Nombre.setText(partes[3]);
+                Apellido.setText(partes[4]);
+                
+                // Verificar si el campo de correo electrónico está presente antes de establecerlo
+                if (partes.length == 6) {
                     Email.setText(partes[5]);
-                    return; // Terminamos la búsqueda una vez encontrado el usuario
+                } else {
+                    // Si no hay correo electrónico, establecerlo como vacío o manejar según sea necesario
+                    Email.setText("");
                 }
+                
+                return; // Terminamos la búsqueda una vez encontrado el usuario
             }
-
-            // Si llegamos aquí, el usuario no fue encontrado
-            JOptionPane.showMessageDialog(this, "Usuario no encontrado", "Error", JOptionPane.ERROR_MESSAGE);
-
-        } catch (IOException ex) {
-            JOptionPane.showMessageDialog(this, "Error al leer el archivo", "Error", JOptionPane.ERROR_MESSAGE);
         }
-    }    
+    } catch (IOException ex) {
+        ex.printStackTrace();  // Manejar la excepción adecuadamente en tu aplicación
+    }
+
+    // Si llegamos aquí, las credenciales son incorrectas o el usuario no fue encontrado
+    JOptionPane.showMessageDialog(this, "Credenciales incorrectas o usuario no encontrado", "Error", JOptionPane.ERROR_MESSAGE);
+}
     
     /**
      * @param args the command line arguments

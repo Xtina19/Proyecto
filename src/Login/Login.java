@@ -124,6 +124,10 @@ public class Login extends javax.swing.JFrame {
                     Menu.setVisible(true);
                     this.dispose();
                 }
+                else{
+                    JOptionPane.showMessageDialog(null, "el usuario no existe.", "Error", JOptionPane.ERROR_MESSAGE);
+                    LimpiarCampo();
+                }
             }
             else {
                 JOptionPane.showMessageDialog(null, "el archivo no existe.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -134,6 +138,11 @@ public class Login extends javax.swing.JFrame {
         } 
     }//GEN-LAST:event_IniciarActionPerformed
 
+    private void LimpiarCampo(){
+        Usuario.setText("");
+        Password.setText("");
+    }
+    
     private static boolean credencialesCorrectas(File archivo, String usuarioIngresado, String passwordIngresado) throws IOException {
         try (BufferedReader br = new BufferedReader(new FileReader(archivo))) {
             String linea;
