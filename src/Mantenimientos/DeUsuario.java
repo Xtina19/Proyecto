@@ -249,12 +249,16 @@ public class DeUsuario extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "El usuario y la contraseña son obligatorios.", "Error", JOptionPane.ERROR_MESSAGE);
             return; // Detener el proceso
         }
-
+        
         if (!email.isEmpty() && (!email.contains("@") || !email.contains("."))) {
             JOptionPane.showMessageDialog(null, "El correo electrónico debe contener arroba (@) y punto (.)", "Error", JOptionPane.ERROR_MESSAGE);
             return; // Detener el proceso
         }
-
+        
+        if(email.isEmpty()){
+            email = "-";
+        }
+        
         try {
             // Intentar abrir el archivo
             File archivo = new File("Archivos\\Usuario.txt");
@@ -264,6 +268,7 @@ public class DeUsuario extends javax.swing.JFrame {
                 // Verificar si el usuario ya existe en el archivo
                 if (modificarUsuario(usuario, password, acceso, nombre, apellido, email)) {
                     JOptionPane.showMessageDialog(null, "Información del usuario modificada en el archivo.", "Información", JOptionPane.INFORMATION_MESSAGE);
+                    LimpiarCampos();
                     return; // Detener el proceso si el usuario ya existe y fue modificado
                 }
             }
@@ -278,21 +283,7 @@ public class DeUsuario extends javax.swing.JFrame {
                 }
             }
 
-            // Abrir flujos de escritura
-            try (FileWriter FW = new FileWriter(archivo, true);
-                BufferedWriter BW = new BufferedWriter(FW)) {
-
-                // Crear la línea formateada
-                String linea = String.format("%s,%s,%s,%s,%s,%s", usuario, password, acceso, nombre, apellido, email);
-                System.out.println("Linea: " + linea);  // Agregar esta línea para imprimir la línea formateada
-
-                // Aquí se guarda la información
-                BW.write(linea);
-                BW.newLine(); // Añadir una nueva línea
-
-                JOptionPane.showMessageDialog(null, "Información guardada en el archivo.", "Información", JOptionPane.INFORMATION_MESSAGE);
-                LimpiarCampos();
-            }
+            crearUsuario(archivo, usuario, password, acceso, nombre, apellido, email);
 
         } catch (IOException e) {
             // Capturar y manejar la excepción en caso de error
@@ -319,86 +310,110 @@ public class DeUsuario extends javax.swing.JFrame {
         Menu.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_SalirActionPerformed
-   // Método para modificar el usuario si ya existe en el archivo
+
+    private void crearUsuario(File archivo, String usuario, String password, String acceso, String nombre, String apellido, String email){
+        // Abrir flujos de escritura
+        try (FileWriter FW = new FileWriter(archivo, true);
+            BufferedWriter BW = new BufferedWriter(FW)) {
+
+            // Crear la línea formateada
+            String linea = String.format("%s,%s,%s,%s,%s,%s", usuario, password, acceso, nombre, apellido, email);
+            System.out.println("Linea: " + linea);  // Agregar esta línea para imprimir la línea formateada
+
+            // Aquí se guarda la información
+            BW.write(linea);
+            BW.newLine(); // Añadir una nueva línea
+
+            JOptionPane.showMessageDialog(null, "Información guardada en el archivo.", "Información", JOptionPane.INFORMATION_MESSAGE);
+            LimpiarCampos();
+
+        } 
+        catch (IOException e) {
+            // Capturar y manejar la excepción en caso de error
+            JOptionPane.showMessageDialog(null, "Error al manejar el archivo: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        
+    }
+    
     private boolean modificarUsuario(String usuario, String password, String acceso, String nombre, String apellido, String email) {
-    // Crear una lista para almacenar las líneas modificadas
-    List<String> lineasModificadas = new ArrayList<>();
+        // Crear una lista para almacenar las líneas modificadas
+        List<String> lineasModificadas = new ArrayList<>();
 
-    try (BufferedReader br = new BufferedReader(new FileReader("Archivos\\Usuario.txt"))) {
-        String linea;
-        boolean usuarioModificado = false;
+        try (BufferedReader br = new BufferedReader(new FileReader("Archivos\\Usuario.txt"))) {
+            String linea;
+            boolean usuarioModificado = false;
 
-        while ((linea = br.readLine()) != null) {
-            String[] partes = linea.split(",");
-            if (partes.length == 6 && partes[0].equals(usuario)) {
-                // Encontramos el usuario, rellenamos los campos
-                // Puedes realizar modificaciones aquí si es necesario
-                partes[1] = password;
-                partes[2] = acceso;
-                partes[3] = nombre;
-                partes[4] = apellido;
-                partes[5] = email;
-
-                // Agregamos la línea modificada a la lista
-                lineasModificadas.add(String.join(",", partes));
-                usuarioModificado = true;
-            } else {
-                // Si no es el usuario que estamos buscando, simplemente agregamos la línea al listado
-                lineasModificadas.add(linea);
-            }
-        }
-
-        if (usuarioModificado) {
-            // Ahora escribimos las líneas modificadas de vuelta al archivo
-            try (BufferedWriter bw = new BufferedWriter(new FileWriter("Archivos\\Usuario.txt"))) {
-                for (String lineaModificada : lineasModificadas) {
-                    bw.write(lineaModificada);
-                    bw.newLine(); // Agregamos un salto de línea después de cada línea
+            while ((linea = br.readLine()) != null) {
+                String[] partes = linea.split(",");
+                if (partes.length == 6 && partes[0].equals(usuario) && partes[1].equals(password)) {
+                    // Encontramos el partido, rellenamos los campos
+                    partes[2] = acceso;
+                    partes[3] = nombre;
+                    partes[4] = apellido;                    
+                    partes[5] = email;                    
+                    
+                     // Agregamos la línea modificada a la lista
+                    lineasModificadas.add(String.join(",", partes));
+                    usuarioModificado = true;
+                } 
+                else {
+                    // Si no es el partido que estamos buscando, simplemente agregamos la línea al listado
+                    lineasModificadas.add(linea);
                 }
             }
-        }
 
-        return usuarioModificado;
-
-    } catch (IOException ex) {
-        JOptionPane.showMessageDialog(null, "Error al leer el archivo", "Error", JOptionPane.ERROR_MESSAGE);
-        return false;
-    }
-}
-
-private void buscarYRellenarUsuario() {
-    String nombreUsuario = Login.getText().trim();
-    String passwordUsuario = new String(Password.getPassword());
-
-    try (BufferedReader br = new BufferedReader(new FileReader("Archivos\\Usuario.txt"))) {
-        String linea;
-        while ((linea = br.readLine()) != null) {
-            String[] partes = linea.split(",");
-            if (partes.length >= 5 && partes[0].equals(nombreUsuario) && partes[1].equals(passwordUsuario)) {
-                // Encontramos el usuario, rellenamos los campos
-                Password.setText(partes[1]);
-                Nivel_acceso.setSelectedItem(partes[2]);
-                Nombre.setText(partes[3]);
-                Apellido.setText(partes[4]);
-                
-                // Verificar si el campo de correo electrónico está presente antes de establecerlo
-                if (partes.length == 6) {
-                    Email.setText(partes[5]);
-                } else {
-                    // Si no hay correo electrónico, establecerlo como vacío o manejar según sea necesario
-                    Email.setText("");
+            if (usuarioModificado) {
+                // Ahora escribimos las líneas modificadas de vuelta al archivo
+                try (BufferedWriter bw = new BufferedWriter(new FileWriter("Archivos\\Usuario.txt"))) {
+                    for (String lineaModificada : lineasModificadas) {
+                        bw.write(lineaModificada);
+                        bw.newLine(); // Agregamos un salto de línea después de cada línea
+                    }
                 }
-                
-                return; // Terminamos la búsqueda una vez encontrado el usuario
             }
+
+            return usuarioModificado;
+
+        } 
+        catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "Error al leer el archivo " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
         }
-    } catch (IOException ex) {
-        ex.printStackTrace();  // Manejar la excepción adecuadamente en tu aplicación
     }
+    
+    private void buscarYRellenarUsuario() {
+        String usuario = Login.getText().trim();
+        String password = new String(Password.getPassword());
+        
+        try (BufferedReader br = new BufferedReader(new FileReader("Archivos\\Usuario.txt"))) {
+            String linea;
+            while ((linea = br.readLine()) != null) {
+                String[] partes = linea.split(",");
+                if (partes.length == 6 && partes[0].equals(usuario) && partes[1].equals (password)) {
+                    // Encontramos el usuario, rellenamos los campos
+                    Nivel_acceso.setSelectedItem(partes[2]);
+                    Nombre.setText(partes[3]);
+                    Apellido.setText(partes[4]);
+                    
+                    if(!"-".equals(partes[5])){
+                       Email.setText(partes[5]);                        
+                    }
+                    else if("-".equals(partes[5])){
+                       Email.setText("");                        
+                    }
+                    
+                    return; // Terminamos la búsqueda una vez encontrado el usuario
+                }
+            }
+        } 
+        catch (IOException ex) {
+            JOptionPane.showMessageDialog(this, "Error al leer el archivo", "Error", JOptionPane.ERROR_MESSAGE);
+        }
 
     // Si llegamos aquí, las credenciales son incorrectas o el usuario no fue encontrado
     JOptionPane.showMessageDialog(this, "Credenciales incorrectas o usuario no encontrado", "Error", JOptionPane.ERROR_MESSAGE);
-}
+    
+    }
     
     /**
      * @param args the command line arguments
