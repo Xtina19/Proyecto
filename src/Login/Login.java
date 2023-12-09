@@ -14,7 +14,7 @@ import javax.swing.JOptionPane;
  * @author User
  */
 public class Login extends javax.swing.JFrame {
-
+     public static boolean admin;
     /**
      * Creates new form Login
      */
@@ -143,24 +143,35 @@ public class Login extends javax.swing.JFrame {
         Password.setText("");
     }
     
-    private static boolean credencialesCorrectas(File archivo, String usuarioIngresado, String passwordIngresado) throws IOException {
-        try (BufferedReader br = new BufferedReader(new FileReader(archivo))) {
-            String linea;
-            while ((linea = br.readLine()) != null) {
-                // Separar la línea en campos
-                String[] campos = linea.split(",");
-                // El primer campo es el nombre de usuario
-                String usuarioExistente = campos[0].trim();
-                // El segundo campo es la contraseña
-                String passwordExistente = campos[1].trim();
-                // Verificar si el usuario y la contraseña coinciden
-                if (usuarioExistente.equals(usuarioIngresado) && passwordExistente.equals(passwordIngresado)) {
-                    return true; // Las credenciales son correctas
+private static boolean credencialesCorrectas(File archivo, String usuarioIngresado, String passwordIngresado) throws IOException {
+    try (BufferedReader br = new BufferedReader(new FileReader(archivo))) {
+        String linea;
+        while ((linea = br.readLine()) != null) {
+            // Separar la línea en campos
+            String[] campos = linea.split(",");
+            // El primer campo es el nombre de usuario
+            String usuarioExistente = campos[0].trim();
+            // El segundo campo es la contraseña
+            String passwordExistente = campos[1].trim();
+            // El tercer campo es el nivel de acceso
+            String nivelAccesoExistente = campos[2].trim();
+
+            // Verificar si el usuario y la contraseña coinciden
+            if (usuarioExistente.equals(usuarioIngresado) && passwordExistente.equals(passwordIngresado)) {
+                // Verificar el nivel de acceso
+                if ("(0) Administrador".equals(nivelAccesoExistente)) {
+                    // Si es administrador, asignar true a la variable admin en Login
+                    admin = true;
+                } else {
+                    // Si no es administrador, asignar false a la variable admin en Login
+                    admin = false;
                 }
+                return true; // Las credenciales son correctas
             }
         }
-        return false; // Las credenciales son incorrectas
-    }      
+    }
+    return false; // Las credenciales son incorrectas
+}
     
     /**
      * @param args the command line arguments
