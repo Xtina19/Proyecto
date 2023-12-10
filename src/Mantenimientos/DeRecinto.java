@@ -287,9 +287,6 @@ public class DeRecinto extends javax.swing.JFrame {
     
      private void buscarYRellenarRecinto() {
         String id = Id.getText().trim();
-        String nombre = Nombre.getText().trim();
-        String idcir = IdCir.getText().trim();
-        String direccion = Direccion.getText().trim();
 
         try (BufferedReader br = new BufferedReader(new FileReader("Archivos\\Recinto.txt"))) {
             String linea;
