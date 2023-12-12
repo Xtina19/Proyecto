@@ -185,13 +185,14 @@ public class DeRecinto extends javax.swing.JFrame {
 
         try {
             // Intentar abrir el archivo
-            File archivo = new File("Archivos\\Recinto.txt");
+            File archivo = new File("Archivos\\Recintos.txt");
 
             // Verificar si el archivo existe
             if (archivo.exists()) {
                 // Verificar si el usuario ya existe en el archivo
-                if (modificarRecinto(id, nombre, idcir, direccion)) {
+                if (modificarRecinto(archivo, id, nombre, idcir, direccion)) {
                     JOptionPane.showMessageDialog(null, "Información del recinto modificada en el archivo.", "Información", JOptionPane.INFORMATION_MESSAGE);
+                    LimpiarCampos();
                     return; // Detener el proceso si el usuario ya existe y fue modificado
                 }
             }
@@ -205,21 +206,7 @@ public class DeRecinto extends javax.swing.JFrame {
                     return; // Detener el proceso si no se pudo crear el archivo
                 }
             }
-
-            // Abrir flujos de escritura
-            try (FileWriter FW = new FileWriter(archivo, true);
-                BufferedWriter BW = new BufferedWriter(FW)) {
-
-                // Crear la línea formateada
-                String linea = String.format("%s,%s", id, nombre, idcir, direccion);
-                System.out.println("Línea: " + linea);  // Agregar esta línea para imprimir la línea formateada
-
-                // Aquí se guarda la información
-                BW.write(linea);
-                BW.newLine(); // Añadir una nueva línea
-
-                JOptionPane.showMessageDialog(null, "Información guardada en el archivo.", "Información", JOptionPane.INFORMATION_MESSAGE);
-            }
+            CrearRecinto(archivo, id, nombre, idcir, direccion);
 
         } catch (IOException e) {
             // Capturar y manejar la excepción en caso de error
@@ -228,22 +215,78 @@ public class DeRecinto extends javax.swing.JFrame {
     }//GEN-LAST:event_GuardarActionPerformed
 
     private void LimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LimpiarActionPerformed
+        LimpiarCampos();
+    }//GEN-LAST:event_LimpiarActionPerformed
+
+    private void LimpiarCampos(){
         Id.setText("");
         Nombre.setText("");
         IdCir.setText("");
         Direccion.setText(""); 
-    }//GEN-LAST:event_LimpiarActionPerformed
-
+    }
+    
     private void SalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SalirActionPerformed
         MenuP Menu = new MenuP();
         Menu.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_SalirActionPerformed
-     private boolean modificarRecinto(String id, String nombre, String idcir, String direccion) {
+
+    private void CrearRecinto(File archivo, String id, String nombre, String idcir, String direccion) throws IOException{
+        if(!buscarIdCircunscripcion(idcir)){
+            return;
+        }
+
+        // Abrir flujos de escritura
+        try (FileWriter FW = new FileWriter(archivo, true);
+            BufferedWriter BW = new BufferedWriter(FW)) {
+
+            // Crear la línea formateada
+            String linea = String.format("%s,%s,%s,%s", id, nombre, idcir, direccion);
+            System.out.println("Línea: " + linea);  // Agregar esta línea para imprimir la línea formateada
+
+            // Aquí se guarda la información
+            BW.write(linea);
+            BW.newLine(); // Añadir una nueva línea
+
+            JOptionPane.showMessageDialog(null, "Información guardada en el archivo.", "Información", JOptionPane.INFORMATION_MESSAGE);
+            LimpiarCampos();
+        }
+    }
+
+     private boolean buscarIdCircunscripcion(String idcir) {
+         System.out.println("ID a buscar: " + idcir);
+
+        try (BufferedReader br = new BufferedReader(new FileReader("Archivos\\Circunscripciones.txt"))) {
+            String linea;
+            while ((linea = br.readLine()) != null) {
+                String[] partes = linea.split(",");
+                if (partes.length == 4 && partes[0].equals(idcir)) {
+                    // Encontramos el id, rellenamos los campos
+                    IdCir.setText(partes[0]);
+                    return true; // Terminamos la búsqueda una vez encontrado el recinto
+                }
+            }
+
+            // Si llegamos aquí, el id no fue encontrado
+            JOptionPane.showMessageDialog(this, "Id no encontrado", "Error", JOptionPane.ERROR_MESSAGE);
+
+        } 
+        catch (IOException ex) {
+            JOptionPane.showMessageDialog(this, "Error al leer el archivo", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        return false;
+    }
+
+    private boolean modificarRecinto(File archivo, String id, String nombre, String idcir, String direccion) {
+        // Verificar si el id existe en el archivo de circunscripciones
+        if(!buscarIdCircunscripcion(idcir)){
+            return false;
+        }
+        
         // Crear una lista para almacenar las líneas modificadas
         List<String> lineasModificadas = new ArrayList<>();
 
-        try (BufferedReader br = new BufferedReader(new FileReader("Archivos\\Recinto.txt"))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(archivo))) {
             String linea;
             boolean recintoModificado = false;
 
@@ -251,7 +294,6 @@ public class DeRecinto extends javax.swing.JFrame {
                 String[] partes = linea.split(",");
                 if (partes.length == 4 && partes[0].equals(id)) {
                     // Encontramos el usuario, rellenamos los campos
-                    // Puedes realizar modificaciones aquí si es necesario
                     partes[1] = nombre;
                     partes[2] = idcir;
                     partes[3] = direccion;
@@ -268,7 +310,7 @@ public class DeRecinto extends javax.swing.JFrame {
 
             if (recintoModificado) {
                 // Ahora escribimos las líneas modificadas de vuelta al archivo
-                try (BufferedWriter bw = new BufferedWriter(new FileWriter("Archivos\\Recinto.txt"))) {
+                try (BufferedWriter bw = new BufferedWriter(new FileWriter(archivo))) {
                     for (String lineaModificada : lineasModificadas) {
                         bw.write(lineaModificada);
                      bw.newLine(); // Agregamos un salto de línea después de cada línea
@@ -288,7 +330,7 @@ public class DeRecinto extends javax.swing.JFrame {
      private void buscarYRellenarRecinto() {
         String id = Id.getText().trim();
 
-        try (BufferedReader br = new BufferedReader(new FileReader("Archivos\\Recinto.txt"))) {
+        try (BufferedReader br = new BufferedReader(new FileReader("Archivos\\Recintos.txt"))) {
             String linea;
             while ((linea = br.readLine()) != null) {
                 String[] partes = linea.split(",");

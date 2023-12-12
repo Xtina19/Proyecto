@@ -109,8 +109,8 @@ public class DeCircunscripciones extends javax.swing.JFrame {
                                 .addComponent(Id_Municipio, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel4)
-                                .addGap(61, 61, 61)
-                                .addComponent(Cant_Candidatos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGap(43, 43, 43)
+                                .addComponent(Cant_Candidatos, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(37, 37, 37)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -180,7 +180,7 @@ public class DeCircunscripciones extends javax.swing.JFrame {
 
         // Validar que el id y la descripcion no estén vacíos
         if (id.isEmpty() || nombre.isEmpty() || id_municipio.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Los id y el nombre son obligatorios.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "El id, nombre y municipio son obligatorios.", "Error", JOptionPane.ERROR_MESSAGE);
             return; // Detener el proceso
         }
 
@@ -198,6 +198,7 @@ public class DeCircunscripciones extends javax.swing.JFrame {
                 // Verificar si la circunscripcion ya existe en el archivo
                 if (modificarCircunscripcion(id, nombre, id_municipio, cant_candidatos)) {
                     JOptionPane.showMessageDialog(null, "Información de la circunscripcion modificada en el archivo.", "Información", JOptionPane.INFORMATION_MESSAGE);
+                    LimpiarCampos();
                     return; // Detener el proceso si la circunscripcion ya existe y fue modificado
                 }
             }
@@ -212,20 +213,7 @@ public class DeCircunscripciones extends javax.swing.JFrame {
                 }
             }
 
-            // Abrir flujos de escritura
-            try (FileWriter FW = new FileWriter(archivo, true);
-                BufferedWriter BW = new BufferedWriter(FW)) {
-
-                // Crear la línea formateada
-                String linea = String.format("%s,%s,%s,%s", id, nombre, id_municipio, cant_candidatos);
-                System.out.println("Linea: " + linea);  // Agregar esta línea para imprimir la línea formateada
-
-                // Aquí se guarda la información
-                BW.write(linea);
-                BW.newLine(); // Añadir una nueva línea
-
-                JOptionPane.showMessageDialog(null, "Información guardada en el archivo.", "Información", JOptionPane.INFORMATION_MESSAGE);
-            }
+            CrearCircunscripcion(archivo, id, nombre, id_municipio, cant_candidatos);
 
         } catch (IOException e) {
             // Capturar y manejar la excepción en caso de error
@@ -233,18 +221,77 @@ public class DeCircunscripciones extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_GuardarActionPerformed
 
+    private void CrearCircunscripcion(File archivo, String id, String nombre, String id_municipio, int cant_candidatos) throws IOException{
+        // Verificar si el id existe en el archivo de municipios
+        if(!buscarIdMunicipio(id_municipio)){
+            return;
+        }
+
+        // Abrir flujos de escritura
+        try (FileWriter FW = new FileWriter(archivo, true);
+            BufferedWriter BW = new BufferedWriter(FW)) {
+
+            // Crear la línea formateada
+            String linea = String.format("%s,%s,%s,%d", id, nombre, id_municipio, cant_candidatos);
+            System.out.println("Linea: " + linea);  // Agregar esta línea para imprimir la línea formateada
+
+            // Aquí se guarda la información
+            BW.write(linea);
+            BW.newLine(); // Añadir una nueva línea
+
+            JOptionPane.showMessageDialog(null, "Información guardada en el archivo.", "Información", JOptionPane.INFORMATION_MESSAGE);
+            LimpiarCampos();
+        }
+
+    }
+        
     private void LimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LimpiarActionPerformed
+        LimpiarCampos();
+    }//GEN-LAST:event_LimpiarActionPerformed
+
+    private void LimpiarCampos(){
         Id.setText("");
         Nombre.setText("");
         Id_Municipio.setText("");
-        Cant_Candidatos.setValue(0);
-    }//GEN-LAST:event_LimpiarActionPerformed
-
+        Cant_Candidatos.setValue(0);        
+    }
+    
     private void SalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SalirActionPerformed
-        // TODO add your handling code here:
+        MenuP Menu = new MenuP();
+        Menu.setVisible(true);
+        this.dispose();        
     }//GEN-LAST:event_SalirActionPerformed
  
+     private boolean buscarIdMunicipio(String id_municipio) {
+         System.out.println("ID a buscar: " + id_municipio);
+
+        try (BufferedReader br = new BufferedReader(new FileReader("Archivos\\Municipios.txt"))) {
+            String linea;
+            while ((linea = br.readLine()) != null) {
+                String[] partes = linea.split(",");
+                if (partes.length == 2 && partes[0].equals(id_municipio)) {
+                    // Encontramos el id, rellenamos los campos
+                    Id_Municipio.setText(partes[0]);
+                    return true; // Terminamos la búsqueda una vez encontrado el recinto
+                }
+            }
+
+            // Si llegamos aquí, el id no fue encontrado
+            JOptionPane.showMessageDialog(this, "Id no encontrado", "Error", JOptionPane.ERROR_MESSAGE);
+
+        } 
+        catch (IOException ex) {
+            JOptionPane.showMessageDialog(this, "Error al leer el archivo", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        return false;
+    }
+    
     private boolean modificarCircunscripcion(String id, String nombre, String id_municipio, int cant_candidatos) {
+        // Verificar si el id existe en el archivo de municipios
+        if(!buscarIdMunicipio(id_municipio)){
+            return false;
+        }
+        
         // Crear una lista para almacenar las líneas modificadas
         List<String> lineasModificadas = new ArrayList<>();
 
@@ -272,7 +319,7 @@ public class DeCircunscripciones extends javax.swing.JFrame {
 
             if (circunscripcionModificada) {
                 // Ahora escribimos las líneas modificadas de vuelta al archivo
-                try (BufferedWriter bw = new BufferedWriter(new FileWriter("Archivos\\Municipios.txt"))) {
+                try (BufferedWriter bw = new BufferedWriter(new FileWriter("Archivos\\Circunscripciones.txt"))) {
                     for (String lineaModificada : lineasModificadas) {
                         bw.write(lineaModificada);
                      bw.newLine(); // Agregamos un salto de línea después de cada línea

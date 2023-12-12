@@ -261,12 +261,12 @@ public class DeUsuario extends javax.swing.JFrame {
         
         try {
             // Intentar abrir el archivo
-            File archivo = new File("Archivos\\Usuario.txt");
+            File archivo = new File("Archivos\\Usuarios.txt");
 
             // Verificar si el archivo existe
             if (archivo.exists()) {
                 // Verificar si el usuario ya existe en el archivo
-                if (modificarUsuario(usuario, password, acceso, nombre, apellido, email)) {
+                if (modificarUsuario(archivo, usuario, password, acceso, nombre, apellido, email)) {
                     JOptionPane.showMessageDialog(null, "Información del usuario modificada en el archivo.", "Información", JOptionPane.INFORMATION_MESSAGE);
                     LimpiarCampos();
                     return; // Detener el proceso si el usuario ya existe y fue modificado
@@ -303,8 +303,7 @@ public class DeUsuario extends javax.swing.JFrame {
         Apellido.setText("");
         Email.setText("");        
     }
-    
-    
+        
     private void SalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SalirActionPerformed
         MenuP Menu = new MenuP();
         Menu.setVisible(true);
@@ -335,11 +334,11 @@ public class DeUsuario extends javax.swing.JFrame {
         
     }
     
-    private boolean modificarUsuario(String usuario, String password, String acceso, String nombre, String apellido, String email) {
+    private boolean modificarUsuario(File archivo, String usuario, String password, String acceso, String nombre, String apellido, String email) {
         // Crear una lista para almacenar las líneas modificadas
         List<String> lineasModificadas = new ArrayList<>();
 
-        try (BufferedReader br = new BufferedReader(new FileReader("Archivos\\Usuario.txt"))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(archivo))) {
             String linea;
             boolean usuarioModificado = false;
 
@@ -364,7 +363,7 @@ public class DeUsuario extends javax.swing.JFrame {
 
             if (usuarioModificado) {
                 // Ahora escribimos las líneas modificadas de vuelta al archivo
-                try (BufferedWriter bw = new BufferedWriter(new FileWriter("Archivos\\Usuario.txt"))) {
+                try (BufferedWriter bw = new BufferedWriter(new FileWriter(archivo))) {
                     for (String lineaModificada : lineasModificadas) {
                         bw.write(lineaModificada);
                         bw.newLine(); // Agregamos un salto de línea después de cada línea
@@ -385,7 +384,7 @@ public class DeUsuario extends javax.swing.JFrame {
         String usuario = Login.getText().trim();
         String password = new String(Password.getPassword());
         
-        try (BufferedReader br = new BufferedReader(new FileReader("Archivos\\Usuario.txt"))) {
+        try (BufferedReader br = new BufferedReader(new FileReader("Archivos\\Usuarios.txt"))) {
             String linea;
             while ((linea = br.readLine()) != null) {
                 String[] partes = linea.split(",");

@@ -180,13 +180,17 @@ public class DeCandidatos extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void LimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LimpiarActionPerformed
+        LimpiarCampos();
+    }//GEN-LAST:event_LimpiarActionPerformed
+
+    private void LimpiarCampos(){
         Id.setText("");
         Nombre.setText("");
         IdPar.setText("");
         IdCir.setText("");
-        TotalVo.setText("");
-    }//GEN-LAST:event_LimpiarActionPerformed
-
+        TotalVo.setText("");        
+    }
+    
     private void GuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GuardarActionPerformed
         String id = Id.getText();
         String nombre = Nombre.getText();
@@ -209,6 +213,7 @@ public class DeCandidatos extends javax.swing.JFrame {
                 // Verificar si el usuario ya existe en el archivo
                 if (modificarCandidato(id,nombre,idpar,idcir,totalvo)) {
                     JOptionPane.showMessageDialog(null, "Información del candidato modificada en el archivo.", "Información", JOptionPane.INFORMATION_MESSAGE);
+                    LimpiarCampos();
                     return; // Detener el proceso si el usuario ya existe y fue modificado
                 }
             }
@@ -223,27 +228,43 @@ public class DeCandidatos extends javax.swing.JFrame {
                 }
             }
 
-            // Abrir flujos de escritura
-            try (FileWriter FW = new FileWriter(archivo, true);
-                BufferedWriter BW = new BufferedWriter(FW)) {
-
-                // Crear la línea formateada
-                String linea = String.format("%s,%s", id,nombre,idpar,idcir,totalvo);
-                System.out.println("Línea: " + linea);  // Agregar esta línea para imprimir la línea formateada
-
-                // Aquí se guarda la información
-                BW.write(linea);
-                BW.newLine(); // Añadir una nueva línea
-
-                JOptionPane.showMessageDialog(null, "Información guardada en el archivo.", "Información", JOptionPane.INFORMATION_MESSAGE);
-            }
-
+            CrearCandidatos(archivo, id, nombre, idpar, idcir, totalvo);
+            
         } catch (IOException e) {
             // Capturar y manejar la excepción en caso de error
             JOptionPane.showMessageDialog(null, "Error al manejar el archivo: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_GuardarActionPerformed
 
+    private void CrearCandidatos(File archivo, String id, String nombre, String idpar, String idcir, String totalvo) throws IOException{
+        // Verificar si el id existe en el archivo de partidos
+        if(!buscarIdPartido(idpar)){
+            return;
+        }
+
+        // Verificar si el id existe en el archivo de circunscripciones
+        if(!buscarIdCircunscripcion(idcir)){
+            return;
+        }        
+
+        
+        // Abrir flujos de escritura
+        try (FileWriter FW = new FileWriter(archivo, true);
+            BufferedWriter BW = new BufferedWriter(FW)) {
+
+            // Crear la línea formateada
+            String linea = String.format("%s,%s,%s,%s,%s", id,nombre,idpar,idcir,totalvo);
+            System.out.println("Línea: " + linea);  // Agregar esta línea para imprimir la línea formateada
+
+            // Aquí se guarda la información
+            BW.write(linea);
+                BW.newLine(); // Añadir una nueva línea
+
+                JOptionPane.showMessageDialog(null, "Información guardada en el archivo.", "Información", JOptionPane.INFORMATION_MESSAGE);
+                LimpiarCampos();
+        }        
+    }
+    
     private void BuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BuscarActionPerformed
         buscarYRellenarCandidato();
     }//GEN-LAST:event_BuscarActionPerformed
@@ -253,7 +274,66 @@ public class DeCandidatos extends javax.swing.JFrame {
         Menu.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_SalirActionPerformed
-        private boolean modificarCandidato(String id,String nombre,String idpar,String idcir,String totalvo) {
+
+     private boolean buscarIdPartido(String idpar) {
+         System.out.println("ID Partido a buscar: " + idpar);
+
+        try (BufferedReader br = new BufferedReader(new FileReader("Archivos\\Partidos.txt"))) {
+            String linea;
+            while ((linea = br.readLine()) != null) {
+                String[] partes = linea.split(",");
+                if (partes.length == 2 && partes[0].equals(idpar)) {
+                    // Encontramos el id, rellenamos los campos
+                    IdCir.setText(partes[0]);
+                    return true; // Terminamos la búsqueda una vez encontrado el recinto
+                }
+            }
+
+            // Si llegamos aquí, el id no fue encontrado
+            JOptionPane.showMessageDialog(this, "Id no encontrado", "Error", JOptionPane.ERROR_MESSAGE);
+
+        } 
+        catch (IOException ex) {
+            JOptionPane.showMessageDialog(this, "Error al leer el archivo", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        return false;
+    }
+
+    private boolean buscarIdCircunscripcion(String idcir) {
+        System.out.println("ID Circunscripcion a buscar: " + idcir);
+
+        try (BufferedReader br = new BufferedReader(new FileReader("Archivos\\Circunscripciones.txt"))) {
+            String linea;
+            while ((linea = br.readLine()) != null) {
+                String[] partes = linea.split(",");
+                if (partes.length == 4 && partes[0].equals(idcir)) {
+                    // Encontramos el id, rellenamos los campos
+                    IdCir.setText(partes[0]);
+                    return true; // Terminamos la búsqueda una vez encontrado el recinto
+                }
+            }
+
+            // Si llegamos aquí, el id no fue encontrado
+            JOptionPane.showMessageDialog(this, "Id no encontrado", "Error", JOptionPane.ERROR_MESSAGE);
+
+        } 
+        catch (IOException ex) {
+            JOptionPane.showMessageDialog(this, "Error al leer el archivo", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        return false;
+    }
+        
+    private boolean modificarCandidato(String id,String nombre,String idpar,String idcir,String totalvo) {
+        // Verificar si el id existe en el archivo de partidos
+        if(!buscarIdPartido(idpar)){
+            return false;
+        }
+
+        // Verificar si el id existe en el archivo de circunscripciones
+        if(!buscarIdCircunscripcion(idcir)){
+            return false;
+        }        
+
         // Crear una lista para almacenar las líneas modificadas
         List<String> lineasModificadas = new ArrayList<>();
 

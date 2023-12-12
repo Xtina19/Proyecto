@@ -19,6 +19,7 @@ import Mantenimientos.DeRecinto;
 import Mantenimientos.DeUsuario;
 
 import Consultas.CDeUsuario;
+import Login.Login;
 
 /**
  *
@@ -31,6 +32,20 @@ public class MenuP extends javax.swing.JFrame {
      */
     public MenuP() {
         initComponents();
+
+        // Acceder directamente a la variable isAdmin de la clase Login
+        boolean isAdmin = Login.admin;
+
+        // Puedes realizar lógica específica aquí o en otros métodos
+        if (isAdmin) {
+            // Hacer algo específico para el administrador
+            System.out.println("Es Administrador");
+        } else {
+            // Hacer algo específico para usuarios normales
+            System.out.println("Es Usuario");
+            Mantenimientos.setEnabled(false);
+            Movimientos.setEnabled(false);
+        }
     }
 
     /**
@@ -57,7 +72,7 @@ public class MenuP extends javax.swing.JFrame {
         MAlianza = new javax.swing.JMenuItem();
         MRecintos = new javax.swing.JMenuItem();
         MCandidatos = new javax.swing.JMenuItem();
-        jMenu3 = new javax.swing.JMenu();
+        Movimientos = new javax.swing.JMenu();
         jMenuItem10 = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
         jMenuItem11 = new javax.swing.JMenuItem();
@@ -145,12 +160,12 @@ public class MenuP extends javax.swing.JFrame {
 
         jMenuBar1.add(Mantenimientos);
 
-        jMenu3.setText("Movimientos");
+        Movimientos.setText("Movimientos");
 
         jMenuItem10.setText("De colegios");
-        jMenu3.add(jMenuItem10);
+        Movimientos.add(jMenuItem10);
 
-        jMenuBar1.add(jMenu3);
+        jMenuBar1.add(Movimientos);
 
         jMenu4.setText("Procesos");
 
@@ -362,9 +377,9 @@ public class MenuP extends javax.swing.JFrame {
     private javax.swing.JMenuItem MRecintos;
     private javax.swing.JMenuItem MUsuario;
     private javax.swing.JMenu Mantenimientos;
+    private javax.swing.JMenu Movimientos;
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem1;
     private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenuBar jMenuBar1;
