@@ -6,6 +6,15 @@
 package Mantenimientos;
 
 import MenuPrincipal.MenuP;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -154,11 +163,15 @@ public class DeAlianza extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void LimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LimpiarActionPerformed
-        Id.setText("");
-        IdMu.setText("");
-        Aliados.setText("");
+        LimpiarCampos();
     }//GEN-LAST:event_LimpiarActionPerformed
 
+    private void LimpiarCampos(){
+        Id.setText("");
+        IdMu.setText("");
+        Aliados.setText("");        
+    }
+    
     private void SalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SalirActionPerformed
         MenuP Menu = new MenuP();
         Menu.setVisible(true);
@@ -166,13 +179,201 @@ public class DeAlianza extends javax.swing.JFrame {
     }//GEN-LAST:event_SalirActionPerformed
 
     private void BuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BuscarActionPerformed
-        // buscarYRellenarAlianza();
+        buscarYRellenarAlianza();
     }//GEN-LAST:event_BuscarActionPerformed
 
     private void GuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GuardarActionPerformed
-        // TODO add your handling code here:
+        String id = Id.getText();
+        String idmu = IdMu.getText();
+        String aliados = Aliados.getText();
+
+        // Validar que el id y la descripcion no estén vacíos
+        if (id.isEmpty() || id.isEmpty() || idmu.isEmpty() || aliados.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Todos los campos son obligatorios.", "Error", JOptionPane.ERROR_MESSAGE);
+            return; // Detener el proceso
+        }
+
+        try {
+            // Intentar abrir el archivo
+            File archivo = new File("Archivos\\Alianzas.txt");
+
+            // Verificar si el archivo existe
+            if (archivo.exists()) {
+                // Verificar si la circunscripcion ya existe en el archivo
+                if (modificarAlianza(id, idmu, aliados)) {
+                    JOptionPane.showMessageDialog(null, "Información de la alianza modificada en el archivo.", "Información", JOptionPane.INFORMATION_MESSAGE);
+                    LimpiarCampos();
+                    return; // Detener el proceso si la alianza ya existe y fue modificado
+                }
+            }
+            else {
+                // Si el archivo no existe, intentar crear uno nuevo
+                if (archivo.createNewFile()) {
+                    System.out.println("Se ha creado un nuevo archivo.");
+                }
+                else {
+                    JOptionPane.showMessageDialog(null, "No se pudo crear el archivo ", "Error", JOptionPane.ERROR_MESSAGE);
+                    return; // Detener el proceso si no se pudo crear el archivo
+                }
+            }
+
+            CrearAlianza(archivo, id, idmu, aliados);
+
+        } catch (IOException e) {
+            // Capturar y manejar la excepción en caso de error
+            JOptionPane.showMessageDialog(null, "Error al manejar el archivo: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_GuardarActionPerformed
+
+    private void CrearAlianza(File archivo, String id, String idmu, String aliados) throws IOException{
+        // Verificar si el id existe en el archivo de municipios
+        if(!buscarIdMunicipio(idmu) || !buscarNombrePartido(aliados)){
+            return;
+        }       
+        
+        // Abrir flujos de escritura
+        try (FileWriter FW = new FileWriter(archivo, true);
+            BufferedWriter BW = new BufferedWriter(FW)) {
+
+            // Crear la línea formateada
+            String linea = String.format("%s,%s,%s", id, idmu, aliados);
+            System.out.println("Linea: " + linea);  // Agregar esta línea para imprimir la línea formateada
+
+            // Aquí se guarda la información
+            BW.write(linea);
+            BW.newLine(); // Añadir una nueva línea
+
+            JOptionPane.showMessageDialog(null, "Información guardada en el archivo.", "Información", JOptionPane.INFORMATION_MESSAGE);
+            LimpiarCampos();
+        }
+
+    }
+
+     private boolean buscarIdMunicipio(String idmu) {
+         System.out.println("ID a buscar: " + idmu);
+
+        try (BufferedReader br = new BufferedReader(new FileReader("Archivos\\Municipios.txt"))) {
+            String linea;
+            while ((linea = br.readLine()) != null) {
+                String[] partes = linea.split(",");
+                if (partes.length == 2 && partes[0].equals(idmu)) {
+                    // Encontramos el id, rellenamos los campos
+                    IdMu.setText(partes[0]);
+                    return true; // Terminamos la búsqueda una vez encontrado el recinto
+                }
+            }
+
+            // Si llegamos aquí, el id no fue encontrado
+            JOptionPane.showMessageDialog(this, "Id no encontrado", "Error", JOptionPane.ERROR_MESSAGE);
+
+        } 
+        catch (IOException ex) {
+            JOptionPane.showMessageDialog(this, "Error al leer el archivo", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        return false;
+    }
     
+     private boolean buscarNombrePartido(String aliados) {
+         System.out.println("ID Partido a buscar: " + aliados);
+
+        try (BufferedReader br = new BufferedReader(new FileReader("Archivos\\Partidos.txt"))) {
+            String linea;
+            while ((linea = br.readLine()) != null) {
+                String[] partes = linea.split(",");
+                if (partes.length == 2 && partes[0].equals(aliados)) {
+                    // Encontramos el id, rellenamos los campos
+                    Aliados.setText(partes[0]);
+                    return true; // Terminamos la búsqueda una vez encontrado el partido
+                }
+            }
+
+            // Si llegamos aquí, el id no fue encontrado
+            JOptionPane.showMessageDialog(this, "Partido no encontrado. Recuerde buscar por el ID del partido", "Error", JOptionPane.ERROR_MESSAGE);
+
+        } 
+        catch (IOException ex) {
+            JOptionPane.showMessageDialog(this, "Error al leer el archivo", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        return false;
+    }
+     
+     private boolean modificarAlianza(String id, String idmu, String aliados) {
+        // Verificar si el id existe en el archivo de municipios
+        if(!buscarIdMunicipio(idmu)){
+            return false;
+        }
+        
+        if(!buscarNombrePartido(aliados)){
+            return false;
+        }
+        
+        // Crear una lista para almacenar las líneas modificadas
+        List<String> lineasModificadas = new ArrayList<>();
+
+        try (BufferedReader br = new BufferedReader(new FileReader("Archivos\\Alianzas.txt"))) {
+            String linea;
+            boolean alianzaModificada = false;
+
+            while ((linea = br.readLine()) != null) {
+                String[] partes = linea.split(",");
+                if (partes.length == 3 && partes[0].equals(id)) {
+                    // Encontramos la circunscripcion, rellenamos los campos
+                    partes[1] = idmu;
+                    partes[2] = aliados;
+                    
+                    // Agregamos la línea modificada a la lista
+                    lineasModificadas.add(String.join(",", partes));
+                    alianzaModificada = true;
+                } 
+                else {
+                    // Si no es la alianza que estamos buscando, simplemente agregamos la línea al listado
+                    lineasModificadas.add(linea);
+                }
+            }
+
+            if (alianzaModificada) {
+                // Ahora escribimos las líneas modificadas de vuelta al archivo
+                try (BufferedWriter bw = new BufferedWriter(new FileWriter("Archivos\\Alianzas.txt"))) {
+                    for (String lineaModificada : lineasModificadas) {
+                        bw.write(lineaModificada);
+                     bw.newLine(); // Agregamos un salto de línea después de cada línea
+                    }
+                }
+            }
+
+        return alianzaModificada;
+
+        } 
+        catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "Error al leer el archivo " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+    }
+    
+    private void buscarYRellenarAlianza() {
+        String id = Id.getText().trim();
+
+        try (BufferedReader br = new BufferedReader(new FileReader("Archivos\\Alianzas.txt"))) {
+            String linea;
+            while ((linea = br.readLine()) != null) {
+                String[] partes = linea.split(",");
+                if (partes.length == 3 && partes[0].equals(id)) {
+                    // Encontramos la circunscripcion, rellenamos los campos
+                    IdMu.setText(partes[1]);
+                    Aliados.setText(partes[2]);                    
+                    return; // Terminamos la búsqueda una vez encontrada la circunscripcion
+                }
+            }
+
+            // Si llegamos aquí, la alianza no fue encontrada
+            JOptionPane.showMessageDialog(this, "Alianza no encontrada", "Error", JOptionPane.ERROR_MESSAGE);
+
+        } 
+        catch (IOException ex) {
+            JOptionPane.showMessageDialog(this, "Error al leer el archivo", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    } 
+
     /**
      * @param args the command line arguments
      */
