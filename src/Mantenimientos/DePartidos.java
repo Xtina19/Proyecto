@@ -71,6 +71,7 @@ public class DePartidos extends javax.swing.JFrame {
         });
 
         Votos.setEditable(false);
+        Votos.setText("0");
 
         jLabel4.setText("Votos");
 
@@ -165,6 +166,7 @@ public class DePartidos extends javax.swing.JFrame {
     private void GuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GuardarActionPerformed
         String id = Id.getText();
         String descripcion = Descripcion.getText();
+        String votos = "0";
 
         // Validar que el id y la descripcion no estén vacíos
         if (id.isEmpty() || descripcion.isEmpty()) {
@@ -195,7 +197,7 @@ public class DePartidos extends javax.swing.JFrame {
                     return; // Detener el proceso si no se pudo crear el archivo
                 }
             }
-            CrearPartido(archivo, id, descripcion);
+            CrearPartido(archivo, id, descripcion, votos);
 
         } catch (IOException e) {
             // Capturar y manejar la excepción en caso de error
@@ -204,13 +206,13 @@ public class DePartidos extends javax.swing.JFrame {
 
     }//GEN-LAST:event_GuardarActionPerformed
 
-    private void CrearPartido(File archivo, String id, String descripcion) throws IOException{
+    private void CrearPartido(File archivo, String id, String descripcion, String votos) throws IOException{
         // Abrir flujos de escritura
         try (FileWriter FW = new FileWriter(archivo, true);
             BufferedWriter BW = new BufferedWriter(FW)) {
 
             // Crear la línea formateada
-            String linea = String.format("%s,%s", id, descripcion);
+            String linea = String.format("%s,%s, %s", id, descripcion, votos);
             System.out.println("Linea: " + linea);  // Agregar esta línea para imprimir la línea formateada
 
             // Aquí se guarda la información
@@ -233,7 +235,7 @@ public class DePartidos extends javax.swing.JFrame {
     private void LimpiarCampos(){
         Id.setText("");
         Descripcion.setText("");
-        Votos.setText("");        
+        Votos.setText("0");        
     }
     
     private void BuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BuscarActionPerformed
@@ -296,9 +298,10 @@ public class DePartidos extends javax.swing.JFrame {
             String linea;
             while ((linea = br.readLine()) != null) {
                 String[] partes = linea.split(",");
-                if (partes.length == 2 && partes[0].equals(idPartido)) {
+                if (partes.length == 3 && partes[0].equals(idPartido)) {
                     // Encontramos el partido, rellenamos los campos
                     Descripcion.setText(partes[1]);
+                    Votos.setText(partes[2]);
                     return; // Terminamos la búsqueda una vez encontrado el partido
                 }
             }

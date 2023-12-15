@@ -1,2 +1,2 @@
-005,La fuerza del pueblo,CF,5
+005,Partido de la Liberación Dominicana,CF,5
 006,Partido Revolucionario Moderno,LG,3

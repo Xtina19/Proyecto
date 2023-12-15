@@ -1,2 +1,2 @@
-PRM,Partido Revolucionario Moderno
-PLD,Partido de la Liberacion Dominicana
+PRM,Partido Revoluconario Moderno, 0
+PLD,Partido de la Liberación Dominicana, 0

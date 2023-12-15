@@ -109,10 +109,13 @@
             <Property name="text" type="java.lang.String" value="Movimientos"/>
           </Properties>
           <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem10">
+            <MenuItem class="javax.swing.JMenuItem" name="Colegios">
               <Properties>
                 <Property name="text" type="java.lang.String" value="De colegios"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ColegiosActionPerformed"/>
+              </Events>
             </MenuItem>
           </SubComponents>
         </Menu>
@@ -121,10 +124,13 @@
             <Property name="text" type="java.lang.String" value="Procesos"/>
           </Properties>
           <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem11">
+            <MenuItem class="javax.swing.JMenuItem" name="VotosColegios">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Procesar votos de colegios"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="VotosColegiosActionPerformed"/>
+              </Events>
             </MenuItem>
           </SubComponents>
         </Menu>

@@ -5,11 +5,8 @@
  */
 package MenuPrincipal;
 
-import Consultas.CDeAlianza;
-import Consultas.CDeCandidatos;
-import Consultas.CDeCircunscripciones;
-import Consultas.CDeMunicipios;
-import Consultas.CDePartidos;
+import Login.Login;
+
 import Mantenimientos.DeAlianza;
 import Mantenimientos.DeCandidatos;
 import Mantenimientos.DeCircunscripciones;
@@ -17,9 +14,14 @@ import Mantenimientos.DePartidos;
 import Mantenimientos.DeMunicipios;
 import Mantenimientos.DeRecinto;
 import Mantenimientos.DeUsuario;
+import Movimientos.DeColegios;
 
+import Consultas.CDeAlianza;
+import Consultas.CDeCandidatos;
+import Consultas.CDeCircunscripciones;
+import Consultas.CDeMunicipios;
+import Consultas.CDePartidos;
 import Consultas.CDeUsuario;
-import Login.Login;
 
 /**
  *
@@ -73,9 +75,9 @@ public class MenuP extends javax.swing.JFrame {
         MRecintos = new javax.swing.JMenuItem();
         MCandidatos = new javax.swing.JMenuItem();
         Movimientos = new javax.swing.JMenu();
-        jMenuItem10 = new javax.swing.JMenuItem();
+        Colegios = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
-        jMenuItem11 = new javax.swing.JMenuItem();
+        VotosColegios = new javax.swing.JMenuItem();
         jMenu5 = new javax.swing.JMenu();
         CUsuarios = new javax.swing.JMenuItem();
         CPartidos = new javax.swing.JMenuItem();
@@ -162,15 +164,25 @@ public class MenuP extends javax.swing.JFrame {
 
         Movimientos.setText("Movimientos");
 
-        jMenuItem10.setText("De colegios");
-        Movimientos.add(jMenuItem10);
+        Colegios.setText("De colegios");
+        Colegios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ColegiosActionPerformed(evt);
+            }
+        });
+        Movimientos.add(Colegios);
 
         jMenuBar1.add(Movimientos);
 
         jMenu4.setText("Procesos");
 
-        jMenuItem11.setText("Procesar votos de colegios");
-        jMenu4.add(jMenuItem11);
+        VotosColegios.setText("Procesar votos de colegios");
+        VotosColegios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                VotosColegiosActionPerformed(evt);
+            }
+        });
+        jMenu4.add(VotosColegios);
 
         jMenuBar1.add(jMenu4);
 
@@ -325,6 +337,16 @@ public class MenuP extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_CAlianzaActionPerformed
 
+    private void ColegiosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ColegiosActionPerformed
+        DeColegios Colegio = new DeColegios();
+        Colegio.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_ColegiosActionPerformed
+
+    private void VotosColegiosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VotosColegiosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_VotosColegiosActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -369,6 +391,7 @@ public class MenuP extends javax.swing.JFrame {
     private javax.swing.JMenuItem CMunicipios;
     private javax.swing.JMenuItem CPartidos;
     private javax.swing.JMenuItem CUsuarios;
+    private javax.swing.JMenuItem Colegios;
     private javax.swing.JMenuItem MAlianza;
     private javax.swing.JMenuItem MCandidatos;
     private javax.swing.JMenuItem MCircunscripciones;
@@ -378,14 +401,13 @@ public class MenuP extends javax.swing.JFrame {
     private javax.swing.JMenuItem MUsuario;
     private javax.swing.JMenu Mantenimientos;
     private javax.swing.JMenu Movimientos;
+    private javax.swing.JMenuItem VotosColegios;
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem10;
-    private javax.swing.JMenuItem jMenuItem11;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JPopupMenu jPopupMenu1;
     private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItem1;
