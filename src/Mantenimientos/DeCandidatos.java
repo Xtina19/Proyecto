@@ -83,6 +83,8 @@ public class DeCandidatos extends javax.swing.JFrame {
 
         jLabel6.setText("Total de votos");
 
+        TotalVo.setEditable(false);
+
         Buscar.setText("Buscar");
         Buscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -196,10 +198,9 @@ public class DeCandidatos extends javax.swing.JFrame {
         String nombre = Nombre.getText();
         String idpar = IdPar.getText();
         String idcir = IdCir.getText();
-        String totalvo = TotalVo.getText();
 
         // Validar que el id y la descripcion no estén vacíos
-        if (id.isEmpty() || nombre.isEmpty()|| idpar.isEmpty()|| idcir.isEmpty()|| totalvo.isEmpty()) {
+        if (id.isEmpty() || nombre.isEmpty()|| idpar.isEmpty()|| idcir.isEmpty()) {
             JOptionPane.showMessageDialog(null, "Todos los datos son obligatorios.", "Error", JOptionPane.ERROR_MESSAGE);
             return; // Detener el proceso
         }
@@ -211,7 +212,7 @@ public class DeCandidatos extends javax.swing.JFrame {
             // Verificar si el archivo existe
             if (archivo.exists()) {
                 // Verificar si el usuario ya existe en el archivo
-                if (modificarCandidato(id,nombre,idpar,idcir,totalvo)) {
+                if (modificarCandidato(id,nombre,idpar,idcir)) {
                     JOptionPane.showMessageDialog(null, "Información del candidato modificada en el archivo.", "Información", JOptionPane.INFORMATION_MESSAGE);
                     LimpiarCampos();
                     return; // Detener el proceso si el usuario ya existe y fue modificado
@@ -228,7 +229,7 @@ public class DeCandidatos extends javax.swing.JFrame {
                 }
             }
 
-            CrearCandidatos(archivo, id, nombre, idpar, idcir, totalvo);
+            CrearCandidatos(archivo, id, nombre, idpar, idcir);
             
         } catch (IOException e) {
             // Capturar y manejar la excepción en caso de error
@@ -236,7 +237,7 @@ public class DeCandidatos extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_GuardarActionPerformed
 
-    private void CrearCandidatos(File archivo, String id, String nombre, String idpar, String idcir, String totalvo) throws IOException{
+    private void CrearCandidatos(File archivo, String id, String nombre, String idpar, String idcir) throws IOException{
         // Verificar si el id existe en el archivo de partidos
         if(!buscarIdPartido(idpar)){
             return;
@@ -253,7 +254,7 @@ public class DeCandidatos extends javax.swing.JFrame {
             BufferedWriter BW = new BufferedWriter(FW)) {
 
             // Crear la línea formateada
-            String linea = String.format("%s,%s,%s,%s,%s", id,nombre,idpar,idcir,totalvo);
+            String linea = String.format("%s,%s,%s,%s", id,nombre,idpar,idcir);
             System.out.println("Línea: " + linea);  // Agregar esta línea para imprimir la línea formateada
 
             // Aquí se guarda la información
@@ -262,7 +263,11 @@ public class DeCandidatos extends javax.swing.JFrame {
 
                 JOptionPane.showMessageDialog(null, "Información guardada en el archivo.", "Información", JOptionPane.INFORMATION_MESSAGE);
                 LimpiarCampos();
-        }        
+        }
+        catch (IOException e) {
+            // Capturar y manejar la excepción en caso de error
+            JOptionPane.showMessageDialog(null, "Error al guardar en el archivo: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }          
     }
     
     private void BuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BuscarActionPerformed
@@ -323,7 +328,7 @@ public class DeCandidatos extends javax.swing.JFrame {
         return false;
     }
         
-    private boolean modificarCandidato(String id,String nombre,String idpar,String idcir,String totalvo) {
+    private boolean modificarCandidato(String id,String nombre,String idpar,String idcir) {
         // Verificar si el id existe en el archivo de partidos
         if(!buscarIdPartido(idpar)){
             return false;
@@ -349,7 +354,6 @@ public class DeCandidatos extends javax.swing.JFrame {
                     partes[1] = nombre;
                     partes[2] = idpar;
                     partes[3] = idcir;
-                    partes[4] = totalvo;
 
 
                     // Agregamos la línea modificada a la lista
@@ -382,21 +386,16 @@ public class DeCandidatos extends javax.swing.JFrame {
     }
      private void buscarYRellenarCandidato() {
         String id = Id.getText().trim();
-        String nombre = Nombre.getText().trim();
-        String idpar = IdPar.getText().trim();
-        String idcir = IdCir.getText().trim();
-        String totalvo = TotalVo.getText().trim();
 
         try (BufferedReader br = new BufferedReader(new FileReader("Archivos\\Candidatos.txt"))) {
             String linea;
             while ((linea = br.readLine()) != null) {
                 String[] partes = linea.split(",");
-                if (partes.length == 5 && partes[0].equals(id)) {
+                if (partes.length == 4 && partes[0].equals(id)) {
                     // Encontramos el partido, rellenamos los campos
                     Nombre.setText(partes[1]);
                     IdPar.setText(partes[2]);
                     IdCir.setText(partes[3]);
-                    TotalVo.setText(partes[4]);
                     return; // Terminamos la búsqueda una vez encontrado el partido
                 }
             }
