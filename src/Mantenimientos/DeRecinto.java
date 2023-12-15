@@ -54,7 +54,7 @@ public class DeRecinto extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel5.setText("Id circuncripciones");
+        jLabel5.setText("Id circuncripción");
 
         jLabel4.setText("Dirección ");
 
@@ -251,6 +251,10 @@ public class DeRecinto extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Información guardada en el archivo.", "Información", JOptionPane.INFORMATION_MESSAGE);
             LimpiarCampos();
         }
+        catch (IOException e) {
+            // Capturar y manejar la excepción en caso de error
+            JOptionPane.showMessageDialog(null, "Error al guardar en el archivo: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
      private boolean buscarIdCircunscripcion(String idcir) {
@@ -268,7 +272,7 @@ public class DeRecinto extends javax.swing.JFrame {
             }
 
             // Si llegamos aquí, el id no fue encontrado
-            JOptionPane.showMessageDialog(this, "Id no encontrado", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Id circunstripcion no encontrado", "Error", JOptionPane.ERROR_MESSAGE);
 
         } 
         catch (IOException ex) {
