@@ -246,7 +246,10 @@ public class DeAlianza extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Información guardada en el archivo.", "Información", JOptionPane.INFORMATION_MESSAGE);
             LimpiarCampos();
         }
-
+        catch (IOException e) {
+            // Capturar y manejar la excepción en caso de error
+            JOptionPane.showMessageDialog(null, "Error al guardar en el archivo: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }  
     }
 
      private boolean buscarIdMunicipio(String idmu) {
