@@ -185,6 +185,7 @@ public class DeMunicipios extends javax.swing.JFrame {
                 // Verificar si el municipio ya existe en el archivo
                 if (modificarMunicipio(id, nombre)) {
                     JOptionPane.showMessageDialog(null, "Información del municipio modificada en el archivo.", "Información", JOptionPane.INFORMATION_MESSAGE);
+                    LimpiarCampos();
                     return; // Detener el proceso si el municipio ya existe y fue modificado
                 }
             }
@@ -198,21 +199,7 @@ public class DeMunicipios extends javax.swing.JFrame {
                     return; // Detener el proceso si no se pudo crear el archivo
                 }
             }
-
-            // Abrir flujos de escritura
-            try (FileWriter FW = new FileWriter(archivo, true);
-                BufferedWriter BW = new BufferedWriter(FW)) {
-
-                // Crear la línea formateada
-                String linea = String.format("%s,%s", id, nombre);
-                System.out.println("Linea: " + linea);  // Agregar esta línea para imprimir la línea formateada
-
-                // Aquí se guarda la información
-                BW.write(linea);
-                BW.newLine(); // Añadir una nueva línea
-
-                JOptionPane.showMessageDialog(null, "Información guardada en el archivo.", "Información", JOptionPane.INFORMATION_MESSAGE);
-            }
+            CrearMunicipio(archivo, id, nombre);
 
         } catch (IOException e) {
             // Capturar y manejar la excepción en caso de error
@@ -220,11 +207,37 @@ public class DeMunicipios extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_GuardarActionPerformed
 
+    private void CrearMunicipio(File archivo, String id, String nombre) throws IOException{
+        // Abrir flujos de escritura
+        try (FileWriter FW = new FileWriter(archivo, true);
+            BufferedWriter BW = new BufferedWriter(FW)) {
+
+            // Crear la línea formateada
+            String linea = String.format("%s,%s", id, nombre);
+            System.out.println("Linea: " + linea);  // Agregar esta línea para imprimir la línea formateada
+
+            // Aquí se guarda la información
+            BW.write(linea);
+            BW.newLine(); // Añadir una nueva línea
+
+            JOptionPane.showMessageDialog(null, "Información guardada en el archivo.", "Información", JOptionPane.INFORMATION_MESSAGE);
+            LimpiarCampos();
+        }
+        catch (IOException e) {
+            // Capturar y manejar la excepción en caso de error
+            JOptionPane.showMessageDialog(null, "Error al guardar en el archivo: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }      
+    } 
+    
     private void LimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LimpiarActionPerformed
-        Id.setText("");
-        Nombre.setText("");
+        LimpiarCampos();
     }//GEN-LAST:event_LimpiarActionPerformed
 
+    private void LimpiarCampos(){
+        Id.setText("");
+        Nombre.setText("");        
+    }
+    
     private void BuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BuscarActionPerformed
         buscarYRellenarMunicipio();
     }//GEN-LAST:event_BuscarActionPerformed
