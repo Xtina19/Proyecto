@@ -5,6 +5,12 @@
  */
 package Consultas;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.util.Vector;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author User
@@ -16,6 +22,7 @@ public class CDeCircunscripciones extends javax.swing.JFrame {
      */
     public CDeCircunscripciones() {
         initComponents();
+         Tabla.setModel(Listar(""));
     }
 
     /**
@@ -27,15 +34,20 @@ public class CDeCircunscripciones extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jTextField1 = new javax.swing.JTextField();
+        ID = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
+        Tabla = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        ID.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                IDKeyPressed(evt);
+            }
+        });
+
+        Tabla.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -46,9 +58,7 @@ public class CDeCircunscripciones extends javax.swing.JFrame {
                 "Id", "Nombre", "Id municipio", "Cant.Candidatos"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
-
-        jButton1.setText("Consultar");
+        jScrollPane1.setViewportView(Tabla);
 
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel1.setText("Por ID");
@@ -60,38 +70,80 @@ public class CDeCircunscripciones extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(56, 56, 56)
+                        .addGap(41, 41, 41)
                         .addComponent(jLabel1)
-                        .addGap(18, 18, 18)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(29, 29, 29)
+                        .addComponent(ID, javax.swing.GroupLayout.PREFERRED_SIZE, 393, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(250, 250, 250)
-                        .addComponent(jButton1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(32, 32, 32)
+                        .addGap(21, 21, 21)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 553, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(36, Short.MAX_VALUE))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(30, 30, 30)
+                .addGap(71, 71, 71)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
-                .addGap(30, 30, 30)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 248, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1)
-                .addGap(39, 39, 39))
+                    .addComponent(jLabel1)
+                    .addComponent(ID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 222, Short.MAX_VALUE)
+                .addGap(51, 51, 51))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void IDKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_IDKeyPressed
+        Tabla.setModel(Listar(ID.getText().toString())); 
+    }//GEN-LAST:event_IDKeyPressed
+
     /**
      * @param args the command line arguments
      */
+    public DefaultTableModel Listar(String busqueda){
+      Vector vcabe = new Vector();
+       vcabe.addElement("Id");
+       vcabe.addElement("Nombre");
+       vcabe.addElement("IdMu");
+       vcabe.addElement("Cant.Can");
+       
+      DefaultTableModel mdlTabla = new DefaultTableModel(vcabe,0){
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                // Hacer que todas las celdas no sean editables
+                return false;
+            }
+        };
+      
+      try{
+          FileReader fw = new FileReader("Archivos\\Circunscripciones.txt");
+          BufferedReader br = new BufferedReader(fw);
+          String d;
+          
+          while((d=br.readLine()) !=null  ){
+              String [] info = new String[4];
+              info=d.split(",");
+              
+              if((info[0].toUpperCase().contains(busqueda.toUpperCase())) ||
+                                info[1].toUpperCase().contains(busqueda.toUpperCase()) ||
+                                info[2].toUpperCase().contains(busqueda.toUpperCase()) ||
+                                info[3].toUpperCase().contains(busqueda.toUpperCase())){
+              Vector x = new Vector();
+              x.addElement(info[0]);
+              x.addElement(info[1]);
+              x.addElement(info[2]);
+              x.addElement(info[3]);
+              mdlTabla.addRow(x);
+              }
+              
+                        }
+      }catch(java.io.IOException ioex){
+          JOptionPane.showMessageDialog(null, ioex.toString());
+      }
+        
+      return mdlTabla;  
+    }
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -115,6 +167,9 @@ public class CDeCircunscripciones extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(CDeCircunscripciones.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -125,10 +180,9 @@ public class CDeCircunscripciones extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JTextField ID;
+    private javax.swing.JTable Tabla;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 }

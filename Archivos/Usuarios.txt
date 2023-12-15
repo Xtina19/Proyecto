@@ -1,0 +1,2 @@
+Administrador,admin123,(0) Administrador,Admin,admin,-
+Test,123,(1) Usuario,Tester,Testero,-

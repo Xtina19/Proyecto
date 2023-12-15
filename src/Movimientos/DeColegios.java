@@ -1,9 +1,19 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Movimientos;
+
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Vector;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -16,6 +26,7 @@ public class DeColegios extends javax.swing.JFrame {
      */
     public DeColegios() {
         initComponents();
+         // Tabla.setModel(Listar(""));
     }
 
     /**
@@ -31,14 +42,15 @@ public class DeColegios extends javax.swing.JFrame {
         jTable1 = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        Fecha = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         IdCa = new javax.swing.JTextField();
         IdCo = new javax.swing.JTextField();
         IdRe = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        Tabla = new javax.swing.JTable();
+        NombreCa = new javax.swing.JTextField();
+        NombreRe = new javax.swing.JTextField();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -70,7 +82,19 @@ public class DeColegios extends javax.swing.JFrame {
             }
         });
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        IdCo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                IdCoActionPerformed(evt);
+            }
+        });
+
+        IdRe.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                IdReActionPerformed(evt);
+            }
+        });
+
+        Tabla.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},
                 {null, null, null},
@@ -81,14 +105,35 @@ public class DeColegios extends javax.swing.JFrame {
                 "Id Colegio", "Id Candidato", "Votos"
             }
         ));
-        jScrollPane2.setViewportView(jTable2);
+        jScrollPane2.setViewportView(Tabla);
+
+        NombreCa.setEditable(false);
+        NombreCa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                NombreCaActionPerformed(evt);
+            }
+        });
+
+        NombreRe.setEditable(false);
+        NombreRe.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                NombreReActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(210, 210, 210))
+            .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(48, 48, 48)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 547, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(32, 32, 32)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -105,16 +150,10 @@ public class DeColegios extends javax.swing.JFrame {
                                 .addComponent(jLabel4)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
                                 .addComponent(IdCa, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(171, 171, 171)))
-                .addComponent(Fecha, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(29, 29, 29))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(48, 48, 48)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 547, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(25, 25, 25)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(NombreRe, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(NombreCa, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(77, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -122,16 +161,11 @@ public class DeColegios extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(46, 46, 46)
-                        .addComponent(Fecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(17, 17, 17)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(66, 66, 66)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3)
-                            .addComponent(IdRe, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(IdRe, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(NombreRe, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(24, 24, 24)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2)
@@ -139,7 +173,11 @@ public class DeColegios extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4)
-                            .addComponent(IdCa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(IdCa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(NombreCa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(17, 17, 17)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(53, Short.MAX_VALUE))
@@ -147,10 +185,211 @@ public class DeColegios extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+     private boolean colegioExist = false; 
+     
     private void IdCaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IdCaActionPerformed
-        // TODO add your handling code here:
+     validarCa();
     }//GEN-LAST:event_IdCaActionPerformed
+    
+    private void validarCa() {
+        String idCandidato = IdCa.getText();
+        String nombreCandidato = NombreIdCa(idCandidato);
+
+        if (nombreCandidato != null) {
+            NombreRe.setText(nombreCandidato);
+        } else {
+            JOptionPane.showMessageDialog(this, "Candidato no existe", "Candidato no existe", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+   private String NombreIdCa(String id) {
+        String archivo = "Archivos\\Candidatos.txt";
+
+    try (BufferedReader reader = new BufferedReader(new FileReader(archivo))) {
+        String line;
+        while ((line = reader.readLine()) != null) {
+            String[] parts = line.split(",");
+            if (parts.length == 2 && parts[0].trim().equals(id)) {
+                return parts[1].trim();
+            }
+        }
+    } catch (IOException e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(this, "Error al leer el archivo", "Error", JOptionPane.ERROR_MESSAGE);
+    }
+
+    return null; 
+    }
+    
+    private void IdReActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IdReActionPerformed
+      validarRecinto();
+    }//GEN-LAST:event_IdReActionPerformed
+    
+ private void validarRecinto() {
+        String idRecinto = IdRe.getText();
+        String nombreRecinto = NombreIdRe(idRecinto);
+
+        if (nombreRecinto != null) {
+            NombreRe.setText(nombreRecinto);
+        } else {
+            JOptionPane.showMessageDialog(this, "Recinto no existe", "Recinto no existe", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+   private String NombreIdRe(String id) {
+        String archivo = "Archivos\\Recintos.txt";
+
+    try (BufferedReader reader = new BufferedReader(new FileReader(archivo))) {
+        String line;
+        while ((line = reader.readLine()) != null) {
+            String[] parts = line.split(",");
+            if (parts.length == 2 && parts[0].trim().equals(id)) {
+                return parts[1].trim();
+            }
+        }
+    } catch (IOException e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(this, "Error al leer el archivo", "Error", JOptionPane.ERROR_MESSAGE);
+    }
+
+    return null; 
+    }
+    
+    private void IdCoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IdCoActionPerformed
+     String idColegio = IdCo.getText();
+        buscarColegio(idColegio);
+
+        if (colegioExist) {
+            JOptionPane.showMessageDialog(this, "Modificando", "Modificando", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(this, "Creando", "Creando", JOptionPane.INFORMATION_MESSAGE);
+        }
+
+        if (colegioExist) {
+            modificarColegio(idColegio);
+        } else {
+            guardarColegio();
+        }
+    }//GEN-LAST:event_IdCoActionPerformed
+
+    private void buscarColegio(String idColegio) {
+        String archivo = "Archivos\\Colegio.txt";
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(archivo))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                if (line.trim().equals(idColegio)) {
+                    colegioExist = true;
+                    return;
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error al buscar el Id de Colegio", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
+        colegioExist = false;
+    }
+    
+    private void guardarColegio() {
+      String idColegio = IdCo.getText();
+    
+    // Validate if the id is not empty
+    if (idColegio.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Ingrese un Id de Colegio válido", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+    String archivo = "Archivos\\Colegio.txt";
+
+    try {
+        // Append the id to the file
+        Files.write(Paths.get(archivo), (idColegio + System.lineSeparator()).getBytes(), StandardOpenOption.APPEND);
+        JOptionPane.showMessageDialog(this, "Id de Colegio guardado exitosamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+    } catch (IOException e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(this, "Error al guardar el Id de Colegio", "Error", JOptionPane.ERROR_MESSAGE);
+      }
+    }
+    
+    private boolean modificarColegio(String idColegio) {
+        List<String> lineasModificadas = new ArrayList<>();
+
+    try (BufferedReader br = new BufferedReader(new FileReader("Archivos\\Colegio.txt"))) {
+        String linea;
+        boolean IdModificado = false;
+
+        while ((linea = br.readLine()) != null) {
+            String[] partes = linea.split("");
+            if (partes.length == 1 && partes[0].equals(idColegio)) {
+                partes[0] = idColegio + " - Modificado";
+                IdModificado = true;
+            }
+            // Agregamos la línea (modificada o no) a la lista
+            lineasModificadas.add(String.join("", partes));
+        }
+
+        if (IdModificado) {
+            // Ahora escribimos las líneas modificadas de vuelta al archivo
+            try (BufferedWriter bw = new BufferedWriter(new FileWriter("Archivos\\Colegio.txt"))) {
+                for (String lineaModificada : lineasModificadas) {
+                    bw.write(lineaModificada);
+                    bw.newLine(); // Agregamos un salto de línea después de cada línea
+                }
+            }
+        }
+        return IdModificado;
+    } catch (IOException ex) {
+        JOptionPane.showMessageDialog(null, "Error al leer el archivo " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        return false;
+    }
+   }
+ /* public DefaultTableModel Listar(String busqueda){
+      Vector vcabe = new Vector();
+       vcabe.addElement("IdCo");
+       vcabe.addElement("IdCa");
+       vcabe.addElement("TotalVo");
+       
+      DefaultTableModel mdlTabla = new DefaultTableModel(vcabe,0){
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                // Hacer que todas las celdas no sean editables
+                return false;
+            }
+        };
+      
+      try{
+          FileReader fw = new FileReader("Archivos\\Colegio.txt");
+          FileReader sw = new FileReader("Archivos\\Candidatos.txt");
+          BufferedReader br = new BufferedReader(fw);
+          BufferedReader sb = new BufferedReader(sw);
+          String d;
+          
+          while((d=br.readLine()) !=null  ){
+              String [] info = new String[3];
+              info=d.split(",");
+              
+              if((info[0].toUpperCase().contains(busqueda.toUpperCase())) ||
+                                info[1].toUpperCase().contains(busqueda.toUpperCase()) ||
+                                info[2].toUpperCase().contains(busqueda.toUpperCase())){
+              Vector x = new Vector();
+              x.addElement(info[0]);
+              x.addElement(info[1]);
+              x.addElement(info[2]);
+              mdlTabla.addRow(x);
+              }
+              
+                        }
+      }catch(java.io.IOException ioex){
+          JOptionPane.showMessageDialog(null, ioex.toString());
+      }
+        
+      return mdlTabla;  
+    } */
+    private void NombreCaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NombreCaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_NombreCaActionPerformed
+
+    private void NombreReActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NombreReActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_NombreReActionPerformed
 
     /**
      * @param args the command line arguments
@@ -178,6 +417,9 @@ public class DeColegios extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(DeColegios.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -188,10 +430,12 @@ public class DeColegios extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField Fecha;
     private javax.swing.JTextField IdCa;
     private javax.swing.JTextField IdCo;
     private javax.swing.JTextField IdRe;
+    private javax.swing.JTextField NombreCa;
+    private javax.swing.JTextField NombreRe;
+    private javax.swing.JTable Tabla;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -199,6 +443,5 @@ public class DeColegios extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
     // End of variables declaration//GEN-END:variables
 }

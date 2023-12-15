@@ -1,1 +1,2 @@
 PRM,Partido Revolucionario Moderno
+PLD,Partido de la Liberacion Dominicana
