@@ -70,6 +70,8 @@ public class DePartidos extends javax.swing.JFrame {
             }
         });
 
+        Votos.setEditable(false);
+
         jLabel4.setText("Votos");
 
         Buscar.setText("Buscar");
@@ -179,6 +181,7 @@ public class DePartidos extends javax.swing.JFrame {
                 // Verificar si el usuario ya existe en el archivo
                 if (modificarPartido(id, descripcion)) {
                     JOptionPane.showMessageDialog(null, "Información del partido modificada en el archivo.", "Información", JOptionPane.INFORMATION_MESSAGE);
+                    LimpiarCampos();
                     return; // Detener el proceso si el usuario ya existe y fue modificado
                 }
             }
@@ -192,21 +195,7 @@ public class DePartidos extends javax.swing.JFrame {
                     return; // Detener el proceso si no se pudo crear el archivo
                 }
             }
-
-            // Abrir flujos de escritura
-            try (FileWriter FW = new FileWriter(archivo, true);
-                BufferedWriter BW = new BufferedWriter(FW)) {
-
-                // Crear la línea formateada
-                String linea = String.format("%s,%s", id, descripcion);
-                System.out.println("Linea: " + linea);  // Agregar esta línea para imprimir la línea formateada
-
-                // Aquí se guarda la información
-                BW.write(linea);
-                BW.newLine(); // Añadir una nueva línea
-
-                JOptionPane.showMessageDialog(null, "Información guardada en el archivo.", "Información", JOptionPane.INFORMATION_MESSAGE);
-            }
+            CrearPartido(archivo, id, descripcion);
 
         } catch (IOException e) {
             // Capturar y manejar la excepción en caso de error
@@ -215,12 +204,38 @@ public class DePartidos extends javax.swing.JFrame {
 
     }//GEN-LAST:event_GuardarActionPerformed
 
+    private void CrearPartido(File archivo, String id, String descripcion) throws IOException{
+        // Abrir flujos de escritura
+        try (FileWriter FW = new FileWriter(archivo, true);
+            BufferedWriter BW = new BufferedWriter(FW)) {
+
+            // Crear la línea formateada
+            String linea = String.format("%s,%s", id, descripcion);
+            System.out.println("Linea: " + linea);  // Agregar esta línea para imprimir la línea formateada
+
+            // Aquí se guarda la información
+            BW.write(linea);
+            BW.newLine(); // Añadir una nueva línea
+
+            JOptionPane.showMessageDialog(null, "Información guardada en el archivo.", "Información", JOptionPane.INFORMATION_MESSAGE);
+            LimpiarCampos();
+        }
+        catch (IOException e) {
+            // Capturar y manejar la excepción en caso de error
+            JOptionPane.showMessageDialog(null, "Error al guardar en el archivo: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    } 
+    
     private void LimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LimpiarActionPerformed
-        Id.setText("");
-        Descripcion.setText("");
-        Votos.setText("");
+        LimpiarCampos();
     }//GEN-LAST:event_LimpiarActionPerformed
 
+    private void LimpiarCampos(){
+        Id.setText("");
+        Descripcion.setText("");
+        Votos.setText("");        
+    }
+    
     private void BuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BuscarActionPerformed
         buscarYRellenarPartido();
     }//GEN-LAST:event_BuscarActionPerformed
