@@ -341,7 +341,7 @@ public class DeColegios extends javax.swing.JFrame {
         return false;
     }
    }
- /* public DefaultTableModel Listar(String busqueda){
+ public DefaultTableModel Listar(String busqueda){
       Vector vcabe = new Vector();
        vcabe.addElement("IdCo");
        vcabe.addElement("IdCa");
@@ -382,7 +382,7 @@ public class DeColegios extends javax.swing.JFrame {
       }
         
       return mdlTabla;  
-    } */
+    } 
     private void NombreCaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NombreCaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_NombreCaActionPerformed
