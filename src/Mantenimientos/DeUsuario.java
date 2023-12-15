@@ -245,8 +245,8 @@ public class DeUsuario extends javax.swing.JFrame {
         String email = Email.getText();
 
         // Validar que el usuario y la contraseña no estén vacíos
-        if (usuario.isEmpty() || password.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "El usuario y la contraseña son obligatorios.", "Error", JOptionPane.ERROR_MESSAGE);
+        if (usuario.isEmpty() || password.isEmpty() || nombre.isEmpty() || apellido.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "El usuario, la contraseña, el nombre y el apellido son obligatorios.", "Error", JOptionPane.ERROR_MESSAGE);
             return; // Detener el proceso
         }
         
@@ -329,9 +329,8 @@ public class DeUsuario extends javax.swing.JFrame {
         } 
         catch (IOException e) {
             // Capturar y manejar la excepción en caso de error
-            JOptionPane.showMessageDialog(null, "Error al manejar el archivo: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-        }
-        
+            JOptionPane.showMessageDialog(null, "Error al guardar en el archivo: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }  
     }
     
     private boolean modificarUsuario(File archivo, String usuario, String password, String acceso, String nombre, String apellido, String email) {
