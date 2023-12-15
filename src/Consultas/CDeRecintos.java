@@ -113,7 +113,7 @@ public class CDeRecintos extends javax.swing.JFrame {
         };
       
       try{
-          FileReader fw = new FileReader("Archivos\\Recinto.txt");
+          FileReader fw = new FileReader("Archivos\\Recintos.txt");
           BufferedReader br = new BufferedReader(fw);
           String d;
           

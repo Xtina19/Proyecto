@@ -121,7 +121,7 @@ public class CDeUsuario extends javax.swing.JFrame {
         };
       
       try{
-          FileReader fw = new FileReader("Archivos\\Usuario.txt");
+          FileReader fw = new FileReader("Archivos\\Usuarios.txt");
           BufferedReader br = new BufferedReader(fw);
           String d;
           

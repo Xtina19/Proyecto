@@ -106,7 +106,7 @@ public class CDeAlianza extends javax.swing.JFrame {
         };
       
       try{
-          FileReader fw = new FileReader("Archivos\\Alianza.txt");
+          FileReader fw = new FileReader("Archivos\\Alianzas.txt");
           BufferedReader br = new BufferedReader(fw);
           String d;
           
