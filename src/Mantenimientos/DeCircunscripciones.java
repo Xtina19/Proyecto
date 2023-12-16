@@ -349,8 +349,8 @@ public class DeCircunscripciones extends javax.swing.JFrame {
                 String[] partes = linea.split(",");
                 if (partes.length == 4 && partes[0].equals(idCircunscripcion)) {
                     // Encontramos la circunscripcion, rellenamos los campos
-                    Nombre.setText(partes[1]);
-                    Id_Municipio.setText(partes[2]);
+                    Nombre.setText(partes[1].trim());
+                    Id_Municipio.setText(partes[2].trim());
         
                     // Convertir la cadena a entero antes de asignarlo al JSpinner
                     int cantCandidatos = Integer.parseInt(partes[3]);

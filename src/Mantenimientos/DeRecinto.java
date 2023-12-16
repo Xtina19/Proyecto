@@ -340,9 +340,9 @@ public class DeRecinto extends javax.swing.JFrame {
                 String[] partes = linea.split(",");
                 if (partes.length == 4 && partes[0].equals(id)) {
                     // Encontramos el partido, rellenamos los campos
-                    Nombre.setText(partes[1]);
-                    IdCir.setText(partes[2]);
-                    Direccion.setText(partes[3]);
+                    Nombre.setText(partes[1].trim());
+                    IdCir.setText(partes[2].trim());
+                    Direccion.setText(partes[3].trim());
                     return; // Terminamos la búsqueda una vez encontrado el recinto
                 }
             }

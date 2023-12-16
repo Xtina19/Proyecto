@@ -300,8 +300,8 @@ public class DePartidos extends javax.swing.JFrame {
                 String[] partes = linea.split(",");
                 if (partes.length == 3 && partes[0].equals(idPartido)) {
                     // Encontramos el partido, rellenamos los campos
-                    Descripcion.setText(partes[1]);
-                    Votos.setText(partes[2]);
+                    Descripcion.setText(partes[1].trim());
+                    Votos.setText(partes[2].trim());
                     return; // Terminamos la búsqueda una vez encontrado el partido
                 }
             }

@@ -292,7 +292,6 @@ public class DeMunicipios extends javax.swing.JFrame {
     
     private void buscarYRellenarMunicipio() {
         String idMunicipio = Id.getText().trim();
-        String nombre = Nombre.getText().trim();
         
         try (BufferedReader br = new BufferedReader(new FileReader("Archivos\\Municipios.txt"))) {
             String linea;
@@ -300,7 +299,7 @@ public class DeMunicipios extends javax.swing.JFrame {
                 String[] partes = linea.split(",");
                 if (partes.length == 2 && partes[0].equals(idMunicipio)) {
                     // Encontramos el municipio, rellenamos los campos
-                    Nombre.setText(partes[1]);
+                    Nombre.setText(partes[1].trim());
                     return; // Terminamos la búsqueda una vez encontrado el municipio
                 }
             }

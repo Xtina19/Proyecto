@@ -389,12 +389,12 @@ public class DeUsuario extends javax.swing.JFrame {
                 String[] partes = linea.split(",");
                 if (partes.length == 6 && partes[0].equals(usuario) && partes[1].equals (password)) {
                     // Encontramos el usuario, rellenamos los campos
-                    Nivel_acceso.setSelectedItem(partes[2]);
-                    Nombre.setText(partes[3]);
-                    Apellido.setText(partes[4]);
+                    Nivel_acceso.setSelectedItem(partes[2].trim());
+                    Nombre.setText(partes[3].trim());
+                    Apellido.setText(partes[4].trim());
                     
                     if(!"-".equals(partes[5])){
-                       Email.setText(partes[5]);                        
+                       Email.setText(partes[5].trim());                        
                     }
                     else if("-".equals(partes[5])){
                        Email.setText("");                        

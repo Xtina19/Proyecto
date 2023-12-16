@@ -394,10 +394,10 @@ public class DeCandidatos extends javax.swing.JFrame {
                 String[] partes = linea.split(",");
                 if (partes.length == 5 && partes[0].equals(id)) {
                     // Encontramos el partido, rellenamos los campos
-                    Nombre.setText(partes[1]);
-                    IdPar.setText(partes[2]);
-                    IdCir.setText(partes[3]);
-                    TotalVo.setText(partes[4]);
+                    Nombre.setText(partes[1].trim());
+                    IdPar.setText(partes[2].trim());
+                    IdCir.setText(partes[3].trim());
+                    TotalVo.setText(partes[4].trim());
                     return; // Terminamos la búsqueda una vez encontrado el partido
                 }
             }
