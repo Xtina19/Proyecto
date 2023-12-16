@@ -1,2 +1,2 @@
 CF,Cienfuegos
-LG,La gloria
+SO,Santiago Oeste

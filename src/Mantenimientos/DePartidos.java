@@ -181,7 +181,7 @@ public class DePartidos extends javax.swing.JFrame {
             // Verificar si el archivo existe
             if (archivo.exists()) {
                 // Verificar si el usuario ya existe en el archivo
-                if (modificarPartido(id, descripcion)) {
+                if (modificarPartido(archivo, id, descripcion)) {
                     JOptionPane.showMessageDialog(null, "Información del partido modificada en el archivo.", "Información", JOptionPane.INFORMATION_MESSAGE);
                     LimpiarCampos();
                     return; // Detener el proceso si el usuario ya existe y fue modificado
@@ -248,17 +248,17 @@ public class DePartidos extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_SalirActionPerformed
      
-    private boolean modificarPartido(String id, String descripcion) {
+    private boolean modificarPartido(File archivo,String id, String descripcion) {
         // Crear una lista para almacenar las líneas modificadas
         List<String> lineasModificadas = new ArrayList<>();
 
-        try (BufferedReader br = new BufferedReader(new FileReader("Archivos\\Partidos.txt"))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(archivo))) {
             String linea;
             boolean partidoModificado = false;
 
             while ((linea = br.readLine()) != null) {
                 String[] partes = linea.split(",");
-                if (partes.length == 2 && partes[0].equals(id)) {
+                if (partes.length == 3 && partes[0].equals(id)) {
                     // Encontramos el partido, rellenamos los campos
                     partes[1] = descripcion;
 
@@ -274,7 +274,7 @@ public class DePartidos extends javax.swing.JFrame {
 
             if (partidoModificado) {
                 // Ahora escribimos las líneas modificadas de vuelta al archivo
-                try (BufferedWriter bw = new BufferedWriter(new FileWriter("Archivos\\Partidos.txt"))) {
+                try (BufferedWriter bw = new BufferedWriter(new FileWriter(archivo))) {
                     for (String lineaModificada : lineasModificadas) {
                         bw.write(lineaModificada);
                         bw.newLine(); // Agregamos un salto de línea después de cada línea

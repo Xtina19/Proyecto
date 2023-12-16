@@ -9,6 +9,7 @@ import MenuPrincipal.MenuP;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -41,7 +42,7 @@ public class DeAlianza extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         Salir = new javax.swing.JButton();
         Id = new javax.swing.JTextField();
-        IdMu = new javax.swing.JTextField();
+        Id_Municipio = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         Buscar = new javax.swing.JButton();
@@ -126,7 +127,7 @@ public class DeAlianza extends javax.swing.JFrame {
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jLabel3)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 126, Short.MAX_VALUE)
-                                        .addComponent(IdMu, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(Id_Municipio, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -188,7 +189,7 @@ public class DeAlianza extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(IdMu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(Id_Municipio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -233,7 +234,7 @@ public class DeAlianza extends javax.swing.JFrame {
 
     private void LimpiarCampos(){
         Id.setText("");
-        IdMu.setText("");
+        Id_Municipio.setText("");
         Aliado1.setText("");
         Aliado2.setText("");
         Aliado3.setText("");
@@ -254,7 +255,7 @@ public class DeAlianza extends javax.swing.JFrame {
 
     private void GuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GuardarActionPerformed
         String id = Id.getText();
-        String idmu = IdMu.getText();
+        String id_municipio = Id_Municipio.getText();
         String ali1 = Aliado1.getText();
         String ali2 = Aliado2.getText();        
         String ali3 = Aliado3.getText();        
@@ -263,7 +264,7 @@ public class DeAlianza extends javax.swing.JFrame {
         String ali6 = Aliado6.getText();        
                         
         // Validar que el id y la descripcion no estén vacíos
-        if (id.isEmpty() || idmu.isEmpty()) {
+        if (id.isEmpty() || id_municipio.isEmpty()) {
             JOptionPane.showMessageDialog(null, "Todos los campos son obligatorios.", "Error", JOptionPane.ERROR_MESSAGE);
             return; // Detener el proceso
         }
@@ -294,7 +295,7 @@ public class DeAlianza extends javax.swing.JFrame {
             // Verificar si el archivo existe
             if (archivo.exists()) {
                 // Verificar si la circunscripcion ya existe en el archivo
-                if (modificarAlianza(id, idmu, ali1, ali2, ali3, ali4, ali5, ali6)) {
+                if (modificarAlianza(id, id_municipio, ali1, ali2, ali3, ali4, ali5, ali6)) {
                     JOptionPane.showMessageDialog(null, "Información de la alianza modificada en el archivo.", "Información", JOptionPane.INFORMATION_MESSAGE);
                     LimpiarCampos();
                     return; // Detener el proceso si la alianza ya existe y fue modificado
@@ -311,7 +312,7 @@ public class DeAlianza extends javax.swing.JFrame {
                 }
             }
 
-            CrearAlianza(archivo, id, idmu, ali1, ali2, ali3, ali4, ali5, ali6);
+            CrearAlianza(archivo, id, id_municipio, ali1, ali2, ali3, ali4, ali5, ali6);
 
         } catch (IOException e) {
             // Capturar y manejar la excepción en caso de error
@@ -319,27 +320,27 @@ public class DeAlianza extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_GuardarActionPerformed
     
-    private void CrearAlianza(File archivo, String id, String idmu, String ali1, String ali2, String ali3, String ali4, String ali5, String ali6) throws IOException{
+    private void CrearAlianza(File archivo, String id, String id_municipio, String ali1, String ali2, String ali3, String ali4, String ali5, String ali6) throws IOException{
         // Verificar si el id existe en el archivo de municipios
-        if(!buscarIdMunicipio(idmu)){
+        if(!buscarIdMunicipio(id_municipio)){
             return;
         }       
-        if(!buscarNombreAliado1(ali1)){
+        if(!buscarAliado1(ali1)){
             return;
         }
-        if(!buscarNombreAliado2(ali2)){
+        if(!buscarAliado2(ali2)){
             return;
         }
-        if(!buscarNombreAliado3(ali3)){
+        if(!buscarAliado3(ali3)){
             return;
         }
-        if(!buscarNombreAliado4(ali4)){
+        if(!buscarAliado4(ali4)){
             return;
         }
-        if(!buscarNombreAliado5(ali5)){
+        if(!buscarAliado5(ali5)){
             return;
         }
-        if(!buscarNombreAliado6(ali6)){
+        if(!buscarAliado6(ali6)){
             return;
         }
         
@@ -348,7 +349,7 @@ public class DeAlianza extends javax.swing.JFrame {
             BufferedWriter BW = new BufferedWriter(FW)) {
 
             // Crear la línea formateada
-            String linea = String.format("%s, %s, %s, %s, %s, %s, %s, %s", id, idmu,ali1, ali2, ali3, ali4, ali5, ali6);
+            String linea = String.format("%s, %s, %s, %s, %s, %s, %s, %s", id, id_municipio,ali1, ali2, ali3, ali4, ali5, ali6);
             System.out.println("Linea: " + linea);  // Agregar esta línea para imprimir la línea formateada
 
             // Aquí se guarda la información
@@ -364,22 +365,22 @@ public class DeAlianza extends javax.swing.JFrame {
         }  
     }
 
-     private boolean buscarIdMunicipio(String idmu) {
-         System.out.println("ID circunscripcion a buscar: " + idmu);
+     private boolean buscarIdMunicipio(String id_municipio) {
+         System.out.println("ID Municipio a buscar: " + id_municipio);
 
         try (BufferedReader br = new BufferedReader(new FileReader("Archivos\\Municipios.txt"))) {
             String linea;
             while ((linea = br.readLine()) != null) {
                 String[] partes = linea.split(",");
-                if (partes.length == 2 && partes[0].equals(idmu)) {
+                if (partes.length == 2 && partes[0].equals(id_municipio)) {
                     // Encontramos el id, rellenamos los campos
-                    IdMu.setText(partes[0]);
+                    Id_Municipio.setText(partes[0]);
                     return true; // Terminamos la búsqueda una vez encontrado el recinto
                 }
             }
 
             // Si llegamos aquí, el id no fue encontrado
-            JOptionPane.showMessageDialog(this, "Id municipio no encontrado", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Id Municipio no encontrado", "Error", JOptionPane.ERROR_MESSAGE);
 
         } 
         catch (IOException ex) {
@@ -387,8 +388,8 @@ public class DeAlianza extends javax.swing.JFrame {
         }
         return false;
     }
-    
-     private boolean buscarNombreAliado1(String ali1) {
+
+     private boolean buscarAliado1(String ali1) {
          System.out.println("ID Partido a buscar: " + ali1);
 
         try (BufferedReader br = new BufferedReader(new FileReader("Archivos\\Partidos.txt"))) {
@@ -397,12 +398,13 @@ public class DeAlianza extends javax.swing.JFrame {
                 String[] partes = linea.split(",");
                 if (partes.length == 3 && partes[0].equals(ali1)) {
                     // Encontramos el id, rellenamos los campos
-                    return true; // Terminamos la búsqueda una vez encontrado el partido
+                    Aliado1.setText(partes[0]);
+                    return true; // Terminamos la búsqueda una vez encontrado el recinto
                 }
             }
 
             // Si llegamos aquí, el id no fue encontrado
-            JOptionPane.showMessageDialog(this, "Partido no encontrado. Recuerde buscar por el ID del partido", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Id Aliadoo no encontrado", "Error", JOptionPane.ERROR_MESSAGE);
 
         } 
         catch (IOException ex) {
@@ -411,7 +413,7 @@ public class DeAlianza extends javax.swing.JFrame {
         return false;
     }
 
-     private boolean buscarNombreAliado2(String ali2) {
+     private boolean buscarAliado2(String ali2) {
          System.out.println("ID Partido a buscar: " + ali2);
 
         try (BufferedReader br = new BufferedReader(new FileReader("Archivos\\Partidos.txt"))) {
@@ -420,12 +422,13 @@ public class DeAlianza extends javax.swing.JFrame {
                 String[] partes = linea.split(",");
                 if (partes.length == 3 && partes[0].equals(ali2)) {
                     // Encontramos el id, rellenamos los campos
-                    return true; // Terminamos la búsqueda una vez encontrado el partido
+                    Aliado2.setText(partes[0]);
+                    return true; // Terminamos la búsqueda una vez encontrado el recinto
                 }
             }
 
             // Si llegamos aquí, el id no fue encontrado
-            JOptionPane.showMessageDialog(this, "Partido no encontrado. Recuerde buscar por el ID del partido", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Id Aliado no encontrado", "Error", JOptionPane.ERROR_MESSAGE);
 
         } 
         catch (IOException ex) {
@@ -434,7 +437,7 @@ public class DeAlianza extends javax.swing.JFrame {
         return false;
     }
 
-     private boolean buscarNombreAliado3(String ali3) {
+     private boolean buscarAliado3(String ali3) {
          System.out.println("ID Partido a buscar: " + ali3);
 
         try (BufferedReader br = new BufferedReader(new FileReader("Archivos\\Partidos.txt"))) {
@@ -443,12 +446,13 @@ public class DeAlianza extends javax.swing.JFrame {
                 String[] partes = linea.split(",");
                 if (partes.length == 3 && partes[0].equals(ali3)) {
                     // Encontramos el id, rellenamos los campos
-                    return true; // Terminamos la búsqueda una vez encontrado el partido
+                    Aliado3.setText(partes[0]);
+                    return true; // Terminamos la búsqueda una vez encontrado el recinto
                 }
             }
 
             // Si llegamos aquí, el id no fue encontrado
-            JOptionPane.showMessageDialog(this, "Partido no encontrado. Recuerde buscar por el ID del partido", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Id Aliado no encontrado", "Error", JOptionPane.ERROR_MESSAGE);
 
         } 
         catch (IOException ex) {
@@ -457,7 +461,7 @@ public class DeAlianza extends javax.swing.JFrame {
         return false;
     }
 
-     private boolean buscarNombreAliado4(String ali4) {
+     private boolean buscarAliado4(String ali4) {
          System.out.println("ID Partido a buscar: " + ali4);
 
         try (BufferedReader br = new BufferedReader(new FileReader("Archivos\\Partidos.txt"))) {
@@ -466,12 +470,13 @@ public class DeAlianza extends javax.swing.JFrame {
                 String[] partes = linea.split(",");
                 if (partes.length == 3 && partes[0].equals(ali4)) {
                     // Encontramos el id, rellenamos los campos
-                    return true; // Terminamos la búsqueda una vez encontrado el partido
+                    Aliado4.setText(partes[0]);
+                    return true; // Terminamos la búsqueda una vez encontrado el recinto
                 }
             }
 
             // Si llegamos aquí, el id no fue encontrado
-            JOptionPane.showMessageDialog(this, "Partido no encontrado. Recuerde buscar por el ID del partido", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Id Aliado no encontrado", "Error", JOptionPane.ERROR_MESSAGE);
 
         } 
         catch (IOException ex) {
@@ -480,7 +485,7 @@ public class DeAlianza extends javax.swing.JFrame {
         return false;
     }
 
-     private boolean buscarNombreAliado5(String ali5) {
+     private boolean buscarAliado5(String ali5) {
          System.out.println("ID Partido a buscar: " + ali5);
 
         try (BufferedReader br = new BufferedReader(new FileReader("Archivos\\Partidos.txt"))) {
@@ -489,12 +494,13 @@ public class DeAlianza extends javax.swing.JFrame {
                 String[] partes = linea.split(",");
                 if (partes.length == 3 && partes[0].equals(ali5)) {
                     // Encontramos el id, rellenamos los campos
-                    return true; // Terminamos la búsqueda una vez encontrado el partido
+                    Aliado5.setText(partes[0]);
+                    return true; // Terminamos la búsqueda una vez encontrado el recinto
                 }
             }
 
             // Si llegamos aquí, el id no fue encontrado
-            JOptionPane.showMessageDialog(this, "Partido no encontrado. Recuerde buscar por el ID del partido", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Id Aliado no encontrado", "Error", JOptionPane.ERROR_MESSAGE);
 
         } 
         catch (IOException ex) {
@@ -503,7 +509,7 @@ public class DeAlianza extends javax.swing.JFrame {
         return false;
     }
 
-     private boolean buscarNombreAliado6(String ali6) {
+     private boolean buscarAliado6(String ali6) {
          System.out.println("ID Partido a buscar: " + ali6);
 
         try (BufferedReader br = new BufferedReader(new FileReader("Archivos\\Partidos.txt"))) {
@@ -512,12 +518,13 @@ public class DeAlianza extends javax.swing.JFrame {
                 String[] partes = linea.split(",");
                 if (partes.length == 3 && partes[0].equals(ali6)) {
                     // Encontramos el id, rellenamos los campos
-                    return true; // Terminamos la búsqueda una vez encontrado el partido
+                    Aliado6.setText(partes[0]);
+                    return true; // Terminamos la búsqueda una vez encontrado el recinto
                 }
             }
 
             // Si llegamos aquí, el id no fue encontrado
-            JOptionPane.showMessageDialog(this, "Partido no encontrado. Recuerde buscar por el ID del partido", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Id Aliado no encontrado", "Error", JOptionPane.ERROR_MESSAGE);
 
         } 
         catch (IOException ex) {
@@ -526,9 +533,12 @@ public class DeAlianza extends javax.swing.JFrame {
         return false;
     }
      
-     private boolean modificarAlianza(String id, String idmu, String ali1, String ali2, String ali3, String ali4, String ali5, String ali6) {
+    private boolean modificarAlianza( String id, String id_municipio, String ali1, String ali2, String ali3, String ali4, String ali5, String ali6) {
         // Verificar si el id existe en el archivo de municipios
-        if(!buscarIdMunicipio(idmu)){
+        if(!buscarIdMunicipio(id_municipio)){
+            return false;
+        }
+        if(!buscarAliado1(ali1) || !buscarAliado2(ali2) || !buscarAliado3(ali3) || !buscarAliado4(ali4) || !buscarAliado5(ali5) || !buscarAliado6(ali6)){
             return false;
         }
 
@@ -543,7 +553,7 @@ public class DeAlianza extends javax.swing.JFrame {
                 String[] partes = linea.split(",");
                 if (partes.length == 8 && partes[0].equals(id)) {
                     // Encontramos la circunscripcion, rellenamos los campos
-                    partes[1] = idmu;
+                    partes[1] = id_municipio;
                     partes[2] = ali1;
                     partes[3] = ali2;
                     partes[4] = ali3;
@@ -577,9 +587,9 @@ public class DeAlianza extends javax.swing.JFrame {
         catch (IOException ex) {
             JOptionPane.showMessageDialog(null, "Error al leer el archivo " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             return false;
-        }
+        }    
     }
-    
+     
     private void buscarYRellenarAlianza() {
         String id = Id.getText().trim();
 
@@ -589,13 +599,13 @@ public class DeAlianza extends javax.swing.JFrame {
                 String[] partes = linea.split(",");
                 if (partes.length == 8 && partes[0].equals(id)) {
                     // Encontramos la circunscripcion, rellenamos los campos
-                    IdMu.setText(partes[1]);
-                    Aliado1.setText(partes[2]);                                            
-                    Aliado2.setText(partes[3]);                        
-                    Aliado3.setText(partes[4]);                        
-                    Aliado4.setText(partes[5]);                        
-                    Aliado5.setText(partes[6]);                        
-                    Aliado6.setText(partes[7]);                                            
+                    Id_Municipio.setText(partes[1].trim());
+                    Aliado1.setText(partes[2].trim());                                            
+                    Aliado2.setText(partes[3].trim());                        
+                    Aliado3.setText(partes[4].trim());                        
+                    Aliado4.setText(partes[5].trim());                        
+                    Aliado5.setText(partes[6].trim());                        
+                    Aliado6.setText(partes[7].trim());                                            
                     
                     return; // Terminamos la búsqueda una vez encontrada la circunscripcion
                 }
@@ -655,7 +665,7 @@ public class DeAlianza extends javax.swing.JFrame {
     private javax.swing.JButton Buscar;
     private javax.swing.JButton Guardar;
     private javax.swing.JTextField Id;
-    private javax.swing.JTextField IdMu;
+    private javax.swing.JTextField Id_Municipio;
     private javax.swing.JButton Limpiar;
     private javax.swing.JButton Salir;
     private javax.swing.JLabel Texto1;

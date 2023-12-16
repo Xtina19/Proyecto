@@ -186,6 +186,7 @@ public class DeCircunscripciones extends javax.swing.JFrame {
 
         if(cant_candidatos < 0){
             JOptionPane.showMessageDialog(null, "La cantidad de candidatos debe ser positiva", "Error", JOptionPane.ERROR_MESSAGE);
+            Cant_Candidatos.setValue(0);
             return; // Detener el proceso
         }
 
@@ -266,7 +267,7 @@ public class DeCircunscripciones extends javax.swing.JFrame {
     }//GEN-LAST:event_SalirActionPerformed
  
      private boolean buscarIdMunicipio(String id_municipio) {
-         System.out.println("ID a buscar: " + id_municipio);
+         System.out.println("ID Municipio a buscar: " + id_municipio);
 
         try (BufferedReader br = new BufferedReader(new FileReader("Archivos\\Municipios.txt"))) {
             String linea;
@@ -280,7 +281,7 @@ public class DeCircunscripciones extends javax.swing.JFrame {
             }
 
             // Si llegamos aquí, el id no fue encontrado
-            JOptionPane.showMessageDialog(this, "Id no encontrado", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Id Municipio no encontrado", "Error", JOptionPane.ERROR_MESSAGE);
 
         } 
         catch (IOException ex) {

@@ -289,15 +289,15 @@ public class DeCandidatos extends javax.swing.JFrame {
             String linea;
             while ((linea = br.readLine()) != null) {
                 String[] partes = linea.split(",");
-                if (partes.length == 2 && partes[0].equals(idpar)) {
+                if (partes.length == 3 && partes[0].equals(idpar)) {
                     // Encontramos el id, rellenamos los campos
-                    IdCir.setText(partes[0]);
+                    IdPar.setText(partes[0]);
                     return true; // Terminamos la búsqueda una vez encontrado el recinto
                 }
             }
 
             // Si llegamos aquí, el id no fue encontrado
-            JOptionPane.showMessageDialog(this, "Id no encontrado", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Id Partido no encontrado", "Error", JOptionPane.ERROR_MESSAGE);
 
         } 
         catch (IOException ex) {
@@ -321,7 +321,7 @@ public class DeCandidatos extends javax.swing.JFrame {
             }
 
             // Si llegamos aquí, el id no fue encontrado
-            JOptionPane.showMessageDialog(this, "Id no encontrado", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Id Circunscripcion no encontrado", "Error", JOptionPane.ERROR_MESSAGE);
 
         } 
         catch (IOException ex) {

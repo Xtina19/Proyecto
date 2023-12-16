@@ -46,7 +46,7 @@ public class MenuP extends javax.swing.JFrame {
             // Hacer algo específico para usuarios normales
             System.out.println("Es Usuario");
             Mantenimientos.setEnabled(false);
-            Movimientos.setEnabled(false);
+            Procesos.setEnabled(false);
         }
     }
 
@@ -76,7 +76,7 @@ public class MenuP extends javax.swing.JFrame {
         MCandidatos = new javax.swing.JMenuItem();
         Movimientos = new javax.swing.JMenu();
         Colegios = new javax.swing.JMenuItem();
-        jMenu4 = new javax.swing.JMenu();
+        Procesos = new javax.swing.JMenu();
         VotosColegios = new javax.swing.JMenuItem();
         jMenu5 = new javax.swing.JMenu();
         CUsuarios = new javax.swing.JMenuItem();
@@ -174,7 +174,7 @@ public class MenuP extends javax.swing.JFrame {
 
         jMenuBar1.add(Movimientos);
 
-        jMenu4.setText("Procesos");
+        Procesos.setText("Procesos");
 
         VotosColegios.setText("Procesar votos de colegios");
         VotosColegios.addActionListener(new java.awt.event.ActionListener() {
@@ -182,9 +182,9 @@ public class MenuP extends javax.swing.JFrame {
                 VotosColegiosActionPerformed(evt);
             }
         });
-        jMenu4.add(VotosColegios);
+        Procesos.add(VotosColegios);
 
-        jMenuBar1.add(jMenu4);
+        jMenuBar1.add(Procesos);
 
         jMenu5.setText("Consultas");
 
@@ -401,10 +401,10 @@ public class MenuP extends javax.swing.JFrame {
     private javax.swing.JMenuItem MUsuario;
     private javax.swing.JMenu Mantenimientos;
     private javax.swing.JMenu Movimientos;
+    private javax.swing.JMenu Procesos;
     private javax.swing.JMenuItem VotosColegios;
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem1;
     private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
