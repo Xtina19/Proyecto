@@ -38,7 +38,6 @@ public class DeAlianza extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel4 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         Salir = new javax.swing.JButton();
         Id = new javax.swing.JTextField();
@@ -47,12 +46,21 @@ public class DeAlianza extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         Buscar = new javax.swing.JButton();
         Limpiar = new javax.swing.JButton();
-        Aliados = new javax.swing.JTextField();
         Guardar = new javax.swing.JButton();
+        Texto1 = new javax.swing.JLabel();
+        Texto2 = new javax.swing.JLabel();
+        Texto3 = new javax.swing.JLabel();
+        Aliado1 = new javax.swing.JTextField();
+        Aliado3 = new javax.swing.JTextField();
+        Texto4 = new javax.swing.JLabel();
+        Texto5 = new javax.swing.JLabel();
+        Texto6 = new javax.swing.JLabel();
+        Aliado6 = new javax.swing.JTextField();
+        Aliado4 = new javax.swing.JTextField();
+        Aliado2 = new javax.swing.JTextField();
+        Aliado5 = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        jLabel4.setText("Partidos aliados");
 
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel1.setText("Mantenimientos de alianza");
@@ -89,6 +97,18 @@ public class DeAlianza extends javax.swing.JFrame {
             }
         });
 
+        Texto1.setText("Aliado 1:");
+
+        Texto2.setText("Aliado 2:");
+
+        Texto3.setText("Aliado 3:");
+
+        Texto4.setText("Aliado 4:");
+
+        Texto5.setText("Aliado 5:");
+
+        Texto6.setText("Aliado 6:");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -96,38 +116,64 @@ public class DeAlianza extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(25, 25, 25)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(Limpiar)
-                                .addGap(45, 45, 45))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(jLabel3)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(IdMu, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(Id, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                    .addComponent(jLabel4)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(Aliados, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(Buscar))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(62, 62, 62)
                         .addComponent(jLabel1))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(137, 137, 137)
-                        .addComponent(Salir, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(27, Short.MAX_VALUE))
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(80, 80, 80)
-                    .addComponent(Guardar)
-                    .addContainerGap(272, Short.MAX_VALUE)))
+                        .addGap(25, 25, 25)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel3)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 126, Short.MAX_VALUE)
+                                        .addComponent(IdMu, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(Id, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(Buscar))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(Texto1)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(Aliado1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(Texto2)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(Aliado2, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(Texto3)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(Aliado3, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(Texto4)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(Aliado4, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(Texto5)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(Aliado5, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(Texto6)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(Aliado6, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(Guardar)
+                        .addGap(65, 65, 65)
+                        .addComponent(Limpiar))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(Salir, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(56, 56, 56)))
+                .addGap(158, 158, 158))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -144,19 +190,38 @@ public class DeAlianza extends javax.swing.JFrame {
                     .addComponent(jLabel3)
                     .addComponent(IdMu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(Texto1)
+                            .addComponent(Aliado1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(Texto2)
+                            .addComponent(Aliado2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(Texto3)
+                            .addComponent(Aliado3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(Texto4)
+                            .addComponent(Aliado4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(Texto5)
+                            .addComponent(Aliado5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(Texto6)
+                            .addComponent(Aliado6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(67, 67, 67)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Aliados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(19, 19, 19)
-                .addComponent(Limpiar)
-                .addGap(18, 18, 18)
-                .addComponent(Salir)
-                .addContainerGap(44, Short.MAX_VALUE))
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                    .addContainerGap(214, Short.MAX_VALUE)
                     .addComponent(Guardar)
-                    .addGap(92, 92, 92)))
+                    .addComponent(Limpiar))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(Salir)
+                .addGap(42, 42, 42))
         );
 
         pack();
@@ -169,7 +234,12 @@ public class DeAlianza extends javax.swing.JFrame {
     private void LimpiarCampos(){
         Id.setText("");
         IdMu.setText("");
-        Aliados.setText("");        
+        Aliado1.setText("");
+        Aliado2.setText("");
+        Aliado3.setText("");
+        Aliado4.setText("");
+        Aliado5.setText("");
+        Aliado6.setText("");
     }
     
     private void SalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SalirActionPerformed
@@ -185,14 +255,38 @@ public class DeAlianza extends javax.swing.JFrame {
     private void GuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GuardarActionPerformed
         String id = Id.getText();
         String idmu = IdMu.getText();
-        String aliados = Aliados.getText();
-
+        String ali1 = Aliado1.getText();
+        String ali2 = Aliado2.getText();        
+        String ali3 = Aliado3.getText();        
+        String ali4 = Aliado4.getText();        
+        String ali5 = Aliado5.getText();        
+        String ali6 = Aliado6.getText();        
+                        
         // Validar que el id y la descripcion no estén vacíos
-        if (id.isEmpty() || id.isEmpty() || idmu.isEmpty() || aliados.isEmpty()) {
+        if (id.isEmpty() || idmu.isEmpty()) {
             JOptionPane.showMessageDialog(null, "Todos los campos son obligatorios.", "Error", JOptionPane.ERROR_MESSAGE);
             return; // Detener el proceso
         }
-
+        
+        if(ali1.isEmpty()){
+            ali1 = "-";
+        }
+        if(ali2.isEmpty()){
+            ali2 = "-";
+        }
+        if(ali3.isEmpty()){
+            ali3 = "-";
+        }
+        if(ali4.isEmpty()){
+            ali4 = "-";
+        }
+        if(ali5.isEmpty()){
+            ali5 = "-";
+        }
+        if(ali6.isEmpty()){
+            ali6 = "-";
+        }
+   
         try {
             // Intentar abrir el archivo
             File archivo = new File("Archivos\\Alianzas.txt");
@@ -200,7 +294,7 @@ public class DeAlianza extends javax.swing.JFrame {
             // Verificar si el archivo existe
             if (archivo.exists()) {
                 // Verificar si la circunscripcion ya existe en el archivo
-                if (modificarAlianza(id, idmu, aliados)) {
+                if (modificarAlianza(id, idmu, ali1, ali2, ali3, ali4, ali5, ali6)) {
                     JOptionPane.showMessageDialog(null, "Información de la alianza modificada en el archivo.", "Información", JOptionPane.INFORMATION_MESSAGE);
                     LimpiarCampos();
                     return; // Detener el proceso si la alianza ya existe y fue modificado
@@ -217,26 +311,44 @@ public class DeAlianza extends javax.swing.JFrame {
                 }
             }
 
-            CrearAlianza(archivo, id, idmu, aliados);
+            CrearAlianza(archivo, id, idmu, ali1, ali2, ali3, ali4, ali5, ali6);
 
         } catch (IOException e) {
             // Capturar y manejar la excepción en caso de error
             JOptionPane.showMessageDialog(null, "Error al manejar el archivo: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_GuardarActionPerformed
-
-    private void CrearAlianza(File archivo, String id, String idmu, String aliados) throws IOException{
+    
+    private void CrearAlianza(File archivo, String id, String idmu, String ali1, String ali2, String ali3, String ali4, String ali5, String ali6) throws IOException{
         // Verificar si el id existe en el archivo de municipios
-        if(!buscarIdMunicipio(idmu) || !buscarNombrePartido(aliados)){
+        if(!buscarIdMunicipio(idmu)){
             return;
         }       
+        if(!buscarNombreAliado1(ali1)){
+            return;
+        }
+        if(!buscarNombreAliado2(ali2)){
+            return;
+        }
+        if(!buscarNombreAliado3(ali3)){
+            return;
+        }
+        if(!buscarNombreAliado4(ali4)){
+            return;
+        }
+        if(!buscarNombreAliado5(ali5)){
+            return;
+        }
+        if(!buscarNombreAliado6(ali6)){
+            return;
+        }
         
         // Abrir flujos de escritura
         try (FileWriter FW = new FileWriter(archivo, true);
             BufferedWriter BW = new BufferedWriter(FW)) {
 
             // Crear la línea formateada
-            String linea = String.format("%s,%s,%s", id, idmu, aliados);
+            String linea = String.format("%s, %s, %s, %s, %s, %s, %s, %s", id, idmu,ali1, ali2, ali3, ali4, ali5, ali6);
             System.out.println("Linea: " + linea);  // Agregar esta línea para imprimir la línea formateada
 
             // Aquí se guarda la información
@@ -253,7 +365,7 @@ public class DeAlianza extends javax.swing.JFrame {
     }
 
      private boolean buscarIdMunicipio(String idmu) {
-         System.out.println("ID a buscar: " + idmu);
+         System.out.println("ID circunscripcion a buscar: " + idmu);
 
         try (BufferedReader br = new BufferedReader(new FileReader("Archivos\\Municipios.txt"))) {
             String linea;
@@ -267,7 +379,7 @@ public class DeAlianza extends javax.swing.JFrame {
             }
 
             // Si llegamos aquí, el id no fue encontrado
-            JOptionPane.showMessageDialog(this, "Id no encontrado", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Id municipio no encontrado", "Error", JOptionPane.ERROR_MESSAGE);
 
         } 
         catch (IOException ex) {
@@ -276,16 +388,130 @@ public class DeAlianza extends javax.swing.JFrame {
         return false;
     }
     
-     private boolean buscarNombrePartido(String aliados) {
-         System.out.println("ID Partido a buscar: " + aliados);
+     private boolean buscarNombreAliado1(String ali1) {
+         System.out.println("ID Partido a buscar: " + ali1);
 
         try (BufferedReader br = new BufferedReader(new FileReader("Archivos\\Partidos.txt"))) {
             String linea;
             while ((linea = br.readLine()) != null) {
                 String[] partes = linea.split(",");
-                if (partes.length == 2 && partes[0].equals(aliados)) {
+                if (partes.length == 3 && partes[0].equals(ali1)) {
                     // Encontramos el id, rellenamos los campos
-                    Aliados.setText(partes[0]);
+                    return true; // Terminamos la búsqueda una vez encontrado el partido
+                }
+            }
+
+            // Si llegamos aquí, el id no fue encontrado
+            JOptionPane.showMessageDialog(this, "Partido no encontrado. Recuerde buscar por el ID del partido", "Error", JOptionPane.ERROR_MESSAGE);
+
+        } 
+        catch (IOException ex) {
+            JOptionPane.showMessageDialog(this, "Error al leer el archivo", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        return false;
+    }
+
+     private boolean buscarNombreAliado2(String ali2) {
+         System.out.println("ID Partido a buscar: " + ali2);
+
+        try (BufferedReader br = new BufferedReader(new FileReader("Archivos\\Partidos.txt"))) {
+            String linea;
+            while ((linea = br.readLine()) != null) {
+                String[] partes = linea.split(",");
+                if (partes.length == 3 && partes[0].equals(ali2)) {
+                    // Encontramos el id, rellenamos los campos
+                    return true; // Terminamos la búsqueda una vez encontrado el partido
+                }
+            }
+
+            // Si llegamos aquí, el id no fue encontrado
+            JOptionPane.showMessageDialog(this, "Partido no encontrado. Recuerde buscar por el ID del partido", "Error", JOptionPane.ERROR_MESSAGE);
+
+        } 
+        catch (IOException ex) {
+            JOptionPane.showMessageDialog(this, "Error al leer el archivo", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        return false;
+    }
+
+     private boolean buscarNombreAliado3(String ali3) {
+         System.out.println("ID Partido a buscar: " + ali3);
+
+        try (BufferedReader br = new BufferedReader(new FileReader("Archivos\\Partidos.txt"))) {
+            String linea;
+            while ((linea = br.readLine()) != null) {
+                String[] partes = linea.split(",");
+                if (partes.length == 3 && partes[0].equals(ali3)) {
+                    // Encontramos el id, rellenamos los campos
+                    return true; // Terminamos la búsqueda una vez encontrado el partido
+                }
+            }
+
+            // Si llegamos aquí, el id no fue encontrado
+            JOptionPane.showMessageDialog(this, "Partido no encontrado. Recuerde buscar por el ID del partido", "Error", JOptionPane.ERROR_MESSAGE);
+
+        } 
+        catch (IOException ex) {
+            JOptionPane.showMessageDialog(this, "Error al leer el archivo", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        return false;
+    }
+
+     private boolean buscarNombreAliado4(String ali4) {
+         System.out.println("ID Partido a buscar: " + ali4);
+
+        try (BufferedReader br = new BufferedReader(new FileReader("Archivos\\Partidos.txt"))) {
+            String linea;
+            while ((linea = br.readLine()) != null) {
+                String[] partes = linea.split(",");
+                if (partes.length == 3 && partes[0].equals(ali4)) {
+                    // Encontramos el id, rellenamos los campos
+                    return true; // Terminamos la búsqueda una vez encontrado el partido
+                }
+            }
+
+            // Si llegamos aquí, el id no fue encontrado
+            JOptionPane.showMessageDialog(this, "Partido no encontrado. Recuerde buscar por el ID del partido", "Error", JOptionPane.ERROR_MESSAGE);
+
+        } 
+        catch (IOException ex) {
+            JOptionPane.showMessageDialog(this, "Error al leer el archivo", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        return false;
+    }
+
+     private boolean buscarNombreAliado5(String ali5) {
+         System.out.println("ID Partido a buscar: " + ali5);
+
+        try (BufferedReader br = new BufferedReader(new FileReader("Archivos\\Partidos.txt"))) {
+            String linea;
+            while ((linea = br.readLine()) != null) {
+                String[] partes = linea.split(",");
+                if (partes.length == 3 && partes[0].equals(ali5)) {
+                    // Encontramos el id, rellenamos los campos
+                    return true; // Terminamos la búsqueda una vez encontrado el partido
+                }
+            }
+
+            // Si llegamos aquí, el id no fue encontrado
+            JOptionPane.showMessageDialog(this, "Partido no encontrado. Recuerde buscar por el ID del partido", "Error", JOptionPane.ERROR_MESSAGE);
+
+        } 
+        catch (IOException ex) {
+            JOptionPane.showMessageDialog(this, "Error al leer el archivo", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        return false;
+    }
+
+     private boolean buscarNombreAliado6(String ali6) {
+         System.out.println("ID Partido a buscar: " + ali6);
+
+        try (BufferedReader br = new BufferedReader(new FileReader("Archivos\\Partidos.txt"))) {
+            String linea;
+            while ((linea = br.readLine()) != null) {
+                String[] partes = linea.split(",");
+                if (partes.length == 3 && partes[0].equals(ali6)) {
+                    // Encontramos el id, rellenamos los campos
                     return true; // Terminamos la búsqueda una vez encontrado el partido
                 }
             }
@@ -300,16 +526,12 @@ public class DeAlianza extends javax.swing.JFrame {
         return false;
     }
      
-     private boolean modificarAlianza(String id, String idmu, String aliados) {
+     private boolean modificarAlianza(String id, String idmu, String ali1, String ali2, String ali3, String ali4, String ali5, String ali6) {
         // Verificar si el id existe en el archivo de municipios
         if(!buscarIdMunicipio(idmu)){
             return false;
         }
-        
-        if(!buscarNombrePartido(aliados)){
-            return false;
-        }
-        
+
         // Crear una lista para almacenar las líneas modificadas
         List<String> lineasModificadas = new ArrayList<>();
 
@@ -319,10 +541,15 @@ public class DeAlianza extends javax.swing.JFrame {
 
             while ((linea = br.readLine()) != null) {
                 String[] partes = linea.split(",");
-                if (partes.length == 3 && partes[0].equals(id)) {
+                if (partes.length == 8 && partes[0].equals(id)) {
                     // Encontramos la circunscripcion, rellenamos los campos
                     partes[1] = idmu;
-                    partes[2] = aliados;
+                    partes[2] = ali1;
+                    partes[3] = ali2;
+                    partes[4] = ali3;
+                    partes[5] = ali4;
+                    partes[6] = ali5;
+                    partes[7] = ali6;
                     
                     // Agregamos la línea modificada a la lista
                     lineasModificadas.add(String.join(",", partes));
@@ -360,10 +587,16 @@ public class DeAlianza extends javax.swing.JFrame {
             String linea;
             while ((linea = br.readLine()) != null) {
                 String[] partes = linea.split(",");
-                if (partes.length == 3 && partes[0].equals(id)) {
+                if (partes.length == 8 && partes[0].equals(id)) {
                     // Encontramos la circunscripcion, rellenamos los campos
                     IdMu.setText(partes[1]);
-                    Aliados.setText(partes[2]);                    
+                    Aliado1.setText(partes[2]);                                            
+                    Aliado2.setText(partes[3]);                        
+                    Aliado3.setText(partes[4]);                        
+                    Aliado4.setText(partes[5]);                        
+                    Aliado5.setText(partes[6]);                        
+                    Aliado6.setText(partes[7]);                                            
+                    
                     return; // Terminamos la búsqueda una vez encontrada la circunscripcion
                 }
             }
@@ -413,16 +646,26 @@ public class DeAlianza extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField Aliados;
+    private javax.swing.JTextField Aliado1;
+    private javax.swing.JTextField Aliado2;
+    private javax.swing.JTextField Aliado3;
+    private javax.swing.JTextField Aliado4;
+    private javax.swing.JTextField Aliado5;
+    private javax.swing.JTextField Aliado6;
     private javax.swing.JButton Buscar;
     private javax.swing.JButton Guardar;
     private javax.swing.JTextField Id;
     private javax.swing.JTextField IdMu;
     private javax.swing.JButton Limpiar;
     private javax.swing.JButton Salir;
+    private javax.swing.JLabel Texto1;
+    private javax.swing.JLabel Texto2;
+    private javax.swing.JLabel Texto3;
+    private javax.swing.JLabel Texto4;
+    private javax.swing.JLabel Texto5;
+    private javax.swing.JLabel Texto6;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     // End of variables declaration//GEN-END:variables
 }

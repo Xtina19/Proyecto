@@ -112,7 +112,7 @@ public class Login extends javax.swing.JFrame {
     
         try {  
             // Intentar abrir el archivo
-             File archivo = new File("Archivos\\Usuario.txt");
+             File archivo = new File("Archivos\\Usuarios.txt");
            // Verificar si el archivo existe
         
         
