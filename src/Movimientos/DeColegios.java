@@ -1,6 +1,5 @@
 package Movimientos;
 
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
@@ -26,7 +25,6 @@ public class DeColegios extends javax.swing.JFrame {
      */
     public DeColegios() {
         initComponents();
-         // Tabla.setModel(Listar(""));
     }
 
     /**
@@ -52,6 +50,7 @@ public class DeColegios extends javax.swing.JFrame {
         NombreCa = new javax.swing.JTextField();
         NombreRe = new javax.swing.JTextField();
         Fecha = new com.toedter.calendar.JDateChooser();
+        Guardar = new javax.swing.JButton();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -122,21 +121,20 @@ public class DeColegios extends javax.swing.JFrame {
             }
         });
 
+        Guardar.setText("Guardar");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(54, 54, 54)
+                .addGap(183, 183, 183)
                 .addComponent(Fecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(27, 27, 27))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(48, 48, 48)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 547, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(32, 32, 32)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -156,15 +154,23 @@ public class DeColegios extends javax.swing.JFrame {
                         .addGap(25, 25, 25)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(NombreRe, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(NombreCa, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(77, Short.MAX_VALUE))
+                            .addComponent(NombreCa, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(314, 314, 314)
+                        .addComponent(Guardar))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(79, 79, 79)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 547, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(96, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(66, 66, 66)
+                        .addGap(17, 17, 17)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3)
                             .addComponent(IdRe, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -179,18 +185,19 @@ public class DeColegios extends javax.swing.JFrame {
                             .addComponent(IdCa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(NombreCa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(17, 17, 17)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(Fecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(18, 18, 18)
+                        .addGap(31, 31, 31)
+                        .addComponent(Fecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(53, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(Guardar)
+                .addGap(27, 27, 27))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
      private boolean colegioExist = false; 
+     private String idCandidatoActual;
      
     private void IdCaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IdCaActionPerformed
      validarCa();
@@ -231,14 +238,70 @@ public class DeColegios extends javax.swing.JFrame {
     
  private void validarRecinto() {
         String idRecinto = IdRe.getText();
-        String nombreRecinto = NombreIdRe(idRecinto);
+    String nombreRecinto = NombreIdRe(idRecinto);
 
-        if (nombreRecinto != null) {
+    if (nombreRecinto != null) {
+        // Verificar si la circunscripción del Candidato coincide con la del Recinto
+        if (validarCircunscripcion()) {
             NombreRe.setText(nombreRecinto);
         } else {
-            JOptionPane.showMessageDialog(this, "Recinto no existe", "Recinto no existe", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "La Circunscripción del Candidato no se corresponde con la del Recinto", "Error", JOptionPane.ERROR_MESSAGE);
+            IdRe.setText(""); // Limpiar el campo IdRecinto
+            NombreRe.setText(""); // Limpiar el campo NombreRe
         }
+    } else {
+        JOptionPane.showMessageDialog(this, "Recinto no existe", "Recinto no existe", JOptionPane.ERROR_MESSAGE);
     }
+    }
+  private boolean validarCircunscripcion() {
+    // Lógica para validar si la circunscripción del Candidato es la misma que la del Recinto
+    String circunscripcionCandidato = obtenerCircunscripcionCandidato(idCandidatoActual);
+    String circunscripcionRecinto = obtenerCircunscripcionRecinto(IdRe.getText());
+
+    return circunscripcionCandidato != null && circunscripcionCandidato.equals(circunscripcionRecinto);
+}
+
+  private String obtenerCircunscripcionCandidato(String idCandidato) {
+    // Lógica para obtener la circunscripción del Candidato
+    // Utiliza el archivo Candidato.txt o ajusta según la estructura de tus datos
+    String archivo = "Archivos\\Candidatos.txt";
+
+    try (BufferedReader reader = new BufferedReader(new FileReader(archivo))) {
+        String line;
+        while ((line = reader.readLine()) != null) {
+            String[] parts = line.split(",");
+            if (parts.length == 3 && parts[0].trim().equals(idCandidato)) {
+                return parts[2].trim();
+            }
+        }
+    } catch (IOException e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(this, "Error al leer el archivo de Candidatos", "Error", JOptionPane.ERROR_MESSAGE);
+    }
+
+    return null;
+}
+ private String obtenerCircunscripcionRecinto(String idRecinto) {
+    // Lógica para obtener la circunscripción del Recinto
+    // Utiliza el archivo Recinto.txt o ajusta según la estructura de tus datos
+    String archivo = "Archivos\\Recintos.txt";
+
+    try (BufferedReader reader = new BufferedReader(new FileReader(archivo))) {
+        String line;
+        while ((line = reader.readLine()) != null) {
+            String[] parts = line.split(",");
+            if (parts.length == 2 && parts[0].trim().equals(idRecinto)) {
+                return parts[1].trim();
+            }
+        }
+    } catch (IOException e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(this, "Error al leer el archivo de Recintos", "Error", JOptionPane.ERROR_MESSAGE);
+    }
+
+    return null;
+}
+ 
    private String NombreIdRe(String id) {
         String archivo = "Archivos\\Recintos.txt";
 
@@ -365,7 +428,7 @@ public class DeColegios extends javax.swing.JFrame {
         return false;
     }
    }
- public DefaultTableModel Listar(String busqueda){
+/* public DefaultTableModel Listar(String busqueda){
       Vector vcabe = new Vector();
        vcabe.addElement("IdCo");
        vcabe.addElement("IdCa");
@@ -406,7 +469,7 @@ public class DeColegios extends javax.swing.JFrame {
       }
         
       return mdlTabla;  
-    } 
+    } */
     private void NombreCaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NombreCaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_NombreCaActionPerformed
@@ -455,6 +518,7 @@ public class DeColegios extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.toedter.calendar.JDateChooser Fecha;
+    private javax.swing.JButton Guardar;
     private javax.swing.JTextField IdCa;
     private javax.swing.JTextField IdCo;
     private javax.swing.JTextField IdRe;
@@ -470,3 +534,4 @@ public class DeColegios extends javax.swing.JFrame {
     private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
 }
+
