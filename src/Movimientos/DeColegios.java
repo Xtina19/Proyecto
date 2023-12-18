@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
@@ -122,6 +123,11 @@ public class DeColegios extends javax.swing.JFrame {
         });
 
         Guardar.setText("Guardar");
+        Guardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                GuardarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -197,21 +203,14 @@ public class DeColegios extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
      private boolean colegioExist = false; 
-     private String idCandidatoActual;
      
     private void IdCaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IdCaActionPerformed
      validarCa();
     }//GEN-LAST:event_IdCaActionPerformed
     
     private void validarCa() {
-        String idCandidato = IdCa.getText();
-        String nombreCandidato = NombreIdCa(idCandidato);
-
-        if (nombreCandidato != null) {
-            NombreRe.setText(nombreCandidato);
-        } else {
-            JOptionPane.showMessageDialog(this, "Candidato no existe", "Candidato no existe", JOptionPane.ERROR_MESSAGE);
-        }
+       String idCandidato = IdCa.getText();
+      NombreCa.setText( NombreIdCa(idCandidato));
     }
    private String NombreIdCa(String id) {
         String archivo = "Archivos\\Candidatos.txt";
@@ -220,7 +219,7 @@ public class DeColegios extends javax.swing.JFrame {
         String line;
         while ((line = reader.readLine()) != null) {
             String[] parts = line.split(",");
-            if (parts.length == 2 && parts[0].trim().equals(id)) {
+            if (parts[0].trim().equals(id)) {
                 return parts[1].trim();
             }
         }
@@ -233,74 +232,17 @@ public class DeColegios extends javax.swing.JFrame {
     }
     
     private void IdReActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IdReActionPerformed
-      validarRecinto();
+      if(IdRe.getText().isEmpty()) {
+      NombreRe.setText(""); 
+          return;
+      }
+        validarRecinto();
     }//GEN-LAST:event_IdReActionPerformed
     
  private void validarRecinto() {
         String idRecinto = IdRe.getText();
-    String nombreRecinto = NombreIdRe(idRecinto);
-
-    if (nombreRecinto != null) {
-        // Verificar si la circunscripción del Candidato coincide con la del Recinto
-        if (validarCircunscripcion()) {
-            NombreRe.setText(nombreRecinto);
-        } else {
-            JOptionPane.showMessageDialog(this, "La Circunscripción del Candidato no se corresponde con la del Recinto", "Error", JOptionPane.ERROR_MESSAGE);
-            IdRe.setText(""); // Limpiar el campo IdRecinto
-            NombreRe.setText(""); // Limpiar el campo NombreRe
-        }
-    } else {
-        JOptionPane.showMessageDialog(this, "Recinto no existe", "Recinto no existe", JOptionPane.ERROR_MESSAGE);
+       NombreRe.setText( NombreIdRe(idRecinto));
     }
-    }
-  private boolean validarCircunscripcion() {
-    // Lógica para validar si la circunscripción del Candidato es la misma que la del Recinto
-    String circunscripcionCandidato = obtenerCircunscripcionCandidato(idCandidatoActual);
-    String circunscripcionRecinto = obtenerCircunscripcionRecinto(IdRe.getText());
-
-    return circunscripcionCandidato != null && circunscripcionCandidato.equals(circunscripcionRecinto);
-}
-
-  private String obtenerCircunscripcionCandidato(String idCandidato) {
-    // Lógica para obtener la circunscripción del Candidato
-    // Utiliza el archivo Candidato.txt o ajusta según la estructura de tus datos
-    String archivo = "Archivos\\Candidatos.txt";
-
-    try (BufferedReader reader = new BufferedReader(new FileReader(archivo))) {
-        String line;
-        while ((line = reader.readLine()) != null) {
-            String[] parts = line.split(",");
-            if (parts.length == 3 && parts[0].trim().equals(idCandidato)) {
-                return parts[2].trim();
-            }
-        }
-    } catch (IOException e) {
-        e.printStackTrace();
-        JOptionPane.showMessageDialog(this, "Error al leer el archivo de Candidatos", "Error", JOptionPane.ERROR_MESSAGE);
-    }
-
-    return null;
-}
- private String obtenerCircunscripcionRecinto(String idRecinto) {
-    // Lógica para obtener la circunscripción del Recinto
-    // Utiliza el archivo Recinto.txt o ajusta según la estructura de tus datos
-    String archivo = "Archivos\\Recintos.txt";
-
-    try (BufferedReader reader = new BufferedReader(new FileReader(archivo))) {
-        String line;
-        while ((line = reader.readLine()) != null) {
-            String[] parts = line.split(",");
-            if (parts.length == 2 && parts[0].trim().equals(idRecinto)) {
-                return parts[1].trim();
-            }
-        }
-    } catch (IOException e) {
-        e.printStackTrace();
-        JOptionPane.showMessageDialog(this, "Error al leer el archivo de Recintos", "Error", JOptionPane.ERROR_MESSAGE);
-    }
-
-    return null;
-}
  
    private String NombreIdRe(String id) {
         String archivo = "Archivos\\Recintos.txt";
@@ -309,7 +251,7 @@ public class DeColegios extends javax.swing.JFrame {
         String line;
         while ((line = reader.readLine()) != null) {
             String[] parts = line.split(",");
-            if (parts.length == 2 && parts[0].trim().equals(id)) {
+            if (parts[0].trim().equals(id)) {
                 return parts[1].trim();
             }
         }
@@ -320,25 +262,24 @@ public class DeColegios extends javax.swing.JFrame {
 
     return null; 
     }
-   private void guardarRecinto() {
-      String idRecinto = IdRe.getText();
-    
-    // Validate if the id is not empty
-    if (idRecinto.isEmpty()) {
-        JOptionPane.showMessageDialog(this, "Ingrese un Id de recinto válido", "Error", JOptionPane.ERROR_MESSAGE);
-        return;
-    }
+   private void guardarRecintoYColegio() {
+    String idColegio = IdCo.getText();
+    String idRecinto = IdRe.getText();
     String archivo = "Archivos\\Colegio.txt";
 
     try {
-        // Append the id to the file
-        Files.write(Paths.get(archivo), (idRecinto + System.lineSeparator()).getBytes(), StandardOpenOption.APPEND);
-        JOptionPane.showMessageDialog(this, "Id de recinto guardado exitosamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+        // Obtener la fecha seleccionada en el formato deseado
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        String fechaSeleccionada = dateFormat.format(Fecha.getDate());
+
+        // Append el ID del recinto, el ID del colegio y la fecha al archivo
+        Files.write(Paths.get(archivo), (idRecinto + "," + idColegio + "," + fechaSeleccionada + System.lineSeparator()).getBytes(), StandardOpenOption.APPEND);
+        JOptionPane.showMessageDialog(this, "ID de recinto, colegio y fecha guardados en Colegio.txt", "Éxito", JOptionPane.INFORMATION_MESSAGE);
     } catch (IOException e) {
         e.printStackTrace();
-        JOptionPane.showMessageDialog(this, "Error al guardar el Id de de recinto", "Error", JOptionPane.ERROR_MESSAGE);
-      }
+        JOptionPane.showMessageDialog(this, "Error al guardar el ID de recinto, colegio y fecha en Colegio.txt", "Error", JOptionPane.ERROR_MESSAGE);
     }
+}
    
     private void IdCoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IdCoActionPerformed
      String idColegio = IdCo.getText();
@@ -428,48 +369,6 @@ public class DeColegios extends javax.swing.JFrame {
         return false;
     }
    }
-/* public DefaultTableModel Listar(String busqueda){
-      Vector vcabe = new Vector();
-       vcabe.addElement("IdCo");
-       vcabe.addElement("IdCa");
-       vcabe.addElement("TotalVo");
-       
-      DefaultTableModel mdlTabla = new DefaultTableModel(vcabe,0){
-            @Override
-            public boolean isCellEditable(int row, int column) {
-                // Hacer que todas las celdas no sean editables
-                return false;
-            }
-        };
-      
-      try{
-          FileReader fw = new FileReader("Archivos\\Colegio.txt");
-          FileReader sw = new FileReader("Archivos\\Candidatos.txt");
-          BufferedReader br = new BufferedReader(fw);
-          BufferedReader sb = new BufferedReader(sw);
-          String d;
-          
-          while((d=br.readLine()) !=null  ){
-              String [] info = new String[3];
-              info=d.split(",");
-              
-              if((info[0].toUpperCase().contains(busqueda.toUpperCase())) ||
-                                info[1].toUpperCase().contains(busqueda.toUpperCase()) ||
-                                info[2].toUpperCase().contains(busqueda.toUpperCase())){
-              Vector x = new Vector();
-              x.addElement(info[0]);
-              x.addElement(info[1]);
-              x.addElement(info[2]);
-              mdlTabla.addRow(x);
-              }
-              
-                        }
-      }catch(java.io.IOException ioex){
-          JOptionPane.showMessageDialog(null, ioex.toString());
-      }
-        
-      return mdlTabla;  
-    } */
     private void NombreCaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NombreCaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_NombreCaActionPerformed
@@ -477,6 +376,10 @@ public class DeColegios extends javax.swing.JFrame {
     private void NombreReActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NombreReActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_NombreReActionPerformed
+
+    private void GuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GuardarActionPerformed
+        guardarRecintoYColegio();
+    }//GEN-LAST:event_GuardarActionPerformed
 
     /**
      * @param args the command line arguments
