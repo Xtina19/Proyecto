@@ -5,6 +5,13 @@
 package Procesos;
 
 import MenuPrincipal.MenuP;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -32,7 +39,7 @@ public class ProcesosVo extends javax.swing.JFrame {
         Ejecutar = new javax.swing.JButton();
         jDateChooser1 = new com.toedter.calendar.JDateChooser();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        Tabla = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -50,7 +57,7 @@ public class ProcesosVo extends javax.swing.JFrame {
             }
         });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        Tabla.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -61,7 +68,7 @@ public class ProcesosVo extends javax.swing.JFrame {
                 "Id", "Nombre", "Partido", "Votos Candidato"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(Tabla);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -97,7 +104,60 @@ public class ProcesosVo extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void EjecutarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EjecutarActionPerformed
-        // TODO add your handling code here:
+    // Obtener la fecha seleccionada del JDateChooser
+    Date fechaSeleccionada = jDateChooser1.getDate();
+
+    // Formatear la fecha en el formato deseado (por ejemplo, "dd-MM-yyyy")
+    SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+    String fechaFormateada = sdf.format(fechaSeleccionada);
+
+    // Crear un modelo de tabla para almacenar los datos
+    DefaultTableModel modeloTabla = new DefaultTableModel();
+    modeloTabla.addColumn("ID");
+    modeloTabla.addColumn("Nombre");
+    modeloTabla.addColumn("Partido");
+    modeloTabla.addColumn("Votos Candidato");
+
+    // Leer el archivo "Colegio" y buscar la información relacionada con la fecha
+    try (BufferedReader brColegio = new BufferedReader(new FileReader("Archivos\\Colegio.txt"))) {
+        String lineaColegio;
+        while ((lineaColegio = brColegio.readLine()) != null) {
+            // Supongamos que cada línea tiene el formato "fecha|ID"
+            String[] partesColegio = lineaColegio.split(",");
+
+            // Comparar la fecha en el archivo "Colegio" con la fecha seleccionada
+            if (partesColegio.length == 2 && partesColegio[0].equals(fechaFormateada)) {
+                // Obtener el ID del colegio
+                String idColegio = partesColegio[1];
+
+                // Leer el archivo "Detalle_Colegio" y buscar información relacionada con el ID del colegio
+                try (BufferedReader brDetalleColegio = new BufferedReader(new FileReader("Archivos\\Detalle_Colegio.txt"))) {
+                    String lineaDetalleColegio;
+                    while ((lineaDetalleColegio = brDetalleColegio.readLine()) != null) {
+                        // Supongamos que cada línea tiene el formato "ID|Nombre|Partido|Votos"
+                        String[] partesDetalleColegio = lineaDetalleColegio.split(",");
+
+                        // Comparar el ID del colegio en "Detalle_Colegio" con el ID obtenido de "Colegio"
+                        if (partesDetalleColegio.length == 4 && partesDetalleColegio[0].equals(idColegio)) {
+                            // Agregar la fila al modelo de la tabla
+                            modeloTabla.addRow(new String[]{idColegio, partesDetalleColegio[1], partesDetalleColegio[2], partesDetalleColegio[3]});
+                        }
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    // Manejo de errores para la lectura del archivo "Detalle_Colegio"
+                    JOptionPane.showMessageDialog(this, "Error al leer el archivo 'Detalle_Colegio'", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        }
+    } catch (IOException e) {
+        e.printStackTrace();
+        // Manejo de errores para la lectura del archivo "Colegio"
+        JOptionPane.showMessageDialog(this, "Error al leer el archivo 'Colegio'", "Error", JOptionPane.ERROR_MESSAGE);
+    }
+
+    // Establecer el modelo de la tabla con los datos encontrados
+    Tabla.setModel(modeloTabla);
     }//GEN-LAST:event_EjecutarActionPerformed
 
     private void SalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SalirActionPerformed
@@ -144,8 +204,8 @@ public class ProcesosVo extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Ejecutar;
     private javax.swing.JButton Salir;
+    private javax.swing.JTable Tabla;
     private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
 }
