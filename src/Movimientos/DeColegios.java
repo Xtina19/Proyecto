@@ -12,10 +12,10 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
-import javax.swing.JOptionPane;
+import javax.swing.JOptionPane; 
 import javax.swing.table.DefaultTableModel;
 
-/**Saludos soy yo
+/**
  *
  * @author User
  */
@@ -329,7 +329,6 @@ public class DeColegios extends javax.swing.JFrame {
     String archivo = "Archivos\\Colegio.txt";
 
     try {
-        // Append the id to the file
         Files.write(Paths.get(archivo), (idColegio + System.lineSeparator()).getBytes(), StandardOpenOption.APPEND);
         JOptionPane.showMessageDialog(this, "Id de Colegio guardado exitosamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
     } catch (IOException e) {
@@ -370,6 +369,32 @@ public class DeColegios extends javax.swing.JFrame {
         return false;
     }
    }
+ private void agregarIdColegioATabla(String idColegio) {
+    DefaultTableModel modeloTabla = (DefaultTableModel) Tabla.getModel();
+    modeloTabla.setRowCount(0);
+
+    Vector<String> rowData = new Vector<>();
+    rowData.add(idColegio);
+    modeloTabla.addRow(rowData);
+
+    // Guardar el idColegio en el archivo "detalles de colegio"
+    guardarIdColegioEnDetalles(idColegio);
+}
+
+private void guardarIdColegioEnDetalles(String idColegio) {
+    String archivoDetallesColegio = "Archivos\\DetallesColegio.txt";
+
+    try {
+        // Append el ID del colegio al archivo
+        Files.write(Paths.get(archivoDetallesColegio), (idColegio + System.lineSeparator()).getBytes(), StandardOpenOption.APPEND);
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+}  
+  
+  
+  
+
     private void NombreCaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NombreCaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_NombreCaActionPerformed
@@ -380,21 +405,9 @@ public class DeColegios extends javax.swing.JFrame {
 
     private void GuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GuardarActionPerformed
         guardarRecintoYColegio();
+ 
     }//GEN-LAST:event_GuardarActionPerformed
- private void agregarIdColegioATabla(String idColegio) {
-  
-    DefaultTableModel modeloTabla = (DefaultTableModel) Tabla.getModel();
-    modeloTabla.setRowCount(0);
 
-    Vector<Vector<String>> data = modeloTabla.getDataVector();
-    for (Vector<String> row : data) {
-        modeloTabla.addRow(row);
-    }
-    Vector<String> rowData = new Vector<>();
-    rowData.add(idColegio);
-    modeloTabla.addRow(rowData);
- }
-    
     /**
      * @param args the command line arguments
      */
