@@ -275,6 +275,7 @@ public class DeColegios extends javax.swing.JFrame {
         // Append el ID del recinto, el ID del colegio y la fecha al archivo
         Files.write(Paths.get(archivo), (idRecinto + "," + idColegio + "," + fechaSeleccionada + System.lineSeparator()).getBytes(), StandardOpenOption.APPEND);
         JOptionPane.showMessageDialog(this, "ID de recinto, colegio y fecha guardados en Colegio.txt", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+     agregarIdColegioATabla(idColegio);
     } catch (IOException e) {
         e.printStackTrace();
         JOptionPane.showMessageDialog(this, "Error al guardar el ID de recinto, colegio y fecha en Colegio.txt", "Error", JOptionPane.ERROR_MESSAGE);
@@ -380,7 +381,20 @@ public class DeColegios extends javax.swing.JFrame {
     private void GuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GuardarActionPerformed
         guardarRecintoYColegio();
     }//GEN-LAST:event_GuardarActionPerformed
+ private void agregarIdColegioATabla(String idColegio) {
+  
+    DefaultTableModel modeloTabla = (DefaultTableModel) Tabla.getModel();
+    modeloTabla.setRowCount(0);
 
+    Vector<Vector<String>> data = modeloTabla.getDataVector();
+    for (Vector<String> row : data) {
+        modeloTabla.addRow(row);
+    }
+    Vector<String> rowData = new Vector<>();
+    rowData.add(idColegio);
+    modeloTabla.addRow(rowData);
+ }
+    
     /**
      * @param args the command line arguments
      */
