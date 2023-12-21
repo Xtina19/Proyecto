@@ -2,6 +2,7 @@ package Movimientos;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -12,6 +13,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane; 
 import javax.swing.table.DefaultTableModel;
 
@@ -24,7 +27,7 @@ public class DeColegios extends javax.swing.JFrame {
     /**
      * Creates new form DeColegios
      */
-    public DeColegios() {
+    public DeColegios() throws IOException {
         initComponents();
          Tabla.setModel(Listar(""));
     }
@@ -368,50 +371,74 @@ public class DeColegios extends javax.swing.JFrame {
         return false;
     }
    }
-  public DefaultTableModel Listar(String busqueda){
-      Vector vcabe = new Vector();
-       vcabe.addElement("IdCo");
-       vcabe.addElement("IdCa");
-       vcabe.addElement("TotalVo");
+  public DefaultTableModel Listar(String busqueda) throws FileNotFoundException, IOException {
+    Vector vcabe = new Vector();
+    vcabe.addElement("IdCo");
+    vcabe.addElement("IdCa");
+    vcabe.addElement("TotalVo");
 
-      DefaultTableModel mdlTabla = new DefaultTableModel(vcabe,0){
-            @Override
-            public boolean isCellEditable(int row, int column) {
-                // Hacer que todas las celdas no sean editables
-                return false;
+    DefaultTableModel mdlTabla = new DefaultTableModel(vcabe, 0) {
+        @Override
+        public boolean isCellEditable(int row, int column) {
+            return false;
+        }
+    };
+
+    try {
+        // Leer y mostrar información de Colegio.txt
+        FileReader fwColegio = new FileReader("Archivos\\Colegio.txt");
+        BufferedReader brColegio = new BufferedReader(fwColegio);
+        String dColegio;
+
+        while ((dColegio = brColegio.readLine()) != null) {
+            String[] infoColegio = dColegio.split(",");
+
+            if ((infoColegio[0].toUpperCase().contains(busqueda.toUpperCase()))) {
+
+                Vector x = new Vector();
+                x.addElement(infoColegio[0]);
+                mdlTabla.addRow(x);
             }
-        };
-      
-      try{
-          FileReader fw = new FileReader("Archivos\\Colegio.txt");
-          FileReader fs = new FileReader("Archivos\\Candidatos.txt");
-          FileReader fm = new FileReader("Archivos\\ProcesarVotos.txt");
-          BufferedReader br = new BufferedReader(fw);
-          BufferedReader bd = new BufferedReader(fs);
-          BufferedReader bh = new BufferedReader(fm);
-          String d;
-          
-          while((d=br.readLine()) !=null  ){
-              String [] info = new String[5];
-              info=d.split(",");
-              
-              if((info[0].toUpperCase().contains(busqueda.toUpperCase())) ||
-                                info[1].toUpperCase().contains(busqueda.toUpperCase()) ||
-                                info[4].toUpperCase().contains(busqueda.toUpperCase())){
-              Vector x = new Vector();
-              x.addElement(info[0]);
-              x.addElement(info[1]);
-              x.addElement(info[4]);
-              mdlTabla.addRow(x);
-              }
-              
-                        }
-      }catch(java.io.IOException ioex){
-          JOptionPane.showMessageDialog(null, ioex.toString());
-      }
-        
-      return mdlTabla;  
+        }
+
+        // Leer y mostrar información de Candidatos.txt
+        FileReader fwCandidatos = new FileReader("Archivos\\Candidatos.txt");
+        BufferedReader brCandidatos = new BufferedReader(fwCandidatos);
+        String dCandidatos;
+
+        while ((dCandidatos = brCandidatos.readLine()) != null) {
+           String[] infoCandidatos = dCandidatos.split(",");
+
+            if ((infoCandidatos[0].toUpperCase().contains(busqueda.toUpperCase()))) {
+
+                Vector x = new Vector();
+                x.addElement(infoCandidatos[0]);
+                mdlTabla.addRow(x);
+            }
+        }
+
+        // Leer y mostrar información de ProcesarVotos.txt
+        FileReader fwProcesarVotos = new FileReader("Archivos\\ProcesarVotos.txt");
+        BufferedReader brProcesarVotos = new BufferedReader(fwProcesarVotos);
+        String dProcesarVotos;
+
+        while ((dProcesarVotos = brProcesarVotos.readLine()) != null) {
+              String[] infoVotos = dProcesarVotos.split(",");
+
+            if ((infoVotos[3].toUpperCase().contains(busqueda.toUpperCase()))) {
+
+                Vector x = new Vector();
+                x.addElement(infoVotos[3]);
+                mdlTabla.addRow(x);
+            }
+        }
+
+    } catch (java.io.IOException ioex) {
+        JOptionPane.showMessageDialog(null, ioex.toString());
     }
+    
+    return mdlTabla;
+  }
     private void NombreCaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NombreCaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_NombreCaActionPerformed
@@ -431,7 +458,11 @@ public class DeColegios extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new DeColegios().setVisible(true);
+                try {
+                    new DeColegios().setVisible(true);
+                } catch (IOException ex) {
+                    Logger.getLogger(DeColegios.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
