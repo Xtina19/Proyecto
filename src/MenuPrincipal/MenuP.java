@@ -22,6 +22,10 @@ import Consultas.CDeCircunscripciones;
 import Consultas.CDeMunicipios;
 import Consultas.CDePartidos;
 import Consultas.CDeUsuario;
+import Movimientos.DeColegios;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -347,9 +351,13 @@ public class MenuP extends javax.swing.JFrame {
     }//GEN-LAST:event_CAlianzaActionPerformed
 
     private void ColegiosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ColegiosActionPerformed
-        DeColegios Colegio = new DeColegios();
-        Colegio.setVisible(true);
-        this.dispose();
+        try {
+            DeColegios Colegio = new DeColegios();
+            Colegio.setVisible(true);
+            this.dispose();
+        } catch (IOException ex) {
+            Logger.getLogger(MenuP.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_ColegiosActionPerformed
 
     private void VotosColegiosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VotosColegiosActionPerformed
