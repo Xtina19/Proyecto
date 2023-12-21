@@ -389,7 +389,47 @@ private void guardarIdColegioEnDetalles(String idColegio) {
         e.printStackTrace();
     }
 }  
-  
+   public DefaultTableModel Listar(String busqueda){
+      Vector vcabe = new Vector();
+       vcabe.addElement("IdCandidatos");
+       vcabe.addElement("TotalVo");
+
+      DefaultTableModel mdlTabla = new DefaultTableModel(vcabe,0){
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                // Hacer que todas las celdas no sean editables
+                return false;
+            }
+        };
+      
+      try{
+          FileReader fw = new FileReader("Archivos\\Candidatos.txt");
+          BufferedReader br = new BufferedReader(fw);
+          String d;
+          
+          while((d=br.readLine()) !=null  ){
+              String [] info = new String[5];
+              info=d.split(",");
+              
+              if((info[0].toUpperCase().contains(busqueda.toUpperCase())) ||
+                                info[1].toUpperCase().contains(busqueda.toUpperCase()) ||
+                                info[5].toUpperCase().contains(busqueda.toUpperCase())){
+              Vector x = new Vector();
+              x.addElement(info[0]);
+              x.addElement(info[1]);
+              x.addElement(info[2]);
+              x.addElement(info[3]);
+              x.addElement(info[4]);
+              mdlTabla.addRow(x);
+              }
+              
+                        }
+      }catch(java.io.IOException ioex){
+          JOptionPane.showMessageDialog(null, ioex.toString());
+      }
+        
+      return mdlTabla;  
+    }
 
     private void NombreCaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NombreCaActionPerformed
         // TODO add your handling code here:
