@@ -321,7 +321,6 @@ public class DeColegios extends javax.swing.JFrame {
     private void guardarColegio() {
       String idColegio = IdCo.getText();
     
-    // Validate if the id is not empty
     if (idColegio.isEmpty()) {
         JOptionPane.showMessageDialog(this, "Ingrese un Id de Colegio válido", "Error", JOptionPane.ERROR_MESSAGE);
         return;
@@ -383,7 +382,6 @@ private void guardarIdColegioEnDetalles(String idColegio) {
     String archivoDetallesColegio = "Archivos\\DetallesColegio.txt";
 
     try {
-        // Append el ID del colegio al archivo
         Files.write(Paths.get(archivoDetallesColegio), (idColegio + System.lineSeparator()).getBytes(), StandardOpenOption.APPEND);
     } catch (IOException e) {
         e.printStackTrace();
