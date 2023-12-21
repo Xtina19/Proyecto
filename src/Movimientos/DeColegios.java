@@ -26,6 +26,7 @@ public class DeColegios extends javax.swing.JFrame {
      */
     public DeColegios() {
         initComponents();
+         Tabla.setModel(Listar(""));
     }
 
     /**
@@ -275,7 +276,6 @@ public class DeColegios extends javax.swing.JFrame {
         // Append el ID del recinto, el ID del colegio y la fecha al archivo
         Files.write(Paths.get(archivo), (idRecinto + "," + idColegio + "," + fechaSeleccionada + System.lineSeparator()).getBytes(), StandardOpenOption.APPEND);
         JOptionPane.showMessageDialog(this, "ID de recinto, colegio y fecha guardados en Colegio.txt", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-     agregarIdColegioATabla(idColegio);
     } catch (IOException e) {
         e.printStackTrace();
         JOptionPane.showMessageDialog(this, "Error al guardar el ID de recinto, colegio y fecha en Colegio.txt", "Error", JOptionPane.ERROR_MESSAGE);
@@ -368,47 +368,50 @@ public class DeColegios extends javax.swing.JFrame {
         return false;
     }
    }
- private void agregarIdColegioATabla(String idColegio) {
-    DefaultTableModel modeloTabla = (DefaultTableModel) Tabla.getModel();
-    Vector<String> rowData = new Vector<>();
-    rowData.add(idColegio);
-    modeloTabla.addRow(rowData);
+  public DefaultTableModel Listar(String busqueda){
+      Vector vcabe = new Vector();
+       vcabe.addElement("IdCo");
+       vcabe.addElement("IdCa");
+       vcabe.addElement("TotalVo");
 
-    // Guardar el idColegio en el archivo "detalles de colegio"
-    guardarIdColegioEnDetalles(idColegio);
-}
-
-private void guardarIdColegioEnDetalles(String idColegio) {
-    String archivoDetallesColegio = "Archivos\\DetallesColegio.txt";
-
-    try {
-        Files.write(Paths.get(archivoDetallesColegio), (idColegio + System.lineSeparator()).getBytes(), StandardOpenOption.APPEND);
-    } catch (IOException e) {
-        e.printStackTrace();
+      DefaultTableModel mdlTabla = new DefaultTableModel(vcabe,0){
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                // Hacer que todas las celdas no sean editables
+                return false;
+            }
+        };
+      
+      try{
+          FileReader fw = new FileReader("Archivos\\Colegio.txt");
+          FileReader fs = new FileReader("Archivos\\Candidatos.txt");
+          FileReader fm = new FileReader("Archivos\\ProcesarVotos.txt");
+          BufferedReader br = new BufferedReader(fw);
+          BufferedReader bd = new BufferedReader(fs);
+          BufferedReader bh = new BufferedReader(fm);
+          String d;
+          
+          while((d=br.readLine()) !=null  ){
+              String [] info = new String[5];
+              info=d.split(",");
+              
+              if((info[0].toUpperCase().contains(busqueda.toUpperCase())) ||
+                                info[1].toUpperCase().contains(busqueda.toUpperCase()) ||
+                                info[4].toUpperCase().contains(busqueda.toUpperCase())){
+              Vector x = new Vector();
+              x.addElement(info[0]);
+              x.addElement(info[1]);
+              x.addElement(info[4]);
+              mdlTabla.addRow(x);
+              }
+              
+                        }
+      }catch(java.io.IOException ioex){
+          JOptionPane.showMessageDialog(null, ioex.toString());
+      }
+        
+      return mdlTabla;  
     }
-}  
-private void agregarIdCandidatoATabla(String idCandidato) {
-    DefaultTableModel modeloTabla = (DefaultTableModel) Tabla.getModel();
-    Vector<String> rowData = new Vector<>();
-    rowData.add(IdCo.getText()); // Asume que IdCo contiene el ID de Colegio
-    rowData.add(idCandidato);
-    rowData.add("0"); // Votos, inicializados en 0, puedes ajustar según sea necesario
-    modeloTabla.addRow(rowData);
-
-    // Guardar el idCandidato en el archivo "detalles de candidato"
-    guardarIdCandidatoEnDetalles(idCandidato);
-}
-
-private void guardarIdCandidatoEnDetalles(String idCandidato) {
-    String archivoDetallesCandidato = "Archivos\\DetallesCandidato.txt";
-
-    try {
-        Files.write(Paths.get(archivoDetallesCandidato), (idCandidato + System.lineSeparator()).getBytes(), StandardOpenOption.APPEND);
-    } catch (IOException e) {
-        e.printStackTrace();
-    }
-}
-
     private void NombreCaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NombreCaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_NombreCaActionPerformed
@@ -418,20 +421,7 @@ private void guardarIdCandidatoEnDetalles(String idCandidato) {
     }//GEN-LAST:event_NombreReActionPerformed
 
     private void GuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GuardarActionPerformed
-        if (validarCampos()) {
-        guardarRecintoYColegio();
-        agregarIdCandidatoATabla(IdCa.getText());
-    } else {
-        JOptionPane.showMessageDialog(this, "Todos los campos son obligatorios", "Error", JOptionPane.ERROR_MESSAGE);
-    }
-   }
-
-  private boolean validarCampos() {
-    if (IdCo.getText().isEmpty() || IdRe.getText().isEmpty() || IdCa.getText().isEmpty()) {
-        return false;
-    }
-    return true;
- 
+      guardarRecintoYColegio(); 
     }//GEN-LAST:event_GuardarActionPerformed
 
     /**
