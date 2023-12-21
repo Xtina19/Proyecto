@@ -387,6 +387,28 @@ private void guardarIdColegioEnDetalles(String idColegio) {
         e.printStackTrace();
     }
 }  
+private void agregarIdCandidatoATabla(String idCandidato) {
+    DefaultTableModel modeloTabla = (DefaultTableModel) Tabla.getModel();
+    Vector<String> rowData = new Vector<>();
+    rowData.add(IdCo.getText()); // Asume que IdCo contiene el ID de Colegio
+    rowData.add(idCandidato);
+    rowData.add("0"); // Votos, inicializados en 0, puedes ajustar según sea necesario
+    modeloTabla.addRow(rowData);
+
+    // Guardar el idCandidato en el archivo "detalles de candidato"
+    guardarIdCandidatoEnDetalles(idCandidato);
+}
+
+private void guardarIdCandidatoEnDetalles(String idCandidato) {
+    String archivoDetallesCandidato = "Archivos\\DetallesCandidato.txt";
+
+    try {
+        Files.write(Paths.get(archivoDetallesCandidato), (idCandidato + System.lineSeparator()).getBytes(), StandardOpenOption.APPEND);
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+}
+
     private void NombreCaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NombreCaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_NombreCaActionPerformed
@@ -398,6 +420,7 @@ private void guardarIdColegioEnDetalles(String idColegio) {
     private void GuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GuardarActionPerformed
         if (validarCampos()) {
         guardarRecintoYColegio();
+        agregarIdCandidatoATabla(IdCa.getText());
     } else {
         JOptionPane.showMessageDialog(this, "Todos los campos son obligatorios", "Error", JOptionPane.ERROR_MESSAGE);
     }
