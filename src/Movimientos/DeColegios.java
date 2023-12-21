@@ -24,14 +24,14 @@ import javax.swing.table.DefaultTableModel;
  */
 public class DeColegios extends javax.swing.JFrame {
 
+     private boolean colegioExist = false; 
     /**
      * Creates new form DeColegios
      */
     public DeColegios() throws IOException {
         initComponents();
-         Tabla.setModel(Listar(""));
+        // Tabla.setModel(Listar(""));
     }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -206,8 +206,7 @@ public class DeColegios extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-     private boolean colegioExist = false; 
-     
+ 
     private void IdCaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IdCaActionPerformed
      validarCa();
     }//GEN-LAST:event_IdCaActionPerformed
@@ -276,9 +275,9 @@ public class DeColegios extends javax.swing.JFrame {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         String fechaSeleccionada = dateFormat.format(Fecha.getDate());
 
-        // Append el ID del recinto, el ID del colegio y la fecha al archivo
         Files.write(Paths.get(archivo), (idRecinto + "," + idColegio + "," + fechaSeleccionada + System.lineSeparator()).getBytes(), StandardOpenOption.APPEND);
         JOptionPane.showMessageDialog(this, "ID de recinto, colegio y fecha guardados en Colegio.txt", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+        agregarIdColegioATabla(idColegio);
     } catch (IOException e) {
         e.printStackTrace();
         JOptionPane.showMessageDialog(this, "Error al guardar el ID de recinto, colegio y fecha en Colegio.txt", "Error", JOptionPane.ERROR_MESSAGE);
@@ -371,74 +370,92 @@ public class DeColegios extends javax.swing.JFrame {
         return false;
     }
    }
-  public DefaultTableModel Listar(String busqueda) throws FileNotFoundException, IOException {
-    Vector vcabe = new Vector();
-    vcabe.addElement("IdCo");
-    vcabe.addElement("IdCa");
-    vcabe.addElement("TotalVo");
+  private void agregarIdColegioATabla(String idColegio) {
+    DefaultTableModel modeloTabla = (DefaultTableModel) Tabla.getModel();
+    Vector<String> rowData = new Vector<>();
+    rowData.add(idColegio);
+    modeloTabla.addRow(rowData);
 
-    DefaultTableModel mdlTabla = new DefaultTableModel(vcabe, 0) {
-        @Override
-        public boolean isCellEditable(int row, int column) {
-            return false;
-        }
-    };
+    // Guardar el idColegio en el archivo "detalles de colegio"
+    guardarIdColegioEnDetalles(idColegio);
+}
+
+private void guardarIdColegioEnDetalles(String idColegio) {
+    String archivoDetallesColegio = "Archivos\\DetallesColegio.txt";
 
     try {
-        // Leer y mostrar información de Colegio.txt
-        FileReader fwColegio = new FileReader("Archivos\\Colegio.txt");
-        BufferedReader brColegio = new BufferedReader(fwColegio);
-        String dColegio;
-
-        while ((dColegio = brColegio.readLine()) != null) {
-            String[] infoColegio = dColegio.split(",");
-
-            if ((infoColegio[0].toUpperCase().contains(busqueda.toUpperCase()))) {
-
-                Vector x = new Vector();
-                x.addElement(infoColegio[0]);
-                mdlTabla.addRow(x);
-            }
-        }
-
-        // Leer y mostrar información de Candidatos.txt
-        FileReader fwCandidatos = new FileReader("Archivos\\Candidatos.txt");
-        BufferedReader brCandidatos = new BufferedReader(fwCandidatos);
-        String dCandidatos;
-
-        while ((dCandidatos = brCandidatos.readLine()) != null) {
-           String[] infoCandidatos = dCandidatos.split(",");
-
-            if ((infoCandidatos[0].toUpperCase().contains(busqueda.toUpperCase()))) {
-
-                Vector x = new Vector();
-                x.addElement(infoCandidatos[0]);
-                mdlTabla.addRow(x);
-            }
-        }
-
-        // Leer y mostrar información de ProcesarVotos.txt
-        FileReader fwProcesarVotos = new FileReader("Archivos\\ProcesarVotos.txt");
-        BufferedReader brProcesarVotos = new BufferedReader(fwProcesarVotos);
-        String dProcesarVotos;
-
-        while ((dProcesarVotos = brProcesarVotos.readLine()) != null) {
-              String[] infoVotos = dProcesarVotos.split(",");
-
-            if ((infoVotos[3].toUpperCase().contains(busqueda.toUpperCase()))) {
-
-                Vector x = new Vector();
-                x.addElement(infoVotos[3]);
-                mdlTabla.addRow(x);
-            }
-        }
-
-    } catch (java.io.IOException ioex) {
-        JOptionPane.showMessageDialog(null, ioex.toString());
+        Files.write(Paths.get(archivoDetallesColegio), (idColegio + System.lineSeparator()).getBytes(), StandardOpenOption.APPEND);
+    } catch (IOException e) {
+        e.printStackTrace();
     }
-    
-    return mdlTabla;
-  }
+} 
+ /* public DefaultTableModel Listar(String busqueda) throws FileNotFoundException, IOException {
+    Vector vcabe = new Vector();
+        vcabe.addElement("IdCo");
+        vcabe.addElement("IdCa");
+        vcabe.addElement("TotalVo");
+
+        DefaultTableModel mdlTabla = new DefaultTableModel(vcabe, 0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+
+        try {
+            // Leer y mostrar información de Colegio.txt
+            FileReader fwColegio = new FileReader("Archivos\\Colegio.txt");
+            BufferedReader brColegio = new BufferedReader(fwColegio);
+            String dColegio;
+
+            while ((dColegio = brColegio.readLine()) != null) {
+                String[] infoColegio = new String[3];
+                infoColegio = dColegio.split(",");
+
+                if ((infoColegio[1].toUpperCase().contains(busqueda.toUpperCase()))) {
+                    Vector x = new Vector();
+                    x.addElement(infoColegio[1]);
+                    mdlTabla.addRow(x);
+                }
+            }
+
+            // Leer y mostrar información de Candidatos.txt
+            FileReader fwCandidatos = new FileReader("Archivos\\Candidatos.txt");
+            BufferedReader brCandidatos = new BufferedReader(fwCandidatos);
+            String dCandidatos;
+
+            while ((dCandidatos = brCandidatos.readLine()) != null) {
+                String[] infoCandidatos = new String[5];
+                infoCandidatos = dCandidatos.split(",");
+
+                if ((infoCandidatos[0].toUpperCase().contains(busqueda.toUpperCase()))) {
+                    Vector x = new Vector();
+                    x.addElement(infoCandidatos[0]);
+                    mdlTabla.addRow(x);
+                }
+            }
+
+            // Leer y mostrar información de ProcesarVotos.txt
+            FileReader fwProcesarVotos = new FileReader("Archivos\\ProcesarVotos.txt");
+            BufferedReader brProcesarVotos = new BufferedReader(fwProcesarVotos);
+            String dProcesarVotos;
+
+            while ((dProcesarVotos = brProcesarVotos.readLine()) != null) {
+                String[] infoVotos = new String[4];
+                infoVotos = dProcesarVotos.split(",");
+
+                if ((infoVotos[3].toUpperCase().contains(busqueda.toUpperCase()))) {
+                    Vector x = new Vector();
+                    x.addElement(infoVotos[3]);
+                    mdlTabla.addRow(x);
+                }
+            }
+
+        } catch (java.io.IOException ioex) {
+            JOptionPane.showMessageDialog(null, ioex.toString());
+        }
+        return mdlTabla;
+  }*/
     private void NombreCaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NombreCaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_NombreCaActionPerformed
