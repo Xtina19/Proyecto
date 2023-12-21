@@ -371,8 +371,6 @@ public class DeColegios extends javax.swing.JFrame {
    }
  private void agregarIdColegioATabla(String idColegio) {
     DefaultTableModel modeloTabla = (DefaultTableModel) Tabla.getModel();
-    modeloTabla.setRowCount(0);
-
     Vector<String> rowData = new Vector<>();
     rowData.add(idColegio);
     modeloTabla.addRow(rowData);
@@ -391,8 +389,6 @@ private void guardarIdColegioEnDetalles(String idColegio) {
         e.printStackTrace();
     }
 }  
-  
-  
   
 
     private void NombreCaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NombreCaActionPerformed
