@@ -1,2 +1,13 @@
-001,Luis Abinader,PRM,005, 0
-002,Abel Martinez,PLD,006, 0
+1,Jose Perez,1,3,0
+3,Rosa Rodriguez,1,3,0
+5,Carlos Jose,1,3,0
+7,Maria Almonte,1,3,0
+9,Juan Collado,1,3,0
+11,Jean Lopez,1,3,0
+2,Ramon Martinez,2,3,0
+4,Victor Garcia,2,3,0
+6,Bartolomé,2,3,0
+8,Danilo Fajardo,2,3,0
+10,Maricela Polanco,2,3,0
+12,Anthony Romeo,2,3,0
+15,Fabian Quezada,4,3,0
