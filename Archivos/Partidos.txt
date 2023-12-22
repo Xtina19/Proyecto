@@ -1,2 +1,5 @@
-PRM,Partido Revoluconario Moderno, 0
-
+1,Fuerza Del Pueblo,0
+2,PRM,0
+3,PLD,0
+4,PRSC,0
+5,PQDC,0
