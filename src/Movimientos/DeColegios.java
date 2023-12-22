@@ -2,7 +2,6 @@ package Movimientos;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -33,7 +32,7 @@ public class DeColegios extends javax.swing.JFrame {
        
         Guardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                GuardarActionPerformed(evt);
+               // GuardarActionPerformed(evt);
             }
         });
     }
@@ -61,6 +60,7 @@ public class DeColegios extends javax.swing.JFrame {
         NombreRe = new javax.swing.JTextField();
         Fecha = new com.toedter.calendar.JDateChooser();
         Guardar = new javax.swing.JButton();
+        Votos = new javax.swing.JTextField();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -106,13 +106,13 @@ public class DeColegios extends javax.swing.JFrame {
 
         Tabla.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "Id Colegio", "Id Candidato", "Votos"
+                "Id Colegio", "Id Candidato", "Nombre", "Total Votos"
             }
         ));
         jScrollPane2.setViewportView(Tabla);
@@ -135,6 +135,13 @@ public class DeColegios extends javax.swing.JFrame {
         Guardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 GuardarActionPerformed(evt);
+            }
+        });
+
+        Votos.setEditable(false);
+        Votos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                VotosActionPerformed(evt);
             }
         });
 
@@ -169,7 +176,9 @@ public class DeColegios extends javax.swing.JFrame {
                         .addGap(25, 25, 25)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(NombreRe, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(NombreCa, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(NombreCa, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addComponent(Votos, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(314, 314, 314)
                         .addComponent(Guardar))
@@ -198,7 +207,8 @@ public class DeColegios extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4)
                             .addComponent(IdCa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(NombreCa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(NombreCa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(Votos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(31, 31, 31)
                         .addComponent(Fecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -217,9 +227,11 @@ public class DeColegios extends javax.swing.JFrame {
     }//GEN-LAST:event_IdCaActionPerformed
     
     private void validarCa() {
-       String idCandidato = IdCa.getText();
-      NombreCa.setText( NombreIdCa(idCandidato));
-    }
+    String idCandidato = IdCa.getText();
+    NombreCa.setText(NombreIdCa(idCandidato));
+    Votos.setText(TotalVo(idCandidato));
+   }
+    
    private String NombreIdCa(String id) {
         String archivo = "Archivos\\Candidatos.txt";
 
@@ -238,6 +250,24 @@ public class DeColegios extends javax.swing.JFrame {
 
     return null; 
     }
+   private String TotalVo(String id) {
+    String archivo = "Archivos\\ProcesarVotos.txt";
+
+    try (BufferedReader reader = new BufferedReader(new FileReader(archivo))) {
+        String line;
+        while ((line = reader.readLine()) != null) {
+            String[] parts = line.split(",");
+            if (parts[0].trim().equals(id)) {
+                return parts[1].trim();
+            }
+        }
+    } catch (IOException e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(this, "Error al leer el archivo", "Error", JOptionPane.ERROR_MESSAGE);
+    }
+
+    return null;
+ }
     
     private void IdReActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IdReActionPerformed
       if(IdRe.getText().isEmpty()) {
@@ -284,7 +314,7 @@ public class DeColegios extends javax.swing.JFrame {
         if (colegioExist) {
             modificarColegio(idColegio);
         } else {
-            guardarColegio();
+            //guardarColegio();
         }
     }//GEN-LAST:event_IdCoActionPerformed
    private void buscarColegio(String idColegio) {
@@ -338,75 +368,18 @@ public class DeColegios extends javax.swing.JFrame {
         return false;
     }
    }
+  private void agregarIdColegioATabla(String idColegio) {
+    DefaultTableModel modeloTabla = (DefaultTableModel) Tabla.getModel();
+        Vector<String> rowData = new Vector<>();
+        rowData.add(idColegio);
+        rowData.add(IdCa.getText());  // ID del candidato
+        rowData.add(NombreCa.getText());  // Nombre del candidato
+        rowData.add(Votos.getText());  // Total de votos
+        modeloTabla.addRow(rowData);
 
- public DefaultTableModel Listar(String busqueda) throws FileNotFoundException, IOException {
-    Vector vcabe = new Vector();
-        vcabe.addElement("IdCo");
-        vcabe.addElement("IdCa");
-        vcabe.addElement("TotalVo");
-
-        DefaultTableModel mdlTabla = new DefaultTableModel(vcabe, 0) {
-            @Override
-            public boolean isCellEditable(int row, int column) {
-                return false;
-            }
-        };
-
-        try {
-            // Leer y mostrar información de Colegio.txt
-            FileReader fwColegio = new FileReader("Archivos\\Colegio.txt");
-            BufferedReader brColegio = new BufferedReader(fwColegio);
-            String dColegio;
-
-            while ((dColegio = brColegio.readLine()) != null) {
-                String[] infoColegio = new String[3];
-                infoColegio = dColegio.split(",");
-
-                if ((infoColegio[1].toUpperCase().contains(busqueda.toUpperCase()))) {
-                    Vector x = new Vector();
-                    x.addElement(infoColegio[1]);
-                    mdlTabla.addRow(x);
-                }
-            }
-
-            // Leer y mostrar información de Candidatos.txt
-            FileReader fwCandidatos = new FileReader("Archivos\\Candidatos.txt");
-            BufferedReader brCandidatos = new BufferedReader(fwCandidatos);
-            String dCandidatos;
-
-            while ((dCandidatos = brCandidatos.readLine()) != null) {
-                String[] infoCandidatos = new String[5];
-                infoCandidatos = dCandidatos.split(",");
-
-                if ((infoCandidatos[0].toUpperCase().contains(busqueda.toUpperCase()))) {
-                    Vector x = new Vector();
-                    x.addElement(infoCandidatos[0]);
-                    mdlTabla.addRow(x);
-                }
-            }
-
-            // Leer y mostrar información de ProcesarVotos.txt
-            FileReader fwProcesarVotos = new FileReader("Archivos\\ProcesarVotos.txt");
-            BufferedReader brProcesarVotos = new BufferedReader(fwProcesarVotos);
-            String dProcesarVotos;
-
-            while ((dProcesarVotos = brProcesarVotos.readLine()) != null) {
-                String[] infoVotos = new String[4];
-                infoVotos = dProcesarVotos.split(",");
-
-                if ((infoVotos[3].toUpperCase().contains(busqueda.toUpperCase()))) {
-                    Vector x = new Vector();
-                    x.addElement(infoVotos[3]);
-                    mdlTabla.addRow(x);
-                }
-            }
-
-        } catch (java.io.IOException ioex) {
-            JOptionPane.showMessageDialog(null, ioex.toString());
-        }
-        return mdlTabla;
-  }
- 
+        // Guardar el idColegio en el archivo "detalles de colegio"
+        guardarDetalles();
+ }
     private void NombreCaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NombreCaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_NombreCaActionPerformed
@@ -415,47 +388,70 @@ public class DeColegios extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_NombreReActionPerformed
   private void guardarColegio() {
+     // Verificar si todos los campos obligatorios están llenos
+    if (IdRe.getText().isEmpty() || IdCo.getText().isEmpty() || IdCa.getText().isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Todos los campos son obligatorios", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+    //Si proceso guardara los votos if (NombreCa.getText().isEmpty() || Votos.getText().isEmpty())
+    if (NombreCa.getText().isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Por favor, ingrese un ID de candidato válido", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+    //Si procesos estuviera completo seria asi (NombreCa.getText().isEmpty() || Votos.getText().isEmpty()) 
+    if (NombreRe.getText().isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Por favor, ingrese un ID de recinto válido", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+    String idRecinto = IdRe.getText();
     String idColegio = IdCo.getText();
-        String idRecinto = IdRe.getText();
-        String archivo = "Archivos\\Colegio.txt";
+    String archivo = "Archivos\\Colegio.txt";
 
-        try {
-            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-            String fechaSeleccionada = dateFormat.format(Fecha.getDate());
+    try {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        String fechaSeleccionada = dateFormat.format(Fecha.getDate());
 
-            // Modifiqué la línea para incluir también el ID del recinto
-            Files.write(Paths.get(archivo), (idRecinto + "," + idColegio + "," + fechaSeleccionada + System.lineSeparator()).getBytes(), StandardOpenOption.APPEND);
-            JOptionPane.showMessageDialog(this, "ID de recinto, colegio y fecha guardados en Colegio.txt", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-        } catch (IOException e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Error al guardar el ID de recinto, colegio y fecha en Colegio.txt", "Error", JOptionPane.ERROR_MESSAGE);
+        // Modifiqué la línea para incluir también el ID del recinto
+        Files.write(Paths.get(archivo), (idRecinto + "," + idColegio + "," + fechaSeleccionada + System.lineSeparator()).getBytes(), StandardOpenOption.APPEND);
+        JOptionPane.showMessageDialog(this, "ID de recinto, colegio y fecha guardados en Colegio.txt", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+
+        // Agregar a la tabla solo si no existe ya
+        if (!colegioExist) {
+            agregarIdColegioATabla(idColegio);
+            guardarDetalles();
         }
+
+    } catch (IOException e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(this, "Error al guardar el ID de recinto, colegio y fecha en Colegio.txt", "Error", JOptionPane.ERROR_MESSAGE);
+    }
    }
     private void guardarDetalles() {
-        try {
+       try {
             String detallesArchivo = "Archivos\\DetallesColegio.txt";
             BufferedWriter writer = new BufferedWriter(new FileWriter(detallesArchivo, true));
 
-            String idColegio = IdCo.getText();
-            String idCandidato = IdCa.getText();
-
-            // Modifiqué para obtener el valor del campo "TotalVo" (asegúrate de tener ese campo definido)
-            String totalVotos = "TotalVo"; // Reemplaza esto con el nombre correcto del campo
-
-            writer.write(idColegio + "," + idCandidato + "," + totalVotos);
+            writer.write(IdCa.getText() + "," + IdCa.getText());  // Cambiado a IdCa.getText() para obtener el ID del candidato
             writer.newLine();
 
             writer.close();
         } catch (IOException e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(this, "Error al guardar los detalles en detallesColegio.txt", "Error", JOptionPane.ERROR_MESSAGE);
-           }
+        }
     }
  
     private void GuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GuardarActionPerformed
        guardarColegio();
         guardarDetalles();
     }//GEN-LAST:event_GuardarActionPerformed
+
+    private void VotosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VotosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_VotosActionPerformed
 
     /**
      * @param args the command line arguments
@@ -482,6 +478,7 @@ public class DeColegios extends javax.swing.JFrame {
     private javax.swing.JTextField NombreCa;
     private javax.swing.JTextField NombreRe;
     private javax.swing.JTable Tabla;
+    private javax.swing.JTextField Votos;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
