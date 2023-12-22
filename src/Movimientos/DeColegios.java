@@ -30,7 +30,12 @@ public class DeColegios extends javax.swing.JFrame {
      */
     public DeColegios() throws IOException {
         initComponents();
-        // Tabla.setModel(Listar(""));
+       
+        Guardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                GuardarActionPerformed(evt);
+            }
+        });
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -265,24 +270,6 @@ public class DeColegios extends javax.swing.JFrame {
 
     return null; 
     }
-   private void guardarRecintoYColegio() {
-    String idColegio = IdCo.getText();
-    String idRecinto = IdRe.getText();
-    String archivo = "Archivos\\Colegio.txt";
-
-    try {
-        // Obtener la fecha seleccionada en el formato deseado
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        String fechaSeleccionada = dateFormat.format(Fecha.getDate());
-
-        Files.write(Paths.get(archivo), (idRecinto + "," + idColegio + "," + fechaSeleccionada + System.lineSeparator()).getBytes(), StandardOpenOption.APPEND);
-        JOptionPane.showMessageDialog(this, "ID de recinto, colegio y fecha guardados en Colegio.txt", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-        agregarIdColegioATabla(idColegio);
-    } catch (IOException e) {
-        e.printStackTrace();
-        JOptionPane.showMessageDialog(this, "Error al guardar el ID de recinto, colegio y fecha en Colegio.txt", "Error", JOptionPane.ERROR_MESSAGE);
-    }
-}
    
     private void IdCoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IdCoActionPerformed
      String idColegio = IdCo.getText();
@@ -300,8 +287,7 @@ public class DeColegios extends javax.swing.JFrame {
             guardarColegio();
         }
     }//GEN-LAST:event_IdCoActionPerformed
-
-    private void buscarColegio(String idColegio) {
+   private void buscarColegio(String idColegio) {
         String archivo = "Archivos\\Colegio.txt";
 
         try (BufferedReader reader = new BufferedReader(new FileReader(archivo))) {
@@ -320,24 +306,6 @@ public class DeColegios extends javax.swing.JFrame {
         colegioExist = false;
     }
     
-    private void guardarColegio() {
-      String idColegio = IdCo.getText();
-    
-    if (idColegio.isEmpty()) {
-        JOptionPane.showMessageDialog(this, "Ingrese un Id de Colegio válido", "Error", JOptionPane.ERROR_MESSAGE);
-        return;
-    }
-    String archivo = "Archivos\\Colegio.txt";
-
-    try {
-        Files.write(Paths.get(archivo), (idColegio + System.lineSeparator()).getBytes(), StandardOpenOption.APPEND);
-        JOptionPane.showMessageDialog(this, "Id de Colegio guardado exitosamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-    } catch (IOException e) {
-        e.printStackTrace();
-        JOptionPane.showMessageDialog(this, "Error al guardar el Id de Colegio", "Error", JOptionPane.ERROR_MESSAGE);
-      }
-    }
-    
     private boolean modificarColegio(String idColegio) {
         List<String> lineasModificadas = new ArrayList<>();
 
@@ -346,7 +314,7 @@ public class DeColegios extends javax.swing.JFrame {
         boolean IdModificado = false;
 
         while ((linea = br.readLine()) != null) {
-            String[] partes = linea.split("");
+            String[] partes = linea.split(",");
             if (partes.length == 1 && partes[0].equals(idColegio)) {
                 partes[0] = idColegio + " - Modificado";
                 IdModificado = true;
@@ -370,26 +338,8 @@ public class DeColegios extends javax.swing.JFrame {
         return false;
     }
    }
-  private void agregarIdColegioATabla(String idColegio) {
-    DefaultTableModel modeloTabla = (DefaultTableModel) Tabla.getModel();
-    Vector<String> rowData = new Vector<>();
-    rowData.add(idColegio);
-    modeloTabla.addRow(rowData);
 
-    // Guardar el idColegio en el archivo "detalles de colegio"
-    guardarIdColegioEnDetalles(idColegio);
-}
-
-private void guardarIdColegioEnDetalles(String idColegio) {
-    String archivoDetallesColegio = "Archivos\\DetallesColegio.txt";
-
-    try {
-        Files.write(Paths.get(archivoDetallesColegio), (idColegio + System.lineSeparator()).getBytes(), StandardOpenOption.APPEND);
-    } catch (IOException e) {
-        e.printStackTrace();
-    }
-} 
- /* public DefaultTableModel Listar(String busqueda) throws FileNotFoundException, IOException {
+ public DefaultTableModel Listar(String busqueda) throws FileNotFoundException, IOException {
     Vector vcabe = new Vector();
         vcabe.addElement("IdCo");
         vcabe.addElement("IdCa");
@@ -455,7 +405,8 @@ private void guardarIdColegioEnDetalles(String idColegio) {
             JOptionPane.showMessageDialog(null, ioex.toString());
         }
         return mdlTabla;
-  }*/
+  }
+ 
     private void NombreCaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NombreCaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_NombreCaActionPerformed
@@ -463,9 +414,47 @@ private void guardarIdColegioEnDetalles(String idColegio) {
     private void NombreReActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NombreReActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_NombreReActionPerformed
+  private void guardarColegio() {
+    String idColegio = IdCo.getText();
+        String idRecinto = IdRe.getText();
+        String archivo = "Archivos\\Colegio.txt";
 
+        try {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            String fechaSeleccionada = dateFormat.format(Fecha.getDate());
+
+            // Modifiqué la línea para incluir también el ID del recinto
+            Files.write(Paths.get(archivo), (idRecinto + "," + idColegio + "," + fechaSeleccionada + System.lineSeparator()).getBytes(), StandardOpenOption.APPEND);
+            JOptionPane.showMessageDialog(this, "ID de recinto, colegio y fecha guardados en Colegio.txt", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+        } catch (IOException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error al guardar el ID de recinto, colegio y fecha en Colegio.txt", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+   }
+    private void guardarDetalles() {
+        try {
+            String detallesArchivo = "Archivos\\DetallesColegio.txt";
+            BufferedWriter writer = new BufferedWriter(new FileWriter(detallesArchivo, true));
+
+            String idColegio = IdCo.getText();
+            String idCandidato = IdCa.getText();
+
+            // Modifiqué para obtener el valor del campo "TotalVo" (asegúrate de tener ese campo definido)
+            String totalVotos = "TotalVo"; // Reemplaza esto con el nombre correcto del campo
+
+            writer.write(idColegio + "," + idCandidato + "," + totalVotos);
+            writer.newLine();
+
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error al guardar los detalles en detallesColegio.txt", "Error", JOptionPane.ERROR_MESSAGE);
+           }
+    }
+ 
     private void GuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GuardarActionPerformed
-      guardarRecintoYColegio(); 
+       guardarColegio();
+        guardarDetalles();
     }//GEN-LAST:event_GuardarActionPerformed
 
     /**
