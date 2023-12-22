@@ -1,2 +1,2 @@
-001,Luis Abinader,PRM,006, 0
-002,Abel Martinez,PLD,005, 0
+001,Luis Abinader,PRM,005, 0
+002,Abel Martinez,PLD,006, 0

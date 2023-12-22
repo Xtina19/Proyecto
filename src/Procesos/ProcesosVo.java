@@ -8,6 +8,7 @@ import MenuPrincipal.MenuP;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.JOptionPane;
@@ -18,14 +19,17 @@ import javax.swing.table.DefaultTableModel;
  * @author User
  */
 public class ProcesosVo extends javax.swing.JFrame {
-
+    String IdRecinto;
+    String IDCandidato;
+    String VotoCa;
+    String VotoPa;    
     /**
      * Creates new form ProcesosVo
      */
     public ProcesosVo() {
         initComponents();
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -37,7 +41,7 @@ public class ProcesosVo extends javax.swing.JFrame {
 
         Salir = new javax.swing.JButton();
         Ejecutar = new javax.swing.JButton();
-        jDateChooser1 = new com.toedter.calendar.JDateChooser();
+        Fecha = new com.toedter.calendar.JDateChooser();
         jScrollPane1 = new javax.swing.JScrollPane();
         Tabla = new javax.swing.JTable();
 
@@ -59,13 +63,13 @@ public class ProcesosVo extends javax.swing.JFrame {
 
         Tabla.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
             },
             new String [] {
-                "Id", "Nombre", "Partido", "Votos Candidato"
+                "Id Candidato", "Voto Candidato", "Voto Partido"
             }
         ));
         jScrollPane1.setViewportView(Tabla);
@@ -76,7 +80,7 @@ public class ProcesosVo extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap(96, Short.MAX_VALUE)
-                .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(Fecha, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(Ejecutar)
                 .addGap(18, 18, 18)
@@ -91,7 +95,7 @@ public class ProcesosVo extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(58, 58, 58)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Fecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(Ejecutar)
                         .addComponent(Salir)))
@@ -104,68 +108,168 @@ public class ProcesosVo extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void EjecutarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EjecutarActionPerformed
-    // Obtener la fecha seleccionada del JDateChooser
-    Date fechaSeleccionada = jDateChooser1.getDate();
+        // Obtener la fecha seleccionada del JDateChooser
+        Date dateSeleccionada = Fecha.getDate();
+        
+        // Formatear la fecha seleccionada al formato del archivo
+        SimpleDateFormat sdfArchivo = new SimpleDateFormat("dd/MM/yyyy");
+        String fechaFormateada = sdfArchivo.format(dateSeleccionada);
 
-    // Formatear la fecha en el formato deseado (por ejemplo, "dd-MM-yyyy")
-    SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-    String fechaFormateada = sdf.format(fechaSeleccionada);
+        // Limpiar la tabla antes de mostrar nuevos resultados
+        DefaultTableModel model = (DefaultTableModel) Tabla.getModel();
+        model.setRowCount(0);
 
-    // Crear un modelo de tabla para almacenar los datos
-    DefaultTableModel modeloTabla = new DefaultTableModel();
-    modeloTabla.addColumn("ID");
-    modeloTabla.addColumn("Nombre");
-    modeloTabla.addColumn("Partido");
-    modeloTabla.addColumn("Votos Candidato");
-
-    // Leer el archivo "Colegio" y buscar la información relacionada con la fecha
-    try (BufferedReader brColegio = new BufferedReader(new FileReader("Archivos\\Colegio.txt"))) {
-        String lineaColegio;
-        while ((lineaColegio = brColegio.readLine()) != null) {
-            // Supongamos que cada línea tiene el formato "fecha|ID"
-            String[] partesColegio = lineaColegio.split(",");
-
-            // Comparar la fecha en el archivo "Colegio" con la fecha seleccionada
-            if (partesColegio.length == 2 && partesColegio[0].equals(fechaFormateada)) {
-                // Obtener el ID del colegio
-                String idColegio = partesColegio[1];
-
-                // Leer el archivo "Detalle_Colegio" y buscar información relacionada con el ID del colegio
-                try (BufferedReader brDetalleColegio = new BufferedReader(new FileReader("Archivos\\Detalle_Colegio.txt"))) {
-                    String lineaDetalleColegio;
-                    while ((lineaDetalleColegio = brDetalleColegio.readLine()) != null) {
-                        // Supongamos que cada línea tiene el formato "ID|Nombre|Partido|Votos"
-                        String[] partesDetalleColegio = lineaDetalleColegio.split(",");
-
-                        // Comparar el ID del colegio en "Detalle_Colegio" con el ID obtenido de "Colegio"
-                        if (partesDetalleColegio.length == 4 && partesDetalleColegio[0].equals(idColegio)) {
-                            // Agregar la fila al modelo de la tabla
-                            modeloTabla.addRow(new String[]{idColegio, partesDetalleColegio[1], partesDetalleColegio[2], partesDetalleColegio[3]});
-                        }
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    // Manejo de errores para la lectura del archivo "Detalle_Colegio"
-                    JOptionPane.showMessageDialog(this, "Error al leer el archivo 'Detalle_Colegio'", "Error", JOptionPane.ERROR_MESSAGE);
-                }
-            }
-        }
-    } catch (IOException e) {
-        e.printStackTrace();
-        // Manejo de errores para la lectura del archivo "Colegio"
-        JOptionPane.showMessageDialog(this, "Error al leer el archivo 'Colegio'", "Error", JOptionPane.ERROR_MESSAGE);
-    }
-
-    // Establecer el modelo de la tabla con los datos encontrados
-    Tabla.setModel(modeloTabla);
+        buscarIdColegio(fechaFormateada);
+        llenarTabla(IDCandidato, VotoCa, VotoPa);
     }//GEN-LAST:event_EjecutarActionPerformed
 
+    private void buscarIdColegio(String fechaFormateada) {
+         System.out.println("Fecha a buscar: " + fechaFormateada);
+
+        try (BufferedReader br = new BufferedReader(new FileReader("Archivos\\Colegio.txt"))) {
+            String linea;
+            while ((linea = br.readLine()) != null) {
+                String[] partes = linea.split(",");
+                if (partes.length == 3 && partes[2].equals(fechaFormateada)) {
+                    // Encontramos la fecha, rellenamos los campos
+                    IdRecinto = partes[0].trim();
+                    System.out.println("Recinto obtenido: "+IdRecinto);
+                    String IdColegio = partes[1].trim();
+                    System.out.println("Fecha encontrada");                    
+                    buscarIdCandidato(IdColegio.trim());
+                    return; // Terminamos la búsqueda una vez encontrada la fecha
+                }
+            }
+
+            // Si llegamos aquí, el id no fue encontrado
+            JOptionPane.showMessageDialog(this, "Fecha no encontrada", "Error", JOptionPane.ERROR_MESSAGE);
+
+        } 
+        catch (IOException ex) {
+            JOptionPane.showMessageDialog(this, "Error al leer el archivo", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+    private void buscarIdCandidato(String IdColegio) {
+        System.out.println("ID Colegio a buscar: " + IdColegio);
+
+        try (BufferedReader br = new BufferedReader(new FileReader("Archivos\\DetallesColegio.txt"))) {
+            String linea;
+            while ((linea = br.readLine()) != null) {
+                String[] partes = linea.split(",");
+                if (partes.length == 1 && partes[0].equals(IdColegio)) {
+                    System.out.println("Id Colegio encontrado");
+                    // Encontramos el id, rellenamos los campos
+                    String IdCandidato = partes[0].trim();                    
+                    buscarCandidato(IdCandidato.trim());
+                    return; // Terminamos la búsqueda una vez encontrado el id
+                }
+            }
+
+            // Si llegamos aquí, el id no fue encontrado
+            JOptionPane.showMessageDialog(this, "Id Candidato no encontrado", "Error", JOptionPane.ERROR_MESSAGE);
+
+        } 
+        catch (IOException ex) {
+            JOptionPane.showMessageDialog(this, "Error al leer el archivo", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void buscarCandidato(String IdCandidato) {
+         System.out.println("Id Candidato a buscar: " + IdCandidato);
+
+        try (BufferedReader br = new BufferedReader(new FileReader("Archivos\\Candidatos.txt"))) {
+            String linea;
+            while ((linea = br.readLine()) != null) {
+                String[] partes = linea.split(",");
+                if (partes.length == 5 && partes[0].equals(IdCandidato)) {
+                    // Encontramos la fecha, rellenamos los campos
+                    String IdPartido = partes[2].trim();
+                    String IdCircunscripcion = partes[3].trim();
+                    VotoCa = partes[4].trim();
+                    System.out.println("Id Candidato encontrado"); 
+                    IDCandidato = IdCandidato.trim();
+                    buscarRecinto(IdCircunscripcion.trim());
+                    buscarPartido(IdPartido.trim());
+                    return; // Terminamos la búsqueda una vez encontrado el candidato
+                }
+            }
+
+            // Si llegamos aquí, el id no fue encontrado
+            JOptionPane.showMessageDialog(this, "Id Candidato no encontrado", "Error", JOptionPane.ERROR_MESSAGE);
+
+        } 
+        catch (IOException ex) {
+            JOptionPane.showMessageDialog(this, "Error al leer el archivo", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+    private void buscarRecinto(String IdCircunscripcion) {
+         System.out.println("ID Circunscripcion a buscar: " + IdCircunscripcion);
+
+        try (BufferedReader br = new BufferedReader(new FileReader("Archivos\\Recintos.txt"))) {
+            String linea;
+            while ((linea = br.readLine()) != null) {
+                String[] partes = linea.split(",");
+                if (partes.length == 4 && partes[2].equals(IdCircunscripcion)) {
+                    System.out.println("Id Circunscripcion encontrada");
+                    // Encontramos el id, rellenamos los campos  
+                    String Idrecinto = partes[0].trim();
+                    if(Idrecinto.equals(IdRecinto)){
+                        System.out.println("Recinto encontrado");
+                        return; // Terminamos la búsqueda una vez encontrado el id
+                    }
+                    else{
+                        JOptionPane.showMessageDialog(this, "Los recintos no coinciden", "Error", JOptionPane.ERROR_MESSAGE);                        
+                        return;
+                    }
+                }
+            }
+
+            // Si llegamos aquí, el id no fue encontrado
+            JOptionPane.showMessageDialog(this, "Id Circunscripcion no encontrada", "Error", JOptionPane.ERROR_MESSAGE);
+
+        } 
+        catch (IOException ex) {
+            JOptionPane.showMessageDialog(this, "Error al leer el archivo", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }    
+    
     private void SalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SalirActionPerformed
         MenuP menu = new MenuP();
         menu.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_SalirActionPerformed
+ 
+    private void buscarPartido(String IdPartido){
+         System.out.println("ID Partido a buscar: " + IdPartido);
 
+        try (BufferedReader br = new BufferedReader(new FileReader("Archivos\\Partidos.txt"))) {
+            String linea;
+            while ((linea = br.readLine()) != null) {
+                String[] partes = linea.split(",");
+                if (partes.length == 3 && partes[0].equals(IdPartido)) {
+                    // Encontramos el id, rellenamos los campos
+                    VotoPa = partes[2].trim();
+                    System.out.println("Id Partido encontrado");
+                    return; // Terminamos la búsqueda una vez encontrado el recinto
+                }
+            }
+
+            // Si llegamos aquí, el id no fue encontrado
+            JOptionPane.showMessageDialog(this, "Id Partido no encontrado", "Error", JOptionPane.ERROR_MESSAGE);
+
+        } 
+        catch (IOException ex) {
+            JOptionPane.showMessageDialog(this, "Error al leer el archivo", "Error", JOptionPane.ERROR_MESSAGE);
+        }       
+    }
+       
+    private void llenarTabla(String IDCandidato, String VotoCa, String VotoPa) {
+        DefaultTableModel model = (DefaultTableModel) Tabla.getModel();
+        model.addRow(new Object[]{IDCandidato, VotoCa, VotoPa});
+    }   
+    
     /**
      * @param args the command line arguments
      */
@@ -203,9 +307,9 @@ public class ProcesosVo extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Ejecutar;
+    private com.toedter.calendar.JDateChooser Fecha;
     private javax.swing.JButton Salir;
     private javax.swing.JTable Tabla;
-    private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }
