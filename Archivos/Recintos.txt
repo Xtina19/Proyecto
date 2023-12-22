@@ -1,4 +1,4 @@
 100,Escuela Rafael Ramos,3,Centro Ciudad
-100,Colegio Sagrado,3,Av.Juan Pablo Duarte
+101,Colegio Sagrado,3,Av.Juan Pablo Duarte
 102,Escuela Onesimo Jimenez,3,Baitoa
 103,Codia,3,Villa Olimpica

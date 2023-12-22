@@ -385,18 +385,16 @@ public class DeColegios extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_NombreReActionPerformed
   private void guardarColegio() {
-     // Verificar si todos los campos obligatorios están llenos
-    if (IdRe.getText().isEmpty() || IdCo.getText().isEmpty() || IdCa.getText().isEmpty()) {
-        JOptionPane.showMessageDialog(this, "Todos los campos son obligatorios", "Error", JOptionPane.ERROR_MESSAGE);
+     if (IdRe.getText().isEmpty() || IdCo.getText().isEmpty() || IdCa.getText().isEmpty() || Fecha.getDate() == null) {
+        JOptionPane.showMessageDialog(this, "Todos los campos son obligatorios, incluida la fecha", "Error", JOptionPane.ERROR_MESSAGE);
         return;
     }
 
-    if (NombreCa.getText().isEmpty() || Votos.getText().isEmpty()) {
+    if (NombreCa.getText().isEmpty()) {
         JOptionPane.showMessageDialog(this, "Por favor, ingrese un ID de candidato válido", "Error", JOptionPane.ERROR_MESSAGE);
         return;
     }
 
-    //Si procesos estuviera completo seria asi (NombreCa.getText().isEmpty() || Votos.getText().isEmpty()) 
     if (NombreRe.getText().isEmpty()) {
         JOptionPane.showMessageDialog(this, "Por favor, ingrese un ID de recinto válido", "Error", JOptionPane.ERROR_MESSAGE);
         return;
@@ -430,7 +428,7 @@ public class DeColegios extends javax.swing.JFrame {
             String detallesArchivo = "Archivos\\DetallesColegio.txt";
             BufferedWriter writer = new BufferedWriter(new FileWriter(detallesArchivo, true));
 
-            writer.write(IdCa.getText() + "," + IdCa.getText());  // Cambiado a IdCa.getText() para obtener el ID del candidato
+            writer.write(IdCo.getText() + "," + IdCa.getText()+ "," + NombreCa.getText()+ "," + Votos.getText());  // Cambiado a IdCa.getText() para obtener el ID del candidato
             writer.newLine();
 
             writer.close();
