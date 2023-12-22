@@ -106,13 +106,10 @@ public class DeColegios extends javax.swing.JFrame {
 
         Tabla.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Id Colegio", "Id Candidato", "Nombre", "Total Votos"
+                "Id Colegio", "Id Candidato", "Nombre", "Votos"
             }
         ));
         jScrollPane2.setViewportView(Tabla);

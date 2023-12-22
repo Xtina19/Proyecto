@@ -1,2 +1,2 @@
-005,Partido de la Liberación Dominicana,CF,5
-006,Partido Revolucionario Moderno,LG,3
+3,Circuscripcion #3,20,6
+1,Circuscripcion #1,10,5

@@ -1,2 +1,4 @@
-CF,Cienfuegos
-SO,Santiago Oeste
+10,Navarrete
+20,Santiago
+30,Baitoa
+40,Tamboril
