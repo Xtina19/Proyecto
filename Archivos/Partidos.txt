@@ -1,2 +1,2 @@
-PRM,Partido Revoluconario Moderno, 0
+PRM,Partido Revoluconario Moderno,20
 

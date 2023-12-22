@@ -6,11 +6,14 @@ package Procesos;
 
 import MenuPrincipal.MenuP;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -22,7 +25,13 @@ public class ProcesosVo extends javax.swing.JFrame {
     String IdRecinto;
     String IDCandidato;
     String VotoCa;
-    String VotoPa;    
+    int totalca;
+    String VotoPa;
+    int totalpa;    
+    
+    String votosca;
+    String votospa;
+    
     /**
      * Creates new form ProcesosVo
      */
@@ -44,8 +53,11 @@ public class ProcesosVo extends javax.swing.JFrame {
         Fecha = new com.toedter.calendar.JDateChooser();
         jScrollPane1 = new javax.swing.JScrollPane();
         Tabla = new javax.swing.JTable();
+        jLabel1 = new javax.swing.JLabel();
+        Voto = new javax.swing.JSpinner();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Proceso Colegios");
 
         Salir.setText("Salir");
         Salir.addActionListener(new java.awt.event.ActionListener() {
@@ -74,31 +86,45 @@ public class ProcesosVo extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(Tabla);
 
+        jLabel1.setText("Voto:");
+
+        Voto.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                VotoStateChanged(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(96, Short.MAX_VALUE)
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 528, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(17, 17, 17)
                 .addComponent(Fecha, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(Ejecutar)
                 .addGap(18, 18, 18)
                 .addComponent(Salir)
-                .addGap(25, 25, 25))
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addGap(40, 40, 40)
+                .addComponent(jLabel1)
+                .addGap(18, 18, 18)
+                .addComponent(Voto, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(58, 58, 58)
+                .addGap(57, 57, 57)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(Fecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(Ejecutar)
-                        .addComponent(Salir)))
+                        .addComponent(Salir)
+                        .addComponent(jLabel1)
+                        .addComponent(Voto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -108,6 +134,15 @@ public class ProcesosVo extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void EjecutarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EjecutarActionPerformed
+        // Verificar si el JDateChooser está vacío
+        if (Fecha.getDate() == null) {
+            JOptionPane.showMessageDialog(this, "Debe seleccionar una fecha", "Error", JOptionPane.ERROR_MESSAGE);            
+            return;
+        }
+        
+        totalca = (int) Voto.getValue();
+        totalpa = (int) Voto.getValue();
+        
         // Obtener la fecha seleccionada del JDateChooser
         Date dateSeleccionada = Fecha.getDate();
         
@@ -120,7 +155,8 @@ public class ProcesosVo extends javax.swing.JFrame {
         model.setRowCount(0);
 
         buscarIdColegio(fechaFormateada);
-        llenarTabla(IDCandidato, VotoCa, VotoPa);
+        llenarTabla(IDCandidato, totalca, totalpa);
+        Voto.setValue(0);
     }//GEN-LAST:event_EjecutarActionPerformed
 
     private void buscarIdColegio(String fechaFormateada) {
@@ -176,8 +212,8 @@ public class ProcesosVo extends javax.swing.JFrame {
     }
 
     private void buscarCandidato(String IdCandidato) {
-         System.out.println("Id Candidato a buscar: " + IdCandidato);
-
+        System.out.println("Id Candidato a buscar: " + IdCandidato);
+         
         try (BufferedReader br = new BufferedReader(new FileReader("Archivos\\Candidatos.txt"))) {
             String linea;
             while ((linea = br.readLine()) != null) {
@@ -186,7 +222,11 @@ public class ProcesosVo extends javax.swing.JFrame {
                     // Encontramos la fecha, rellenamos los campos
                     String IdPartido = partes[2].trim();
                     String IdCircunscripcion = partes[3].trim();
-                    VotoCa = partes[4].trim();
+                    votosca = partes[4].trim();
+                    int voto = Integer.parseInt(votosca);
+                    totalca += voto;
+                    System.out.println("Votos candidato: " +totalca);
+                    modificarCandidato( IdCandidato);
                     System.out.println("Id Candidato encontrado"); 
                     IDCandidato = IdCandidato.trim();
                     buscarRecinto(IdCircunscripcion.trim());
@@ -240,6 +280,14 @@ public class ProcesosVo extends javax.swing.JFrame {
         menu.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_SalirActionPerformed
+
+    private void VotoStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_VotoStateChanged
+        int voto = (int) Voto.getValue();
+        if(voto < 0){
+            JOptionPane.showMessageDialog(this, "los votos deben ser positivos", "Error", JOptionPane.ERROR_MESSAGE);
+            Voto.setValue(0);
+        }
+    }//GEN-LAST:event_VotoStateChanged
  
     private void buscarPartido(String IdPartido){
          System.out.println("ID Partido a buscar: " + IdPartido);
@@ -250,7 +298,11 @@ public class ProcesosVo extends javax.swing.JFrame {
                 String[] partes = linea.split(",");
                 if (partes.length == 3 && partes[0].equals(IdPartido)) {
                     // Encontramos el id, rellenamos los campos
-                    VotoPa = partes[2].trim();
+                    votospa = partes[2].trim();
+                    int voto = Integer.parseInt(votospa);
+                    totalpa += voto;
+                    System.out.println("votos partidos: " +totalca);
+                    modificarPartido(IdPartido);
                     System.out.println("Id Partido encontrado");
                     return; // Terminamos la búsqueda una vez encontrado el recinto
                 }
@@ -264,10 +316,99 @@ public class ProcesosVo extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Error al leer el archivo", "Error", JOptionPane.ERROR_MESSAGE);
         }       
     }
-       
-    private void llenarTabla(String IDCandidato, String VotoCa, String VotoPa) {
+ 
+    private int modificarCandidato(String IdCandidato) {
+        // Crear una lista para almacenar las líneas modificadas
+        List<String> lineasModificadas = new ArrayList<>();
+
+        try (BufferedReader br = new BufferedReader(new FileReader("Archivos\\Candidatos.txt"))) {
+            String linea;
+            boolean candidatoModificado = false;
+
+            while ((linea = br.readLine()) != null) {
+                String[] partes = linea.split(",");
+                if (partes.length == 5 && partes[0].equals(IdCandidato)) {
+                    String VotoCa = String.valueOf(totalca);
+                    partes[4] = VotoCa;
+
+                    // Agregamos la línea modificada a la lista
+                    lineasModificadas.add(String.join(",", partes));
+                    candidatoModificado = true;
+                } 
+                else {
+                    // Si no es el usuario que estamos buscando, simplemente agregamos la línea al listado
+                    lineasModificadas.add(linea);
+                }
+            }
+
+            if (candidatoModificado) {
+                // Ahora escribimos las líneas modificadas de vuelta al archivo
+                try (BufferedWriter bw = new BufferedWriter(new FileWriter("Archivos\\Candidatos.txt"))) {
+                    for (String lineaModificada : lineasModificadas) {
+                        bw.write(lineaModificada);
+                     bw.newLine(); // Agregamos un salto de línea después de cada línea
+                        System.out.println("Votos candidato modificado en el archivo");
+                    }
+                }
+            }
+
+        return totalca;
+
+        } 
+        catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "Error al leer el archivo " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        return 0;
+    }    
+    
+     private int modificarPartido(String IdPartido) {
+        // Crear una lista para almacenar las líneas modificadas
+        List<String> lineasModificadas = new ArrayList<>();
+
+        try (BufferedReader br = new BufferedReader(new FileReader("Archivos\\Partidos.txt"))) {
+            String linea;
+            boolean partidoModificado = false;
+
+            while ((linea = br.readLine()) != null) {
+                String[] partes = linea.split(",");
+                if (partes.length == 3 && partes[0].equals(IdPartido)) {
+                    // Encontramos el partido, rellenamos los campos
+                    String VotoPa = String.valueOf(totalpa);         
+                    partes[2] = VotoPa;
+
+                     // Agregamos la línea modificada a la lista
+                    lineasModificadas.add(String.join(",", partes));
+                    partidoModificado = true;
+                } 
+                else {
+                    // Si no es el partido que estamos buscando, simplemente agregamos la línea al listado
+                    lineasModificadas.add(linea);
+                }
+            }
+
+            if (partidoModificado) {
+                // Ahora escribimos las líneas modificadas de vuelta al archivo
+                try (BufferedWriter bw = new BufferedWriter(new FileWriter("Archivos\\Partidos.txt"))) {
+                    for (String lineaModificada : lineasModificadas) {
+                        bw.write(lineaModificada);
+                        bw.newLine(); // Agregamos un salto de línea después de cada línea
+                        System.out.println("Votos partido modificado en el archivo");                        
+                    }
+                }
+            }
+
+            return totalca;
+
+        } 
+        catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "Error al leer el archivo " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        return 0;
+    }
+
+    private void llenarTabla(String IDCandidato, int totalca, int totalpa) {
         DefaultTableModel model = (DefaultTableModel) Tabla.getModel();
-        model.addRow(new Object[]{IDCandidato, VotoCa, VotoPa});
+        model.addRow(new Object[]{IDCandidato, totalca, totalpa});
     }   
     
     /**
@@ -310,6 +451,8 @@ public class ProcesosVo extends javax.swing.JFrame {
     private com.toedter.calendar.JDateChooser Fecha;
     private javax.swing.JButton Salir;
     private javax.swing.JTable Tabla;
+    private javax.swing.JSpinner Voto;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }
