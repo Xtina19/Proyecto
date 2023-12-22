@@ -391,8 +391,7 @@ public class DeColegios extends javax.swing.JFrame {
         return;
     }
 
-    //Si proceso guardara los votos if (NombreCa.getText().isEmpty() || Votos.getText().isEmpty())
-    if (NombreCa.getText().isEmpty()) {
+    if (NombreCa.getText().isEmpty() || Votos.getText().isEmpty()) {
         JOptionPane.showMessageDialog(this, "Por favor, ingrese un ID de candidato válido", "Error", JOptionPane.ERROR_MESSAGE);
         return;
     }
