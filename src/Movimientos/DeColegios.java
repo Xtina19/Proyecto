@@ -428,7 +428,7 @@ public class DeColegios extends javax.swing.JFrame {
             String detallesArchivo = "Archivos\\DetallesColegio.txt";
             BufferedWriter writer = new BufferedWriter(new FileWriter(detallesArchivo, true));
 
-            writer.write(IdCo.getText() + "," + IdCa.getText()+ "," + NombreCa.getText()+ "," + Votos.getText());  // Cambiado a IdCa.getText() para obtener el ID del candidato
+            writer.write(IdCo.getText() + "," + IdCa.getText()+ "," + NombreCa.getText()+ "," + Votos.getText());  
             writer.newLine();
 
             writer.close();
